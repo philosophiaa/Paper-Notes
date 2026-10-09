@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文阅读笔记 · Learning Structured Policies for General Humanoid Loco-Manipulation</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root {
+    --bg: #0F172A;
+    --bg-card: #1E293B;
+    --bg-card-hover: #243347;
+    --border: #334155;
+    --text: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --cyan: #06B6D4;
+    --purple: #8B5CF6;
+    --green: #10B981;
+    --orange: #F59E0B;
+    --red: #EF4444;
+    --pink: #EC4899;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    max-width: 800px;
+  }
+  .hero h1 .accent { color: var(--cyan); }
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ===== Section ===== */
+  .section {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--cyan);
+    background: rgba(6,182,212,0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .section-desc {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 28px;
+    max-width: 700px;
+  }
+
+  /* ===== Overview Cards ===== */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .overview-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .overview-card .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .overview-card .value {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  .overview-card.highlight-cyan { border-left: 3px solid var(--cyan); }
+  .overview-card.highlight-purple { border-left: 3px solid var(--purple); }
+  .overview-card.highlight-green { border-left: 3px solid var(--green); }
+
+  /* ===== Pipeline Flow ===== */
+  .pipeline-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    overflow-x: auto;
+  }
+  .pipeline-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    min-width: 800px;
+  }
+  .pipeline-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .pipeline-node .node-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .pipeline-node .node-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .pipeline-node .node-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    max-width: 120px;
+    line-height: 1.4;
+  }
+  .pipeline-arrow {
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    min-width: 30px;
+    margin: 0 8px;
+    margin-bottom: 32px;
+  }
+  .pipeline-arrow::after {
+    content: '';
+    position: absolute;
+    right: -1px; top: -4px;
+    width: 8px; height: 8px;
+    border-top: 2px solid var(--border);
+    border-right: 2px solid var(--border);
+    transform: rotate(45deg);
+  }
+  .bg-cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
+  .bg-purple { background: rgba(139,92,246,0.15); color: var(--purple); }
+  .bg-green { background: rgba(16,185,129,0.15); color: var(--green); }
+  .bg-orange { background: rgba(245,158,11,0.15); color: var(--orange); }
+  .bg-pink { background: rgba(236,72,153,0.15); color: var(--pink); }
+
+  /* ===== Module Cards ===== */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .module-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    transition: background 0.2s;
+  }
+  .module-card:hover { background: var(--bg-card-hover); }
+  .module-card .module-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .module-card .module-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .module-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .module-card .module-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+  .module-card .module-body strong { color: var(--text); }
+  .module-card .key-points {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .module-card .key-points li {
+    list-style: none;
+    padding-left: 16px;
+    position: relative;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
+  }
+  .module-card .key-points li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+  }
+
+  /* ===== Chart container ===== */
+  .chart-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .chart-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .chart-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .chart-canvas {
+    width: 100%;
+    height: 320px;
+  }
+
+  /* ===== Results Table ===== */
+  .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .results-table th {
+    text-align: left;
+    padding: 12px 14px;
+    background: rgba(6,182,212,0.08);
+    color: var(--cyan);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+  .results-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .results-table tr:last-child td { border-bottom: none; }
+  .results-table .success { color: var(--green); font-weight: 600; }
+  .results-table .partial { color: var(--orange); font-weight: 600; }
+  .results-table td:first-child { color: var(--text); font-weight: 500; }
+
+  /* ===== Contribution Cards ===== */
+  .contrib-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .contrib-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contrib-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+  }
+  .contrib-card:nth-child(1)::before { background: var(--cyan); }
+  .contrib-card:nth-child(2)::before { background: var(--purple); }
+  .contrib-card:nth-child(3)::before { background: var(--green); }
+  .contrib-card .contrib-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .contrib-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .contrib-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ===== Keywords ===== */
+  .keywords-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .keyword-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .keyword-card .kw-term {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--cyan);
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .keyword-card .kw-def {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ===== Insight Box ===== */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(6,182,212,0.2);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .insight-box h3 {
+    font-size: 17px;
+    margin-bottom: 14px;
+    color: var(--cyan);
+  }
+  .insight-box p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+  .insight-box .formula {
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 14px 0;
+    font-size: 13px;
+    color: var(--text);
+    border-left: 3px solid var(--cyan);
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    padding: 32px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    body { font-size: 14px; }
+    .hero { padding: 40px 0 32px; }
+    .hero h1 { font-size: 22px; }
+    .hero-subtitle { font-size: 14px; }
+    .hero-meta { font-size: 12px; }
+    .section { padding: 32px 0; }
+    .section-title { font-size: 18px; }
+    .overview-grid, .modules-grid, .contrib-grid, .keywords-grid {
+      grid-template-columns: 1fr;
+    }
+    .pipeline-flow { flex-direction: column; min-width: auto; }
+    .pipeline-arrow {
+      width: 2px; height: 30px;
+      margin: 8px 0;
+      margin-bottom: 0;
+    }
+    .pipeline-arrow::after {
+      right: -4px; top: auto; bottom: -1px;
+      transform: rotate(135deg);
+    }
+    .chart-canvas { height: 260px; }
+    .insight-box { padding: 20px; }
+    .insight-box .formula { font-size: 12px; line-height: 1.8; word-break: break-all; }
+    .results-table { font-size: 12px; min-width: 500px; }
+    .container { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">PAPER READING NOTES · 第一篇</div>
+    <h1>Learning Structured Policies for <span class="accent">General Humanoid Loco-Manipulation</span></h1>
+    <p class="hero-subtitle">
+      不要让人形机器人直接在高维动作空间里探索所有技能；先用 SBTO 把有限的人类示范变成大量物理可行的 motion，再让 Diffusion 学会生成 motion，让 RL Tracker 负责高频执行，最后用 tracker-in-the-loop 的 Post-training 缩小生成与执行之间的差距。
+    </p>
+    <div class="hero-meta">
+      <span>Shafeef Omar · Sebastian Sanokowski · Cordelia Schmid · Majid Khadiv</span>
+      <span>MRM / INRIA / IAS</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 01 论文速览 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> 论文速览</div>
+    <p class="section-desc">这篇论文到底要解决什么问题？核心思路是什么？</p>
+    <div class="overview-grid">
+      <div class="overview-card highlight-cyan">
+        <div class="label">核心问题</div>
+        <div class="value">训练一个 <strong>generalist humanoid policy</strong>，让人形机器人能完成多种全身 loco-manipulation（边走边操作）任务。</div>
+      </div>
+      <div class="overview-card highlight-purple">
+        <div class="label">三大困难</div>
+        <div class="value">
+          ① 高自由度系统，action space 探索困难<br>
+          ② RL Tracker 不会产生多模态长时程规划<br>
+          ③ Diffusion 不知道具体机器人的物理可行性
+        </div>
+      </div>
+      <div class="overview-card highlight-green">
+        <div class="label">核心思路</div>
+        <div class="value">
+          <strong>Diffusion 放 motion level</strong>（生成未来运动）<br>
+          <strong>RL Tracker 放 action level</strong>（高频执行）<br>
+          最后 tracker-in-the-loop Post-training 闭环优化
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 02 整体 Pipeline ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> 整体 Pipeline</div>
+    <p class="section-desc">从人类示范到机器人执行的完整数据流：四个阶段，两个并行预训练，最后闭环微调。</p>
+    <div class="pipeline-wrapper">
+      <div class="pipeline-flow">
+        <div class="pipeline-node">
+          <div class="node-icon bg-orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+          </div>
+          <div class="node-title">Human Motion</div>
+          <div class="node-sub">Kinematic Demonstrations</div>
+        </div>
+        <div class="pipeline-arrow"></div>
+        <div class="pipeline-node">
+          <div class="node-icon bg-orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div class="node-title">SBTO</div>
+          <div class="node-sub">Dynamically Feasible Motions</div>
+        </div>
+        <div class="pipeline-arrow"></div>
+        <div class="pipeline-node">
+          <div class="node-icon bg-cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+          </div>
+          <div class="node-title">Diffusion Model</div>
+          <div class="node-sub">Motion Generator</div>
+        </div>
+        <div class="pipeline-arrow"></div>
+        <div class="pipeline-node">
+          <div class="node-icon bg-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <div class="node-title">RL Tracking</div>
+          <div class="node-sub">High-Freq Controller</div>
+        </div>
+        <div class="pipeline-arrow"></div>
+        <div class="pipeline-node">
+          <div class="node-icon bg-green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+          </div>
+          <div class="node-title">Humanoid</div>
+          <div class="node-sub">Real Robot Action</div>
+        </div>
+      </div>
+      <div style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--border); text-align: center;">
+        <span style="font-size: 13px; color: var(--text-muted);">
+          <strong style="color: var(--pink);">Post-training 闭环：</strong>
+          Diffusion 生成 motion → Tracker 实际 rollout → Trackability Reward → 反向优化 Diffusion
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 核心模块拆解 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> 四大核心模块</div>
+    <p class="section-desc">拆解 pipeline 中每个关键组件的输入、输出和设计动机。</p>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-header">
+          <span class="module-num">M1</span>
+          <h3>SBTO 数据生成</h3>
+        </div>
+        <div class="module-body">
+          IK 只能保证<strong>几何上可行</strong>，但人形机器人和人类在身体形态、关节结构、质量分布上差异巨大，IK 得到的轨迹可能存在 missing contact、脚穿模、接触不正确等问题。<br><br>
+          <strong>SBTO（Sampling-Based Trajectory Optimization）</strong>从 imperfect kinematic trajectory 出发，搜索优化出物理一致、动态可行的 robot motion。
+        </div>
+        <ul class="key-points">
+          <li>IK = "几何上机器人应该怎么摆？"</li>
+          <li>SBTO = "考虑物理后机器人真正应该怎么动？"</li>
+          <li>每条 demo 生成 tube-like diversity 轨迹族</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header">
+          <span class="module-num">M2</span>
+          <h3>Diffusion Motion Generator</h3>
+        </div>
+        <div class="module-body">
+          不是直接预测 torque/action，而是预测<strong>未来一段 dynamically-feasible motion</strong>。<br><br>
+          <strong>输入：</strong>当前 state + imperfect kinematic reference + goal（物体相对基座的方向）<br>
+          <strong>输出：</strong>未来 n-step 的 robot motion sequence<br><br>
+          为什么放 motion level？因为 legged robot 底层控制需要 50-100Hz+ 高频运行，大模型不适合直接在这个频率产生 action。
+        </div>
+        <ul class="key-points">
+          <li>传统 Diffusion Policy: obs → action</li>
+          <li>本文: state + ref + goal → motion → tracker → action</li>
+          <li>Slow motion generation / Fast tracking control</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header">
+          <span class="module-num">M3</span>
+          <h3>Generalist RL Tracker</h3>
+        </div>
+        <div class="module-body">
+          DeepMimic-style RL tracking policy，负责把 desired motion 转换成高频 control action。<br><br>
+          <strong>输入：</strong>当前机器人状态 + desired motion<br>
+          <strong>输出：</strong>control action（关节力矩/位置目标）<br><br>
+          关键设计：使用 <strong>sparse lookahead（1, 2, 4, 8 frames）</strong>，让机器人提前知道未来动作趋势，支持多个 motion。
+        </div>
+        <ul class="key-points">
+          <li>只在 dynamically feasible motions 上训练</li>
+          <li>Adaptive sampling：困难片段更频繁访问</li>
+          <li>Reward = motion tracking + object tracking + regularization</li>
+        </ul>
+      </div>
+
+      <div class="module-card">
+        <div class="module-header">
+          <span class="module-num">M4</span>
+          <h3>Tracker-in-the-loop Post-training</h3>
+        </div>
+        <div class="module-body">
+          预训练 Diffusion 生成的 motion "数据层面好看"，但不一定正好是当前 tracker 最容易执行的。存在 <strong>plan-execution gap</strong>。<br><br>
+          Post-training 让 Diffusion 生成 motion → Tracker 在 simulator 中真正 rollout → 比较生成轨迹 vs 实际执行轨迹 → 用 reward 反向微调 Diffusion。
+        </div>
+        <ul class="key-points">
+          <li>Trackability reward：生成轨迹 vs 实际执行 state</li>
+          <li>Kinematic fidelity reward：生成轨迹 vs 原始 kinematic ref</li>
+          <li>Smoothness + Termination penalty</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04 数据增长可视化 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> 数据从哪里来？</div>
+    <p class="section-desc">只有 29 条有限的人类示范，如何扩展成足够训练的数据集？SBTO + Symmetry Augmentation 的威力。</p>
+    <div class="chart-box">
+      <div class="chart-title">数据集增长过程</div>
+      <div class="chart-desc">29 条 demonstrations → SBTO 生成 tube-like diversity → Symmetry augmentation 扩大约 8 倍</div>
+      <div id="chart-data-growth" class="chart-canvas"></div>
+    </div>
+    <div class="insight-box" style="margin-top: 16px;">
+      <h3>关键洞察</h3>
+      <p>
+        Teleoperation data 非常昂贵，而 human motion data 相对容易获得并可以 retarget。论文的核心数据策略是：<strong>不依赖大量遥操作数据，而是从有限的人类示范出发，通过物理优化 + 对称性增强，程序化生成大规模训练数据</strong>。这是一种 "simulation-generated data" 的思路。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 实验结果 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> 实验结果</div>
+    <p class="section-desc">100 episodes / setting，测试训练内、同类泛化和完全未见过的技能。</p>
+
+    <div class="chart-box">
+      <div class="chart-title">各任务成功率对比</div>
+      <div class="chart-desc">Pick & Place 训练内/同类都 100%；Pushing 100% 但 tracking error 上升；Kicking 只有 74%</div>
+      <div id="chart-results" class="chart-canvas"></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Tracking Error 对比（MPJPE, 单位：米）</div>
+      <div class="chart-desc">越接近训练分布，tracking error 越小；OOD 技能（Kicking）tracking error 显著增大</div>
+      <div id="chart-error" class="chart-canvas"></div>
+    </div>
+
+    <div class="chart-box" style="margin-top: 16px;">
+      <div class="chart-title">详细实验数据</div>
+      <div class="chart-desc">n=100 episodes, mean ± std</div>
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+      <table class="results-table">
+        <colgroup>
+          <col style="width: 28%">
+          <col style="width: 14%">
+          <col style="width: 16%">
+          <col style="width: 14%">
+          <col style="width: 14%">
+          <col style="width: 14%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th>MPJPE (m)</th>
+            <th>Joint pos. err (rad)</th>
+            <th>Object pos. err (m)</th>
+            <th>Object ori. err (rad)</th>
+            <th>Success Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pick &amp; Place (train)</td>
+            <td>0.069 ± 0.014</td>
+            <td>0.625 ± 0.060</td>
+            <td>0.281 ± 0.040</td>
+            <td>0.281 ± 0.286</td>
+            <td class="success">1.00</td>
+          </tr>
+          <tr>
+            <td>Pick &amp; Place (eval)</td>
+            <td>0.070 ± 0.012</td>
+            <td>0.619 ± 0.042</td>
+            <td>0.061 ± 0.013</td>
+            <td>0.529 ± 0.415</td>
+            <td class="success">1.00</td>
+          </tr>
+          <tr>
+            <td>Pushing (eval)</td>
+            <td>0.117 ± 0.031</td>
+            <td>0.573 ± 0.040</td>
+            <td>0.247 ± 0.096</td>
+            <td>0.373 ± 0.134</td>
+            <td class="success">1.00</td>
+          </tr>
+          <tr>
+            <td>Kicking (eval)</td>
+            <td>0.254 ± 0.088</td>
+            <td>0.613 ± 0.056</td>
+            <td>0.512 ± 0.112</td>
+            <td>0.772 ± 0.271</td>
+            <td class="partial">0.74</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="insight-box" style="margin-top: 16px;">
+      <h3>实验结论解读</h3>
+      <p>
+        <strong>In-distribution generalization 比较成功：</strong>Pick & Place 训练内外都是 100%，说明模型对 "训练分布内、motion style 没见过" 的同类任务有不错泛化。<br><br>
+        <strong>Out-of-distribution skill generalization 仍是主要挑战：</strong>Pushing 虽然 100% 成功，但作者自己解释这是因为 pushing 的运动 style 与训练中的 pick-and-place 有相似性。而 Kicking（接触动力学完全不同）成功率掉到 74%，tracking error 大幅上升——真正不同的 skill 仍然是难点。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 三大贡献 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> 三大核心贡献</div>
+    <p class="section-desc">这篇论文最重要的三个贡献点。</p>
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <div class="contrib-num">CONTRIBUTION 01</div>
+        <h3>Structured Generalist Pipeline</h3>
+        <p>提出了一个结构化的通用 pipeline：从不完美的 kinematic demonstrations 出发，经过 dynamically feasible motion 转换，再由 Diffusion 生成 motion、Generalist Tracker 执行 action。把 motion generation 和 low-level control 解耦。</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-num">CONTRIBUTION 02</div>
+        <h3>数据生成方法</h3>
+        <p>仅用有限 demonstrations，通过 SBTO 生成 feasible trajectories + symmetry augmentation（镜像对称 + 90° 旋转），将数据集有效扩大约 8 倍。不依赖昂贵的 teleoperation，而是 simulation-generated data。</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-num">CONTRIBUTION 03</div>
+        <h3>Diffusion Post-training</h3>
+        <p>把 tracking controller 放进 Diffusion 的训练闭环：Diffusion → Tracker → Simulator → Reward → Diffusion。目的是缩小 "生成出来的 motion" 和 "机器人真正能执行的 motion" 之间的 plan-execution gap。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 关键词速查 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">07</span> 关键词速查</div>
+    <p class="section-desc">读这篇论文必须理解的核心术语。</p>
+    <div class="keywords-grid">
+      <div class="keyword-card">
+        <div class="kw-term">Loco-Manipulation</div>
+        <div class="kw-def">locomotion + manipulation = 一边移动身体，一边与物体交互</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">Retargeting</div>
+        <div class="kw-def">把 human motion 转成 robot motion 的过程</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">IK</div>
+        <div class="kw-def">Inverse Kinematics，给定目标姿态，求 robot joint configuration</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">SBTO</div>
+        <div class="kw-def">Sampling-Based Trajectory Optimization，从 imperfect kinematic trajectory 中搜索动态可行轨迹</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">Kinematic vs Dynamically Feasible</div>
+        <div class="kw-def">前者是几何/关节层面可实现；后者是考虑动力学、接触等物理约束后仍可执行</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">Diffusion (in this paper)</div>
+        <div class="kw-def">学习多模态 motion distribution，生成未来一段 motion sequence，而不是直接产生 action</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">Tracking Policy</div>
+        <div class="kw-def">把 desired motion 转换成高频 control action 的 RL controller</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">Post-training</div>
+        <div class="kw-def">预训练之后，用实际 rollout + reward 继续优化生成模型</div>
+      </div>
+      <div class="keyword-card">
+        <div class="kw-term">Trackability</div>
+        <div class="kw-def">生成的 motion 是否容易被实际 tracker 执行的程度</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 与研究方向的联系 ===== -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> 与研究方向的联系</div>
+    <p class="section-desc">这篇论文如何连接到后续研究计划？</p>
+    <div class="insight-box">
+      <h3>DynaRetarget ↔ 本篇论文的关系</h3>
+      <div class="formula">
+        DynaRetarget: Human motion → IK → SBTO → dynamically feasible robot trajectories<br>
+        本  篇: dynamically feasible trajectories → Diffusion → future motion → RL tracking → generalist policy
+      </div>
+      <p>
+        <strong>DynaRetarget = "把数据做好"</strong>，<strong>本篇 = "用这些好数据学会生成和执行 motion"</strong>。两篇论文是递进关系，不是孤立的。
+      </p>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <div class="overview-grid">
+        <div class="overview-card highlight-cyan">
+          <div class="label">Diversity 思想</div>
+          <div class="value">一个 demonstration → 多个 feasible trajectories（tube-like diversity）</div>
+        </div>
+        <div class="overview-card highlight-purple">
+          <div class="label">Structured Policy</div>
+          <div class="value">motion generation 和 low-level control 分开，各司其职</div>
+        </div>
+        <div class="overview-card highlight-green">
+          <div class="label">Generalization</div>
+          <div class="value">一个 policy 尝试覆盖多个 loco-manipulation skills</div>
+        </div>
+      </div>
+      <div class="overview-grid" style="margin-top: 16px;">
+        <div class="overview-card highlight-cyan">
+          <div class="label">Simulation-generated Data</div>
+          <div class="value">不完全依赖昂贵的 teleoperation，程序化生成训练数据</div>
+        </div>
+        <div class="overview-card highlight-purple">
+          <div class="label">Post-training 闭环</div>
+          <div class="value">让真实执行反馈反过来改进生成模型</div>
+        </div>
+        <div class="overview-card highlight-green">
+          <div class="label">Future Direction</div>
+          <div class="value">扩大 motion/skill diversity、multi-object scenes、parameter-efficient finetuning (LoRA)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 一句话总结 ===== -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <div style="text-align: center; padding: 40px 20px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
+      <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 1px;">一句话记住这篇论文</div>
+      <p style="font-size: 18px; line-height: 1.9; max-width: 750px; margin: 0 auto; color: var(--text);">
+        不要让人形机器人直接在高维 action space 里探索所有技能；<br>
+        先用 <span style="color: var(--orange); font-weight: 600;">SBTO</span> 把有限的人类示范变成大量物理可行的 motion，<br>
+        再让 <span style="color: var(--cyan); font-weight: 600;">Diffusion</span> 学会生成 motion，让 <span style="color: var(--purple); font-weight: 600;">RL Tracker</span> 负责高频执行，<br>
+        最后用 <span style="color: var(--pink); font-weight: 600;">tracker-in-the-loop Post-training</span> 缩小生成与执行之间的差距。
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    Paper Reading Notes · Learning Structured Policies for General Humanoid Loco-Manipulation
+  </div>
+</footer>
+
+<script>
+  // ===== 数据增长图 =====
+  var chartGrowth = echarts.init(document.getElementById('chart-data-growth'));
+  chartGrowth.setOption({
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#1E293B',
+      borderColor: '#334155',
+      textStyle: { color: '#F1F5F9' }
+    },
+    grid: { left: 60, right: 30, top: 30, bottom: 40 },
+    xAxis: {
+      type: 'category',
+      data: ['原始 Demonstrations', 'SBTO 生成后', 'Symmetry Augmentation 后'],
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94A3B8', fontSize: 12 }
+    },
+    yAxis: {
+      type: 'value',
+      name: 'Motion 数量',
+      nameTextStyle: { color: '#94A3B8' },
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#1E293B' } },
+      axisLabel: { color: '#94A3B8' }
+    },
+    series: [{
+      type: 'bar',
+      data: [
+        { value: 29, itemStyle: { color: '#F59E0B' } },
+        { value: 898, itemStyle: { color: '#06B6D4' } },
+        { value: 7184, itemStyle: { color: '#10B981' } }
+      ],
+      barWidth: '40%',
+      label: {
+        show: true,
+        position: 'top',
+        color: '#F1F5F9',
+        fontWeight: 'bold',
+        fontSize: 14
+      }
+    }]
+  });
+
+  // ===== 成功率图 =====
+  var chartResults = echarts.init(document.getElementById('chart-results'));
+  chartResults.setOption({
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#1E293B',
+      borderColor: '#334155',
+      textStyle: { color: '#F1F5F9' },
+      formatter: '{b}<br/>成功率: {c}%'
+    },
+    grid: { left: 60, right: 30, top: 30, bottom: 60 },
+    xAxis: {
+      type: 'category',
+      data: ['Pick&Place\n(train)', 'Pick&Place\n(eval)', 'Pushing\n(OOD)', 'Kicking\n(OOD)'],
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94A3B8', fontSize: 11, interval: 0 }
+    },
+    yAxis: {
+      type: 'value',
+      max: 100,
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#1E293B' } },
+      axisLabel: { color: '#94A3B8', formatter: '{value}%' }
+    },
+    series: [{
+      type: 'bar',
+      data: [
+        { value: 100, itemStyle: { color: '#10B981' } },
+        { value: 100, itemStyle: { color: '#10B981' } },
+        { value: 100, itemStyle: { color: '#F59E0B' } },
+        { value: 74, itemStyle: { color: '#EF4444' } }
+      ],
+      barWidth: '45%',
+      label: {
+        show: true,
+        position: 'top',
+        color: '#F1F5F9',
+        fontWeight: 'bold',
+        formatter: '{c}%'
+      }
+    }]
+  });
+
+  // ===== Tracking Error 图 =====
+  var chartError = echarts.init(document.getElementById('chart-error'));
+  chartError.setOption({
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: '#1E293B',
+      borderColor: '#334155',
+      textStyle: { color: '#F1F5F9' },
+      formatter: '{b}<br/>MPJPE: {c} m'
+    },
+    grid: { left: 60, right: 30, top: 30, bottom: 60 },
+    xAxis: {
+      type: 'category',
+      data: ['Pick&Place\n(train)', 'Pick&Place\n(eval)', 'Pushing\n(OOD)', 'Kicking\n(OOD)'],
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94A3B8', fontSize: 11, interval: 0 }
+    },
+    yAxis: {
+      type: 'value',
+      name: 'MPJPE (m)',
+      nameTextStyle: { color: '#94A3B8' },
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#1E293B' } },
+      axisLabel: { color: '#94A3B8' }
+    },
+    series: [{
+      type: 'bar',
+      data: [
+        { value: 0.069, itemStyle: { color: '#10B981' } },
+        { value: 0.070, itemStyle: { color: '#06B6D4' } },
+        { value: 0.117, itemStyle: { color: '#F59E0B' } },
+        { value: 0.254, itemStyle: { color: '#EF4444' } }
+      ],
+      barWidth: '45%',
+      label: {
+        show: true,
+        position: 'top',
+        color: '#F1F5F9',
+        fontSize: 11,
+        formatter: function(p) { return p.value.toFixed(3); }
+      }
+    }]
+  });
+
+  // 响应式
+  window.addEventListener('resize', function() {
+    chartGrowth.resize();
+    chartResults.resize();
+    chartError.resize();
+  });
+</script>
+
+</body>
+</html>
