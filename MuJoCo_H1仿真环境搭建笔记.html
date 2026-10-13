@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MuJoCo H1 仿真环境搭建笔记</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); }
+  .hero-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .hero h1 .accent { color: var(--cyan); }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 640px; line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan);
+    background: rgba(6,182,212,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: grid; grid-template-columns: 40px 1fr; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(6,182,212,0.15); color: var(--cyan);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;
+  }
+  .step-content h4 { font-size: 15px; margin-bottom: 6px; }
+  .step-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+  /* Code block */
+  .code-block {
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; margin: 12px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    overflow-x: auto; line-height: 1.8;
+  }
+  .code-block .comment { color: var(--text-muted); }
+  .code-block .cmd { color: var(--cyan); }
+  .code-block .flag { color: var(--orange); }
+
+  /* Grid cards */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .card .label {
+    font-size: 11px; color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace;
+  }
+  .card .value { font-size: 22px; font-weight: 700; color: var(--cyan); }
+  .card .desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+  .card.highlight-purple { border-left: 3px solid var(--purple); }
+  .card.highlight-green { border-left: 3px solid var(--green); }
+  .card.highlight-orange { border-left: 3px solid var(--orange); }
+
+  /* Table */
+  .joint-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .joint-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(6,182,212,0.08); color: var(--cyan);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .joint-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .joint-table td:first-child { color: var(--text); font-weight: 500; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* Flow */
+  .flow-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; flex-wrap: wrap; padding: 20px 0;
+  }
+  .flow-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px; font-size: 13px;
+    text-align: center; min-width: 100px;
+  }
+  .flow-item.cyan { border-color: rgba(6,182,212,0.4); color: var(--cyan); }
+  .flow-item.purple { border-color: rgba(139,92,246,0.4); color: var(--purple); }
+  .flow-item.green { border-color: rgba(16,185,129,0.4); color: var(--green); }
+  .flow-arrow { color: var(--text-muted); font-size: 18px; }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+  .checklist li {
+    padding: 8px 0; font-size: 14px; color: var(--text-secondary);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .checklist li::before {
+    content: '✓'; color: var(--green); font-weight: 700;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .checklist.pending li::before { content: '○'; color: var(--text-muted); }
+
+  /* Problem box */
+  .problem-box {
+    background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 10px; padding: 16px 20px; margin-bottom: 12px;
+  }
+  .problem-box .q { font-size: 14px; font-weight: 600; color: var(--red); margin-bottom: 6px; }
+  .problem-box .a { font-size: 13px; color: var(--text-secondary); }
+  .problem-box .a strong { color: var(--green); }
+
+  /* Formula */
+  .formula-box {
+    background: rgba(0,0,0,0.2); border-left: 3px solid var(--purple);
+    padding: 16px 20px; border-radius: 0 8px 8px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    text-align: center; margin: 16px 0; color: var(--text);
+  }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">ENV SETUP NOTES · 实操笔记</div>
+    <h1>MuJoCo H1 <span class="accent">仿真环境搭建</span>笔记</h1>
+    <p>从 Conda 环境到 H1 人形模型加载，再到 PD 控制和 Viewer 可视化——完整的仿真闭环搭建记录。</p>
+  </div>
+</header>
+
+<!-- 01 搭建步骤 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> 环境搭建步骤</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>创建 Conda 环境</h4>
+          <div class="code-block">
+            <span class="cmd">conda</span> create -n humanoid <span class="flag">python=3.10</span><br>
+            <span class="cmd">conda</span> activate humanoid
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>安装 Python 库</h4>
+          <div class="code-block">
+            <span class="cmd">pip</span> install numpy scipy matplotlib jupyter mujoco
+          </div>
+          <p>numpy 矩阵计算 · scipy 科学计算 · matplotlib 可视化 · jupyter 实验记录 · mujoco 物理引擎</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>下载 H1 模型（MuJoCo Menagerie）</h4>
+          <p>从 GitHub 下载 <code>mujoco_menagerie</code> ZIP，解压后进入 <code>unitree_h1/</code> 目录。</p>
+          <div class="code-block">
+            mujoco_menagerie-main/<br>
+            └── unitree_h1/<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;├── scene.xml<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;├── h1.xml<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;├── assets/<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;└── meshes/
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>加载模型并验证</h4>
+          <div class="code-block">
+            <span class="keyword">import</span> mujoco<br>
+            model = mujoco.MjModel.from_xml_path(<span class="flag">"scene.xml"</span>)<br>
+            data = mujoco.MjData(model)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 H1 模型概览 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> H1 模型结构概览</div>
+    <div class="grid-3" style="margin-bottom: 16px;">
+      <div class="card highlight-cyan">
+        <div class="label">qpos 维度</div>
+        <div class="value">26</div>
+        <div class="desc">Floating base (7) + Joint angles (19)</div>
+      </div>
+      <div class="card highlight-purple">
+        <div class="label">qvel 维度</div>
+        <div class="value">25</div>
+        <div class="desc">Base velocity (6) + Joint velocity (19)</div>
+      </div>
+      <div class="card highlight-green">
+        <div class="label">Control 维度</div>
+        <div class="value">19</div>
+        <div class="desc">19 个电机 torque 控制输入</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+      <div class="label">qpos 组成拆解</div>
+      <div class="grid-2" style="margin-top: 8px;">
+        <div>
+          <p style="font-size: 14px; color: var(--text); margin-bottom: 8px;">Floating Base（7维）</p>
+          <p style="font-size: 13px; color: var(--text-secondary);">
+            Position: x, y, z（3维）<br>
+            Orientation: qw, qx, qy, qz（4维四元数）
+          </p>
+        </div>
+        <div>
+          <p style="font-size: 14px; color: var(--text); margin-bottom: 8px;">Joint Angles（19维）</p>
+          <p style="font-size: 13px; color: var(--text-secondary);">
+            左腿 5 关节 · 右腿 5 关节<br>
+            Torso 1 关节 · 左臂 4 关节 · 右臂 4 关节
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Joint 结构 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> H1 Joint 索引表</div>
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div style="overflow-x: auto;">
+      <table class="joint-table">
+        <colgroup>
+          <col style="width: 10%">
+          <col style="width: 30%">
+          <col style="width: 60%">
+        </colgroup>
+        <thead>
+          <tr><th>Index</th><th>Joint Name</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>—</td><td>Floating base（无对应关节索引）</td></tr>
+          <tr><td>1</td><td>left_hip_yaw</td><td>左腿髋关节偏航</td></tr>
+          <tr><td>2</td><td>left_hip_roll</td><td>左腿髋关节翻滚</td></tr>
+          <tr><td>3</td><td>left_hip_pitch</td><td>左腿髋关节俯仰</td></tr>
+          <tr><td>4</td><td>left_knee</td><td>左膝盖</td></tr>
+          <tr><td>5</td><td>left_ankle</td><td>左脚踝</td></tr>
+          <tr><td>6-10</td><td>right_*</td><td>右腿对应 5 个关节</td></tr>
+          <tr><td>11</td><td>torso</td><td>躯干关节</td></tr>
+          <tr><td>12-15</td><td>left_shoulder_*/elbow</td><td>左肩 3 轴 + 左肘</td></tr>
+          <tr><td>16-19</td><td>right_shoulder_*/elbow</td><td>右肩 3 轴 + 右肘</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PD 控制 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> PD 控制与仿真闭环</div>
+
+    <div class="formula-box">
+      τ = Kp · (q_target - q) - Kd · q̇
+    </div>
+
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; text-align: center;">
+      比例项拉向目标位置，微分项抑制速度振荡
+    </p>
+
+    <div class="flow-row">
+      <div class="flow-item cyan">读取 State<br><small>data.qpos / qvel</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item purple">Controller<br><small>PD 计算 torque</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">写入 Control<br><small>data.ctrl[i]</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item green">Physics Step<br><small>mj_step()</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item cyan">Viewer Sync<br><small>viewer.sync()</small></div>
+    </div>
+
+    <div class="code-block" style="margin-top: 16px;">
+      <span class="comment"># PD 控制伪代码</span><br>
+      q = data.qpos[7:]&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 关节角度（跳过 floating base）</span><br>
+      dq = data.qvel[6:]&nbsp;&nbsp;<span class="comment"># 关节速度</span><br><br>
+      tau = Kp * (q_target - q) - Kd * dq<br>
+      data.ctrl[:] = tau<br>
+      mujoco.mj_step(model, data)<br>
+      viewer.sync()&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># 必须！否则画面不更新</span>
+    </div>
+  </div>
+</section>
+
+<!-- 05 常见问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> 常见问题排查</div>
+
+    <div class="problem-box">
+      <div class="q">scene.xml 找不到？</div>
+      <div class="a">运行目录不对。<strong>用 pwd 和 ls 确认当前目录在 unitree_h1/ 下面</strong>，再运行脚本。</div>
+    </div>
+    <div class="problem-box">
+      <div class="q">git clone 下载 Menagerie 失败？</div>
+      <div class="a">GitHub 连接问题。<strong>直接网页下载 ZIP 解压</strong>，比 git clone 更稳。</div>
+    </div>
+    <div class="problem-box">
+      <div class="q">Viewer 启动报错 "launch_passive requires mjpython"？</div>
+      <div class="a">Mac Apple Silicon 上 MuJoCo Viewer 不能直接用 python 跑。<strong>用 mjpython xxx.py 运行</strong>，而不是 python xxx.py。</div>
+    </div>
+    <div class="problem-box">
+      <div class="q">data.qpos 变了但 Viewer 画面不动？</div>
+      <div class="a">launch_passive 模式需要手动同步。<strong>每次 mj_step() 之后调用 viewer.sync()</strong>，画面才会更新。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 完成状态 & 下一步 -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> 完成状态与下一步</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="label" style="color: var(--green);">已完成 ✓</div>
+        <ul class="checklist">
+          <li>Miniconda 环境管理</li>
+          <li>Python 3.10 环境</li>
+          <li>MuJoCo 安装与验证</li>
+          <li>VS Code 开发环境</li>
+          <li>H1 模型加载</li>
+          <li>Joint / Actuator 读取</li>
+          <li>Torque 基础控制</li>
+          <li>Viewer 同步机制</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="label" style="color: var(--orange);">下一步 ○</div>
+        <ul class="checklist pending">
+          <li>H1 完整站立控制（19 关节同时）</li>
+          <li>保持机器人稳定站立</li>
+          <li>调整 PD 参数优化效果</li>
+          <li>Joint trajectory tracking</li>
+          <li>目标关节轨迹 → Controller → Torque → Motion</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    MuJoCo H1 Simulation Environment Setup Notes · 机器人仿真闭环: State → Controller → Torque → Physics → Motion
+  </div>
+</footer>
+
+</body>
+</html>
