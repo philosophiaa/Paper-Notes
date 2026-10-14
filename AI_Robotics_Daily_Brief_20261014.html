@@ -103,6 +103,9 @@
 
   .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
 
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+
   @media (max-width: 768px) {
     .header h1 { font-size: 22px; }
     .section-h2 { font-size: 17px; }
@@ -157,7 +160,7 @@
     <div class="paper-card">
       <div class="paper-num">PAPER 01</div>
       <h3>Workhorse：从人类演示学习复杂全身操作</h3>
-      <div class="meta">论文发布时间：2026年10月6日 · arXiv</div>
+      <div class="meta">论文发布时间：2026年10月6日 · <a href="https://arxiv.org/" target="_blank">arXiv</a></div>
       <p><strong>论文：</strong>Workhorse: Learning Robust Whole-Body Humanoid Loco-Manipulation from Human Data</p>
       <p>这项研究来自加州大学伯克利分校，使用视觉规划器预测躯干、双手腕和双脚的目标位姿，再由强化学习训练的全身控制器完成动作。</p>
       <p>研究者在真实 Unitree G1 上展示了箱子分拣、接球和行李箱操作等任务。仿真中的箱子分拣成功率为77%，加入40 N·s推力扰动后为64%。</p>
@@ -171,7 +174,7 @@
     <div class="paper-card">
       <div class="paper-num">PAPER 02</div>
       <h3>HULK：面向重物操作的全身控制</h3>
-      <div class="meta">论文发布时间：2026年10月6日 · arXiv</div>
+      <div class="meta">论文发布时间：2026年10月6日 · <a href="https://arxiv.org/" target="_blank">arXiv</a></div>
       <p><strong>论文：</strong>HULK: Learning Whole-Body Forceful Loco-Manipulation for Humanoids</p>
       <p>这项工作研究一个非常实际的问题：机器人搬运重物时，负载会改变重心位置，普通运动控制器可能无法同时维持姿态稳定和完成操作。</p>
       <p>研究团队将模型预测控制（MPC）与强化学习结合，并在训练中引入控制障碍函数（CBF），改善机器人在持续负载下的平衡能力。</p>
@@ -186,7 +189,7 @@
     <div class="paper-card">
       <div class="paper-num">PAPER 03</div>
       <h3>Continual Humanoid Motion Learning：让机器人持续学习新动作</h3>
-      <div class="meta">论文发布时间：2026年10月3日 · arXiv · 已开源</div>
+      <div class="meta">论文发布时间：2026年10月3日 · <a href="https://arxiv.org/" target="_blank">arXiv</a> · 已开源</div>
       <p><strong>论文：</strong>Continual Humanoid Motion Learning</p>
       <p>传统机器人运动策略通常在训练完成后固定参数。当机器人学习新技能时，可能遗忘之前掌握的动作。</p>
       <p>这篇论文提出 Similarity-guided LoRA-PNN，通过渐进式神经网络和低秩适配减少灾难性遗忘。</p>
@@ -200,7 +203,7 @@
     <div class="paper-card">
       <div class="paper-num">PAPER 04</div>
       <h3>COAP：机器人控制是否一定需要运行时大模型？</h3>
-      <div class="meta">论文发布时间：2026年10月8日 · arXiv</div>
+      <div class="meta">论文发布时间：2026年10月8日 · <a href="https://arxiv.org/" target="_blank">arXiv</a></div>
       <p><strong>论文：</strong>Embodied Turing Machines: Stateful Code for Robot Recursive Self-Improvement</p>
       <p>这篇论文提出 Code-Only-as-Policy（COAP）。与直接让 VLA 输出动作不同，该方法利用代码维护机器人和环境状态，并根据显式状态执行决策。</p>
       <p>作者报告，在42项双手操作任务上取得70.24%的成功率，且测试时不需要持续调用大模型。</p>
@@ -220,7 +223,7 @@
     <div class="paper-card">
       <div class="paper-num">NEWS 05</div>
       <h3>Gemini 4 Argon 发布：展示 Video-to-Sim-to-Real 能力</h3>
-      <div class="meta">发布时间：2026年10月13日 · Google DeepMind</div>
+      <div class="meta">发布时间：2026年10月13日 · <a href="https://deepmind.google/" target="_blank">Google DeepMind</a></div>
       <p>Google DeepMind 在新模型发布中展示了面向机器人开发的应用。官方报告，Argon 在 Embodied Reasoning（ERQA）测试中取得87%的成绩。</p>
       <p>更值得机器人研究者关注的是一个实验：模型观察人类投掷沙包的视频，推断空间关系与身体动作，生成相应的仿真代码，再将技能迁移至 Apollo 人形机器人。官方展示中，机器人连续完成了七次投掷命中。</p>
       <div class="insight">
@@ -232,7 +235,7 @@
     <div class="paper-card">
       <div class="paper-num">NEWS 06</div>
       <h3>Muse Wonder：Agent向长期任务执行发展</h3>
-      <div class="meta">发布时间：2026年10月12日 · Meta</div>
+      <div class="meta">发布时间：2026年10月12日 · <a href="https://ai.meta.com/blog/" target="_blank">Meta</a></div>
       <p>Meta 新模型重点增强了复杂任务执行、代码能力、长期记忆和任务持续性。</p>
       <p>其中两个关键设计是 <strong>Active Memory</strong> 和 <strong>Active Focus</strong>：前者帮助系统保留相关上下文，后者帮助智能体在任务遇到障碍时继续尝试、恢复并完成目标。</p>
       <p>Muse Wonder 已面向开发者提供 API 访问，Muse Wonder Full 则首先面向 Muse Code 订阅用户开放。</p>
@@ -251,7 +254,7 @@
     <div class="paper-card">
       <div class="paper-num">INDUSTRY 07</div>
       <h3>Mind Robotics 加强工业机器人团队</h3>
-      <div class="meta">新闻发布时间：2026年10月13日 · The Verge</div>
+      <div class="meta">新闻发布时间：2026年10月13日 · <a href="https://www.theverge.com/" target="_blank">The Verge</a></div>
       <p>Mind Robotics 宣布任命 Doug Field 为总裁。该公司与电动车制造商 Rivian 合作，计划在实际工厂环境中开发和测试通用机器人。</p>
       <p>目前公司尚未公开展示机器人，也未确认是否采用人形结构。</p>
       <div class="insight">
