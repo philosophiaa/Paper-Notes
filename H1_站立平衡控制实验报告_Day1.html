@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H1 站立平衡控制实验报告 · Day 1</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .header { padding: 56px 0 40px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--green); border: 1px solid rgba(16,185,129,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .header h1 .accent { color: var(--green); }
+  .header .meta { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
+  .header p { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--green);
+    background: rgba(16,185,129,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+
+  /* Key metrics */
+  .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+  .metric-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; text-align: center;
+  }
+  .metric-card .value { font-size: 28px; font-weight: 900; color: var(--green); font-family: 'JetBrains Mono', monospace; }
+  .metric-card .label { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+  .metric-card.baseline .value { color: var(--red); }
+  .metric-card.improvement .value { color: var(--cyan); }
+
+  /* Experiment flow */
+  .exp-flow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; flex-wrap: wrap; padding: 20px 0;
+  }
+  .exp-step {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px; text-align: center; min-width: 110px;
+  }
+  .exp-step .step-num { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+  .exp-step .step-name { font-size: 13px; font-weight: 600; margin: 4px 0; }
+  .exp-step .step-time { font-size: 12px; color: var(--green); font-family: 'JetBrains Mono', monospace; }
+  .exp-step.best { border-color: var(--green); background: rgba(16,185,129,0.08); }
+  .exp-arrow { color: var(--text-muted); font-size: 18px; }
+
+  /* Experiment card */
+  .exp-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin-bottom: 16px;
+  }
+  .exp-card .exp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .exp-card .exp-title { font-size: 16px; font-weight: 700; }
+  .exp-card .exp-time {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600;
+    padding: 4px 12px; border-radius: 6px;
+  }
+  .exp-time.good { background: rgba(16,185,129,0.15); color: var(--green); }
+  .exp-time.bad { background: rgba(239,68,68,0.15); color: var(--red); }
+  .exp-time.mid { background: rgba(245,158,11,0.15); color: var(--orange); }
+  .exp-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px; }
+  .exp-card p:last-child { margin-bottom: 0; }
+  .exp-card strong { color: var(--text); }
+
+  .formula {
+    background: rgba(0,0,0,0.2); border-left: 3px solid var(--cyan);
+    padding: 12px 16px; border-radius: 0 6px 6px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    margin: 12px 0; color: var(--text); line-height: 1.8;
+  }
+
+  /* Chart */
+  .chart-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 24px; margin-bottom: 16px;
+  }
+  .chart-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .chart-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+  .chart-canvas { width: 100%; height: 320px; }
+
+  /* Table */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(16,185,129,0.08); color: var(--green);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary);
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .best { color: var(--green); font-weight: 600; }
+
+  /* Insight */
+  .insight-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,182,212,0.08));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .insight-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--green); }
+  .insight-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .insight-box p:last-child { margin-bottom: 0; }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .metrics-grid { grid-template-columns: 1fr; }
+    .exp-flow { flex-direction: column; }
+    .exp-arrow { transform: rotate(90deg); }
+    .header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">EXPERIMENT REPORT · DAY 1</div>
+    <h1>H1 人形机器人 <span class="accent">站立平衡控制</span>实验报告</h1>
+    <div class="meta">MuJoCo · Unitree H1 · Joint PD → Hip-Ankle Balance</div>
+    <p>基于 MuJoCo Menagerie Unitree H1 模型，从关节 PD 基线出发，逐步引入 Torso Pitch Feedback、COM Feedback 和 Hip-Ankle 协同平衡控制，分析机器人失稳原因并提升站立稳定性。</p>
+  </div>
+</header>
+
+<!-- 01 关键指标 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> 实验关键指标</div>
+    <div class="metrics-grid">
+      <div class="metric-card baseline">
+        <div class="value">8.11 s</div>
+        <div class="label">Baseline 站立时间</div>
+      </div>
+      <div class="metric-card improvement">
+        <div class="value">12.27 s</div>
+        <div class="label">最佳站立时间（Hip-Ankle）</div>
+      </div>
+      <div class="metric-card">
+        <div class="value">+51%</div>
+        <div class="label">相比 Baseline 提升</div>
+      </div>
+    </div>
+
+    <div class="exp-flow">
+      <div class="exp-step">
+        <div class="step-num">EXP 0</div>
+        <div class="step-name">Joint PD Baseline</div>
+        <div class="step-time">8.11 s</div>
+      </div>
+      <div class="exp-arrow">→</div>
+      <div class="exp-step">
+        <div class="step-num">EXP 1</div>
+        <div class="step-name">Torso Feedback</div>
+        <div class="step-time">姿态修正</div>
+      </div>
+      <div class="exp-arrow">→</div>
+      <div class="exp-step">
+        <div class="step-num">EXP 2-3</div>
+        <div class="step-name">COM Feedback</div>
+        <div class="step-time">~7.8 s</div>
+      </div>
+      <div class="exp-arrow">→</div>
+      <div class="exp-step best">
+        <div class="step-num">EXP 4</div>
+        <div class="step-name">Hip-Ankle Balance</div>
+        <div class="step-time">12.27 s</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 实验环境 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> 实验环境</div>
+    <div class="exp-card">
+      <p><strong>仿真平台：</strong>MuJoCo · Google DeepMind MuJoCo Menagerie · Unitree H1</p>
+      <p><strong>控制方式：</strong>关节空间 PD 力矩控制</p>
+      <div class="formula">τ = Kp · (q_target - q) - Kd · q̇</div>
+      <p><strong>执行器数量：</strong>19 个电机 torque 控制输入</p>
+      <p><strong>目标姿态：</strong>hip pitch = 0.145 rad，knee = 0.3 rad，ankle = -0.23 rad</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 实验结果对比 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> 实验结果对比</div>
+
+    <div class="chart-box">
+      <div class="chart-title">各实验站立时间对比</div>
+      <div class="chart-desc">从 Joint PD 基线到 Hip-Ankle 协同平衡控制，站立时间提升约 51%</div>
+      <div id="chart-standing" class="chart-canvas"></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Baseline COM 漂移过程</div>
+      <div class="chart-desc">机器人约 5 秒后 COM 持续向前移动，最终超过支撑区域导致前倒</div>
+      <div id="chart-com" class="chart-canvas"></div>
+    </div>
+
+    <div class="chart-box" style="margin-top: 16px;">
+      <div class="chart-title">详细实验数据</div>
+      <div style="overflow-x: auto;">
+      <table class="data-table">
+        <colgroup>
+          <col style="width: 30%">
+          <col style="width: 20%">
+          <col style="width: 25%">
+          <col style="width: 25%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>实验</th>
+            <th>站立时间 (s)</th>
+            <th>最大躯干 pitch (deg)</th>
+            <th>结论</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Exp 0: Joint PD Baseline</td>
+            <td>8.11</td>
+            <td>45.03</td>
+            <td>5s 后 COM 前漂移，前倒</td>
+          </tr>
+          <tr>
+            <td>Exp 1: Torso Pitch Feedback</td>
+            <td>—</td>
+            <td>—</td>
+            <td>可影响倒下方向和速度</td>
+          </tr>
+          <tr>
+            <td>Exp 2: COM P Feedback</td>
+            <td>7.79</td>
+            <td>—</td>
+            <td>方向正确但恢复力不足</td>
+          </tr>
+          <tr>
+            <td>Exp 3: COM PD Feedback</td>
+            <td>7.89</td>
+            <td>—</td>
+            <td>速度反馈无明显提升</td>
+          </tr>
+          <tr>
+            <td>Exp 4: Hip-Ankle Balance</td>
+            <td class="best">12.27</td>
+            <td>45.06</td>
+            <td class="best">显著提升，+51%</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 关节力矩方向辨识 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> 关节力矩方向辨识</div>
+    <div class="exp-card">
+      <p><strong>Hip 测试：</strong>torque[2]+10、torque[7]+10 → 向后倒；负方向增加站立时间</p>
+      <p><strong>Ankle 测试：</strong>torque[4]-10 → 向前倒（3.69s）；torque[4]+10 → 向后倒（3.22s）</p>
+      <div class="formula">
+        结论：Ankle torque 正方向 → 产生向后旋转作用<br>
+        Hip 负方向 → 有助于向前恢复平衡
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Hip-Ankle Balance Controller -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> 最优控制器：Hip-Ankle COM Balance</div>
+    <div class="exp-card">
+      <p><strong>控制律：</strong>基于 COM 误差和 COM 速度的 PD 控制，同时作用于 Hip 和 Ankle</p>
+      <div class="formula">
+        balance_torque = -Kp_com · com_error - Kd_com · com_velocity<br><br>
+        Hip: &nbsp;&nbsp;&nbsp;&nbsp;torque[2] += balance_torque<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;torque[7] += balance_torque<br><br>
+        Ankle: torque[4] -= 0.4 · balance_torque<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;torque[9] -= 0.4 · balance_torque
+      </div>
+      <p><strong>参数：</strong>Kp_com = 10，Kd_com = 5，ankle ratio = 0.4</p>
+      <p><strong>结果：</strong>Standing time = <strong style="color: var(--green);">12.27 s</strong>，相比 Baseline 8.11s 提升约 51%</p>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">参数敏感性分析</div>
+      <div class="chart-desc">Kd_com 和 ankle ratio 存在最佳范围，过大反而引入扰动</div>
+      <div id="chart-params" class="chart-canvas"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 实验总结 -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> 实验总结与下一步</div>
+    <div class="insight-box">
+      <h3>主要结论</h3>
+      <p><strong>1.</strong> Joint PD 只能维持短时间站立，无法抵抗 COM 漂移</p>
+      <p><strong>2.</strong> Torso feedback 改善姿态但不能解决 COM 漂移的根本问题</p>
+      <p><strong>3.</strong> COM feedback 提供整体平衡信息，但单独作用于 Hip 恢复力不足</p>
+      <p><strong>4.</strong> Hip-Ankle 协同控制显著提升稳定性，是最有效的方案</p>
+      <p><strong>5.</strong> 最优站立时间达到 12.27 秒，相比基线提升 51%</p>
+    </div>
+
+    <div class="exp-card" style="margin-top: 16px;">
+      <p style="font-weight: 600; color: var(--orange); margin-bottom: 12px;">下一阶段计划</p>
+      <p>○ Capture Point / ICP 控制</p>
+      <p>○ 外部扰动恢复测试</p>
+      <p>○ 三维 COM 控制（前后 + 左右）</p>
+      <p>○ MPC 模型预测控制</p>
+      <p>○ Whole Body Control 全身控制</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    H1 Balance Control Experiment Report · Day 1 · MuJoCo Simulation
+  </div>
+</footer>
+
+<script>
+  // Standing time comparison
+  var chart1 = echarts.init(document.getElementById('chart-standing'));
+  chart1.setOption({
+    tooltip: { trigger: 'axis', backgroundColor: '#1E293B', borderColor: '#334155', textStyle: { color: '#F1F5F9' } },
+    grid: { left: 60, right: 30, top: 30, bottom: 50 },
+    xAxis: {
+      type: 'category',
+      data: ['Joint PD\nBaseline', 'COM P\nFeedback', 'COM PD\nFeedback', 'Hip-Ankle\nBalance'],
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94A3B8', fontSize: 11, interval: 0 }
+    },
+    yAxis: {
+      type: 'value', name: 'Standing Time (s)',
+      nameTextStyle: { color: '#94A3B8' },
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#1E293B' } },
+      axisLabel: { color: '#94A3B8' }
+    },
+    series: [{
+      type: 'bar',
+      data: [
+        { value: 8.11, itemStyle: { color: '#EF4444' } },
+        { value: 7.79, itemStyle: { color: '#F59E0B' } },
+        { value: 7.89, itemStyle: { color: '#F59E0B' } },
+        { value: 12.27, itemStyle: { color: '#10B981' } }
+      ],
+      barWidth: '45%',
+      label: { show: true, position: 'top', color: '#F1F5F9', fontWeight: 'bold', formatter: '{c}s' }
+    }]
+  });
+
+  // COM drift
+  var chart2 = echarts.init(document.getElementById('chart-com'));
+  chart2.setOption({
+    tooltip: { trigger: 'axis', backgroundColor: '#1E293B', borderColor: '#334155', textStyle: { color: '#F1F5F9' } },
+    grid: { left: 60, right: 30, top: 30, bottom: 40 },
+    xAxis: {
+      type: 'category',
+      data: ['1s', '2s', '3s', '4s', '5s', '6s', '7s', '8s'],
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94A3B8' }
+    },
+    yAxis: {
+      type: 'value', name: 'COM Offset (m)',
+      nameTextStyle: { color: '#94A3B8' },
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#1E293B' } },
+      axisLabel: { color: '#94A3B8' }
+    },
+    series: [{
+      type: 'line',
+      data: [0.017, 0.025, 0.032, 0.036, 0.040, 0.089, 0.213, 0.563],
+      smooth: true,
+      lineStyle: { color: '#EF4444', width: 3 },
+      itemStyle: { color: '#EF4444' },
+      areaStyle: { color: 'rgba(239,68,68,0.1)' },
+      markLine: {
+        data: [{ yAxis: 0.1, name: '支撑边界' }],
+        lineStyle: { color: '#F59E0B', type: 'dashed' },
+        label: { color: '#F59E0B', formatter: '支撑区域边界 ~0.1m' }
+      }
+    }]
+  });
+
+  // Parameter sensitivity
+  var chart3 = echarts.init(document.getElementById('chart-params'));
+  chart3.setOption({
+    tooltip: { trigger: 'axis', backgroundColor: '#1E293B', borderColor: '#334155', textStyle: { color: '#F1F5F9' } },
+    legend: { data: ['Standing Time (s)'], textStyle: { color: '#94A3B8' }, top: 0 },
+    grid: { left: 60, right: 30, top: 40, bottom: 40 },
+    xAxis: {
+      type: 'category',
+      data: ['Kd_com=5\n(best)', 'Kd_com=10', 'Ankle ratio=0.4\n(best)', 'Ankle ratio=0.6'],
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94A3B8', fontSize: 11, interval: 0 }
+    },
+    yAxis: {
+      type: 'value', name: 'Standing Time (s)',
+      nameTextStyle: { color: '#94A3B8' },
+      axisLine: { show: false },
+      splitLine: { lineStyle: { color: '#1E293B' } },
+      axisLabel: { color: '#94A3B8' }
+    },
+    series: [{
+      type: 'bar',
+      data: [
+        { value: 12.27, itemStyle: { color: '#10B981' } },
+        { value: 8.92, itemStyle: { color: '#F59E0B' } },
+        { value: 12.27, itemStyle: { color: '#10B981' } },
+        { value: 8.25, itemStyle: { color: '#F59E0B' } }
+      ],
+      barWidth: '40%',
+      label: { show: true, position: 'top', color: '#F1F5F9', fontSize: 12, formatter: '{c}s' }
+    }]
+  });
+
+  window.addEventListener('resize', function() {
+    chart1.resize(); chart2.resize(); chart3.resize();
+  });
+</script>
+
+</body>
+</html>
