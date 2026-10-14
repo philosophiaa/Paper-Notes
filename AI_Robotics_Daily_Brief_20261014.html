@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Robotics Daily Brief · 2026-10-14</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.8; font-size: 15px;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  .header { padding: 48px 0 32px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); border: 1px solid rgba(6,182,212,0.3);
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 28px; font-weight: 900; margin-bottom: 8px; }
+  .header .date { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; }
+  .header .theme { font-size: 15px; color: var(--text-secondary); line-height: 1.8; }
+
+  /* Section */
+  .section { padding: 32px 0; border-bottom: 1px solid var(--border); }
+  .section-h2 {
+    font-size: 20px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-h2 .pct {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    background: rgba(6,182,212,0.1); color: var(--cyan);
+    padding: 2px 10px; border-radius: 4px;
+  }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 20px;
+  }
+  .highlight-box .intro { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+  .highlight-item {
+    padding: 12px 0; border-bottom: 1px solid var(--border);
+    font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .highlight-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .highlight-item .num { color: var(--cyan); font-weight: 700; margin-right: 6px; }
+  .highlight-item strong { color: var(--text); }
+
+  /* Paper card */
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin-bottom: 16px;
+  }
+  .paper-card .paper-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--text-muted); margin-bottom: 6px;
+  }
+  .paper-card h3 {
+    font-size: 16px; font-weight: 700; margin-bottom: 10px; line-height: 1.5;
+  }
+  .paper-card .meta {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .paper-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .paper-card p:last-child { margin-bottom: 0; }
+
+  .rating {
+    display: inline-block; font-size: 13px; margin: 8px 0;
+    color: var(--orange); letter-spacing: 2px;
+  }
+  .insight {
+    background: rgba(6,182,212,0.06); border-left: 3px solid var(--cyan);
+    padding: 12px 16px; border-radius: 0 6px 6px 0; margin-top: 12px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .insight strong { color: var(--cyan); }
+
+  /* Conclusion */
+  .conclusion-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(6,182,212,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .conclusion-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 12px; }
+  .conclusion-box p:last-child { margin-bottom: 0; }
+  .priority {
+    margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 14px;
+  }
+  .priority strong { color: var(--orange); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 22px; }
+    .section-h2 { font-size: 17px; }
+    .paper-card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">DAILY BRIEF</div>
+    <h1>🤖 AI &amp; Robotics Daily Brief</h1>
+    <div class="date">2026年10月14日 · 星期三</div>
+    <p class="theme">
+      今日主题：人形机器人全身控制、具身智能新方法与前沿 AI 模型<br>
+      本期覆盖最近24小时的重要新闻，并补充过去7—10天值得关注的科研论文。内容按照机器人与具身智能60%、AI技术30%、工业动态10%的比例组织。
+    </p>
+  </div>
+</header>
+
+<!-- 今日重点速览 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">今日重点速览</h2>
+    <div class="highlight-box">
+      <p class="intro">今天最值得关注的三个信号是：</p>
+      <div class="highlight-item">
+        <span class="num">①</span>
+        <strong>人形机器人研究正在从单纯运动控制转向全身移动操作（Loco-Manipulation）。</strong>
+        新论文越来越关注机器人如何在搬运物体、受到推力和发生接触时保持稳定。
+      </div>
+      <div class="highlight-item">
+        <span class="num">②</span>
+        <strong>AI大模型开始更深入地参与机器人开发流程。</strong>
+        10月13日发布的 Gemini 4 Argon 展示了从人类动作视频生成仿真程序、再迁移到实体机器人的能力。
+      </div>
+      <div class="highlight-item">
+        <span class="num">③</span>
+        <strong>具身智能的控制架构仍在分化。</strong>
+        强化学习、模型预测控制、VLA和基于显式状态的代码策略正在探索不同的技术路线。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 一、机器人与具身智能 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">一、机器人与具身智能 <span class="pct">60%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">PAPER 01</div>
+      <h3>Workhorse：从人类演示学习复杂全身操作</h3>
+      <div class="meta">论文发布时间：2026年10月6日 · arXiv</div>
+      <p><strong>论文：</strong>Workhorse: Learning Robust Whole-Body Humanoid Loco-Manipulation from Human Data</p>
+      <p>这项研究来自加州大学伯克利分校，使用视觉规划器预测躯干、双手腕和双脚的目标位姿，再由强化学习训练的全身控制器完成动作。</p>
+      <p>研究者在真实 Unitree G1 上展示了箱子分拣、接球和行李箱操作等任务。仿真中的箱子分拣成功率为77%，加入40 N·s推力扰动后为64%。</p>
+      <div class="rating">科研价值：★★★★★</div>
+      <div class="insight">
+        <strong>为什么值得关注：</strong>它将高层动作规划和底层全身控制分开，使控制器能够专注于稳定跟踪任务空间目标。<br>
+        <strong>对当前实验的启发：</strong>可以先完成关节 PD 跟踪，再逐步研究任务空间跟踪、全身协调和扰动恢复。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">PAPER 02</div>
+      <h3>HULK：面向重物操作的全身控制</h3>
+      <div class="meta">论文发布时间：2026年10月6日 · arXiv</div>
+      <p><strong>论文：</strong>HULK: Learning Whole-Body Forceful Loco-Manipulation for Humanoids</p>
+      <p>这项工作研究一个非常实际的问题：机器人搬运重物时，负载会改变重心位置，普通运动控制器可能无法同时维持姿态稳定和完成操作。</p>
+      <p>研究团队将模型预测控制（MPC）与强化学习结合，并在训练中引入控制障碍函数（CBF），改善机器人在持续负载下的平衡能力。</p>
+      <p>论文报告，在仿真测试中，相关方法将发散运动分量（DCM）的总体偏移幅度降低了35.7%，并在 Unitree G1 上进行了验证。</p>
+      <div class="rating">科研价值：★★★★★</div>
+      <div class="insight">
+        <strong>与控制理论的联系：</strong>尤其涉及重心、接触力、平衡约束和模型预测控制。<br>
+        <strong>未来学习目标：</strong>先实现站立 PD 控制，再加入外部扰动，最后学习基于动力学模型的平衡控制。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">PAPER 03</div>
+      <h3>Continual Humanoid Motion Learning：让机器人持续学习新动作</h3>
+      <div class="meta">论文发布时间：2026年10月3日 · arXiv · 已开源</div>
+      <p><strong>论文：</strong>Continual Humanoid Motion Learning</p>
+      <p>传统机器人运动策略通常在训练完成后固定参数。当机器人学习新技能时，可能遗忘之前掌握的动作。</p>
+      <p>这篇论文提出 Similarity-guided LoRA-PNN，通过渐进式神经网络和低秩适配减少灾难性遗忘。</p>
+      <p>论文报告，相比部分基线方法，最多节省94.5%的可训练参数和40.8%的训练时间，并在真实 Unitree G1 上部署。作者也提供了代码链接。</p>
+      <div class="rating">科研价值：★★★★☆</div>
+      <div class="insight">
+        <strong>长期意义：</strong>人形机器人不可能为每一个动作独立训练一套完整控制器。如何在保留旧技能的同时持续学习，是通用机器人控制的重要研究问题。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">PAPER 04</div>
+      <h3>COAP：机器人控制是否一定需要运行时大模型？</h3>
+      <div class="meta">论文发布时间：2026年10月8日 · arXiv</div>
+      <p><strong>论文：</strong>Embodied Turing Machines: Stateful Code for Robot Recursive Self-Improvement</p>
+      <p>这篇论文提出 Code-Only-as-Policy（COAP）。与直接让 VLA 输出动作不同，该方法利用代码维护机器人和环境状态，并根据显式状态执行决策。</p>
+      <p>作者报告，在42项双手操作任务上取得70.24%的成功率，且测试时不需要持续调用大模型。</p>
+      <div class="rating">科研价值：★★★★☆</div>
+      <div class="insight">
+        <strong>技术路线提示：</strong>未来具身智能可能不只有端到端 VLA 一条路线。显式状态、可解释控制逻辑和学习型策略可能长期共存。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 二、AI前沿技术 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">二、AI前沿技术 <span class="pct" style="background: rgba(139,92,246,0.1); color: var(--purple);">30%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 05</div>
+      <h3>Gemini 4 Argon 发布：展示 Video-to-Sim-to-Real 能力</h3>
+      <div class="meta">发布时间：2026年10月13日 · Google DeepMind</div>
+      <p>Google DeepMind 在新模型发布中展示了面向机器人开发的应用。官方报告，Argon 在 Embodied Reasoning（ERQA）测试中取得87%的成绩。</p>
+      <p>更值得机器人研究者关注的是一个实验：模型观察人类投掷沙包的视频，推断空间关系与身体动作，生成相应的仿真代码，再将技能迁移至 Apollo 人形机器人。官方展示中，机器人连续完成了七次投掷命中。</p>
+      <div class="insight">
+        <strong>技术路线：</strong>人类视频 → 空间理解 → 仿真生成 → 动作规划 → 实体机器人。<br>
+        <strong>注意：</strong>这些结果来自发布方的演示，不能直接视为模型已具备普遍可靠的机器人控制能力，但它展示了大模型辅助机器人开发的潜在价值。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 06</div>
+      <h3>Muse Wonder：Agent向长期任务执行发展</h3>
+      <div class="meta">发布时间：2026年10月12日 · Meta</div>
+      <p>Meta 新模型重点增强了复杂任务执行、代码能力、长期记忆和任务持续性。</p>
+      <p>其中两个关键设计是 <strong>Active Memory</strong> 和 <strong>Active Focus</strong>：前者帮助系统保留相关上下文，后者帮助智能体在任务遇到障碍时继续尝试、恢复并完成目标。</p>
+      <p>Muse Wonder 已面向开发者提供 API 访问，Muse Wonder Full 则首先面向 Muse Code 订阅用户开放。</p>
+      <div class="insight">
+        <strong>对机器人领域的启发：</strong>Agent 的长期规划能力可能适合机器人高层任务管理，但高层决策与底层实时控制之间仍需要可靠的接口和安全约束。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 三、工业动态 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">三、工业动态 <span class="pct" style="background: rgba(16,185,129,0.1); color: var(--green);">10%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">INDUSTRY 07</div>
+      <h3>Mind Robotics 加强工业机器人团队</h3>
+      <div class="meta">新闻发布时间：2026年10月13日 · The Verge</div>
+      <p>Mind Robotics 宣布任命 Doug Field 为总裁。该公司与电动车制造商 Rivian 合作，计划在实际工厂环境中开发和测试通用机器人。</p>
+      <p>目前公司尚未公开展示机器人，也未确认是否采用人形结构。</p>
+      <div class="insight">
+        <strong>行业观察：</strong>工业机器人竞争不仅取决于算法性能，还取决于真实场景的数据采集、系统可靠性、维护成本和部署能力。物理交互数据仍是具身智能发展的关键资源。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 今日结论 -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <h2 class="section-h2">今日结论</h2>
+    <div class="conclusion-box">
+      <p>过去一周的研究呈现出一个值得持续观察的方向：人形机器人正在从动作执行走向更复杂的全身物理交互，而 AI 模型正在逐渐参与规划、仿真生成和技能学习。</p>
+      <p>但稳定控制、接触动力学、真实环境鲁棒性和 Sim-to-Real 仍是需要持续解决的问题。</p>
+      <p>因此，当前学习 H1 PD Controller 并不是与前沿研究脱节。它恰好是理解更复杂全身控制方法的基础。</p>
+      <div class="priority">
+        <strong>今日阅读优先级：</strong>HULK → Workhorse → Gemini 4 Argon 机器人应用
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    AI &amp; Robotics Daily Brief · 2026-10-14 · 机器人与具身智能60% · AI技术30% · 工业动态10%
+  </div>
+</footer>
+
+</body>
+</html>
