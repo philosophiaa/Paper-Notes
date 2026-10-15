@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Robotics Daily Brief · 2026-10-15</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  .header { padding: 52px 0 36px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+  .header h1 .accent { color: var(--cyan); }
+  .header .date { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
+  .header p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-h2 {
+    font-size: 19px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pct {
+    font-size: 12px; font-family: 'JetBrains Mono', monospace;
+    background: rgba(6,182,212,0.1); color: var(--cyan);
+    padding: 3px 10px; border-radius: 4px; font-weight: 500;
+  }
+  .section-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 22px; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(6,182,212,0.2);
+    border-radius: 12px; padding: 24px; margin-bottom: 8px;
+  }
+  .highlight-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--cyan); }
+  .highlight-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .highlight-item:last-child { margin-bottom: 0; }
+  .highlight-item .num {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--cyan);
+    flex-shrink: 0; min-width: 24px;
+  }
+
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin-bottom: 16px;
+  }
+  .paper-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .paper-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; line-height: 1.5; }
+  .meta { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; }
+  .paper-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px; }
+  .paper-card p:last-child { margin-bottom: 0; }
+  .paper-card strong { color: var(--text); }
+
+  .insight {
+    margin-top: 14px; padding: 14px 16px;
+    background: rgba(0,0,0,0.2); border-radius: 8px;
+    border-left: 3px solid var(--purple);
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .insight strong { color: var(--purple); }
+
+  .rating { margin-top: 12px; font-size: 13px; color: var(--orange); }
+
+  .conclusion-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,182,212,0.08));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .conclusion-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .conclusion-box p:last-child { margin-bottom: 0; }
+  .conclusion-box strong { color: var(--text); }
+
+  .priority {
+    margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
+    font-size: 14px; color: var(--text);
+  }
+  .priority strong { color: var(--green); }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 21px; }
+    .section-h2 { font-size: 17px; }
+    .paper-card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">DAILY BRIEF</div>
+    <h1>🤖 AI &amp; Robotics <span class="accent">Daily Brief</span></h1>
+    <div class="date">2026年10月15日 · 星期四</div>
+    <p>本期重点：机器人与具身智能 60% ｜ AI 基础模型与相关技术 30% ｜ 工业动态 10%<br>信息覆盖以 10 月 12—15 日的新动态为主，补充近期重要论文、开源项目及行业数据。优先采用企业官方公告、论文原文和权威媒体报道。</p>
+  </div>
+</header>
+
+<!-- 今日核心观察 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">今日核心观察</h2>
+    <div class="highlight-box">
+      <p style="margin-bottom: 14px;">本期最值得关注的变化是：具身智能正在从单纯追求模型能力，转向构建<strong>真实世界数据、物理推理、触觉反馈和实时控制</strong>相结合的完整系统。</p>
+      <div class="highlight-item">
+        <span class="num">①</span>
+        <span><strong>禾赛推出 Kosmo 三维世界数据平台</strong>，切入具身智能数据基础设施。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">②</span>
+        <span><strong>Google Gemini 4 Argon 展示 Video-to-Sim-to-Real</strong> 机器人技能生成能力。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">③</span>
+        <span><strong>机器人学习研究持续探索利用人类视频预训练</strong>，再通过强化学习提升真实机器人任务成功率。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 一、机器人与具身智能 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">一、机器人与具身智能 <span class="pct">60%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 01</div>
+      <h3>禾赛发布 Kosmo，布局 Physical AI 数据基础设施</h3>
+      <div class="meta">发布时间：2026年10月14日 · 重要性：★★★★★</div>
+      <p>Hesai 正式推出 Kosmo 3D World Data Engine，由 Kosmo One 空间相机和 Kosmo World 云平台组成。</p>
+      <p>系统将激光雷达、视觉信息与三维重建结合，用于生成高保真真实环境数据，支持机器人训练、世界模型开发和数字空间构建。</p>
+      <p>公司同时宣布与具身智能企业建立合作关系。<a href="https://www.hesaitech.com/9974-2/?utm_source=chatgpt.com" target="_blank">Hesai</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>真实世界数据采集正在成为具身智能产业链中的独立基础设施。高质量三维数据有望改善仿真场景构建和 Sim-to-Real 训练，但其实际价值仍取决于数据精度、采集成本和训练效果。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 02</div>
+      <h3>Gemini 4 Argon 展示机器人 Video-to-Sim-to-Real 能力</h3>
+      <div class="meta">发布时间：2026年10月13日 · 重要性：★★★★★</div>
+      <p>Google 发布 Gemini 4 Argon 的最新能力介绍。在机器人研究中，Google 展示了以下流程：</p>
+      <p style="font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(0,0,0,0.2); padding: 12px 16px; border-radius: 6px;">人类操作视频 → 空间理解 → 自动生成仿真代码 → 机器人技能执行</p>
+      <p>根据官方披露，模型通过观察人类投掷沙包的视频，推断环境和运动要求，生成仿真代码，并将技能迁移至 Apptronik Apollo 人形机器人。</p>
+      <p>Apollo 在真实测试中连续完成七次投掷。Google 同时报告，Argon 在 ERQA 具身推理基准上达到 87%。这些结果目前主要来自官方测试。<a href="https://blog.google/intl/en-in/products/introducing-gemini-4-argon/?utm_source=chatgpt.com" target="_blank">blog.google</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>这项进展值得关注的不是投掷任务本身，而是大模型可能承担机器人训练流程中部分原本需要人工完成的仿真建模工作。未来，视觉语言模型与仿真平台的结合可能降低新技能开发成本。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">PAPER 03</div>
+      <h3>LAPT-Scale 利用人类视频训练机器人策略</h3>
+      <div class="meta">论文发布日期：2026年10月9日 · 重要性：★★★★★</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.13732" target="_blank">LAPT-Scale: Scaling Embodied Policies with Latent Action Pre-Training on Human Videos</a></p>
+      <p>研究提出通过 Latent Action Model 从人类第一视角视频中学习隐式动作表示，再将这些表示用于 VLA 策略预训练。</p>
+      <p>研究使用约 23,300 小时第一视角视频。在论文报告的实验设置中，当标注人类视频规模从 1,000 小时扩大到 5,000 小时，真实机器人任务成功率从 63.3% 提高至 85.0%。</p>
+      <p>论文已被 CoRL 2026 接收。<a href="https://arxiv.org/abs/2610.13732" target="_blank">arXiv</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>机器人示范数据昂贵，而人类视频相对容易规模化采集。利用没有机器人动作标签的视频进行预训练，可能成为扩展通用机器人策略的重要路线。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">PAPER 04</div>
+      <h3>Robot Learning：强化学习改善 VLA 实时控制</h3>
+      <div class="meta">研究发布日期：2026年9月16日 · 近期重点论文回顾</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2609.18207" target="_blank">Reinforcement Learning for Real-Time Vision-Language-Action Policies</a></p>
+      <p>研究提出 Real-Time EXPO-FT，将大型 VLA 模型的动作生成与轻量级实时动作修正策略分离。</p>
+      <p>大型模型负责生成动作序列，轻量级策略根据最新观测快速修正动作。</p>
+      <p>在四项真实动态操作任务中，论文报告平均任务表现从 42% 提升至 97%，在线机器人数据采集时间限制为 10 分钟。<a href="https://arxiv.org/abs/2609.18207" target="_blank">arXiv</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>大型 VLA 模型推理延迟较高，难以直接承担全部高频控制任务。大模型生成动作、轻量级策略执行快速反馈的分层结构，可能成为机器人实时控制的重要方案。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 05</div>
+      <h3>RoboParty 展示开源人形机器人 RP1</h3>
+      <div class="meta">近期动态：IROS 2026 · 重要性：★★★★☆</div>
+      <p>RoboParty 在 IROS 2026 展示 RP1（ROBOTO 01）人形机器人。</p>
+      <p>现场展示包括外部推搡、踢击扰动后的平衡恢复，以及倒地起身。</p>
+      <p>该项目强调软硬件开放、模块化关节设计和开发者生态。官方已经展示 RP1 及相关技术文档，但部分后续开放计划仍在推进中。<a href="https://www.prnewswire.com/news-releases/roboparty-unveils-rp1-a-high-performance-full-stack-open-source-humanoid-robot-at-iros-302897655.html?utm_source=chatgpt.com" target="_blank">PR Newswire</a></p>
+      <p><strong>项目：</strong><a href="https://roboparty.com/" target="_blank">RoboParty 官方网站</a></p>
+      <p><strong>开源仓库：</strong><a href="https://github.com/Roboparty/roboto_origin?utm_source=chatgpt.com" target="_blank">ROBOTO Origin GitHub</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>开源人形机器人平台的价值不仅在硬件成本，还在于是否提供完整动力学模型、仿真环境、运动控制代码和可复现训练流程。相关资源的开放程度将决定其研究价值。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 06</div>
+      <h3>Sharpa 推进触觉感知与灵巧操作一体化</h3>
+      <div class="meta">近期动态：IROS 2026 · 重要性：★★★★☆</div>
+      <p>Sharpa 展示 D01 机器人、W02 灵巧手和 AE01 数据手套。</p>
+      <p>其中 D01 集成七自由度机械臂、灵巧手和全身电子皮肤，支持触觉反馈与遥操作数据采集。</p>
+      <p>其技术体系还包括视觉、触觉、语言和动作联合建模的 CraftNet。<a href="https://www.sharpa.com/?utm_source=chatgpt.com" target="_blank">Sharpa</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>视觉信息能够帮助机器人识别物体，但接触操作还需要感知压力、滑移和接触状态。触觉反馈与 VLA 模型融合，有望改善插接、抓握和工具操作等任务的可靠性。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 二、AI 基础模型与相关技术 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">二、AI 基础模型与相关技术 <span class="pct" style="background: rgba(139,92,246,0.1); color: var(--purple);">30%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 07</div>
+      <h3>Meta 发布 Muse Wonder 系列，强化 Agent 能力</h3>
+      <div class="meta">发布时间：2026年10月12日 · 重要性：★★★★★</div>
+      <p>Meta 发布 Muse Wonder 和 Muse Wonder Full 两款模型，重点面向个人及专业 Agent 任务。</p>
+      <p>新模型强调复杂任务执行、跨任务记忆和错误恢复。</p>
+      <p>其中 <strong>Active Memory</strong> 用于保留与任务相关的信息，<strong>Active Focus</strong> 则用于支持长时间任务推进、错误修正和持续执行。</p>
+      <p>Muse Wonder 已通过 Meta Model API 和 Muse Code 提供，Wonder Full 面向 Muse Code 订阅用户。<a href="https://about.fb.com/news/2026/10/introducing-muse-wonder-models/?utm_source=chatgpt.com" target="_blank">Facebook</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>Agent 模型的竞争正在从单次问答能力转向长期任务完成率、可靠性和持续执行能力。记忆管理、工具调用和错误恢复将成为重要评价维度。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 08</div>
+      <h3>Google Gemini 4 Argon 扩大开放</h3>
+      <div class="meta">发布时间：2026年10月13日 · 重要性：★★★★★</div>
+      <p>Gemini 4 Argon 已向开发者、企业及符合条件的订阅用户开放。</p>
+      <p>该模型支持文本、图像、音频和视频输入，并提供最高 100 万 token 的统一输入输出上下文窗口。</p>
+      <p>重点能力包括复杂推理、编程、多模态理解、科学研究和 Agent 工作流。</p>
+      <p>官方模型卡披露了多项基准结果，但不同模型在各基准上的表现并不一致，不宜仅根据单一排名判断综合能力。<a href="https://blog.google/intl/en-in/products/introducing-gemini-4-argon/?utm_source=chatgpt.com" target="_blank">blog.google</a> · <a href="https://deepmind.google/models/model-cards/gemini-4-argon/?utm_source=chatgpt.com" target="_blank">Model Card</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>基础模型正在同时强化推理、多模态和自主任务执行能力。这有利于构建能够理解环境、生成计划并调用外部工具的复杂 AI 系统。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">NEWS 09</div>
+      <h3>AMD 发布面向 Agent 的 Helion 基础设施</h3>
+      <div class="meta">发布时间：2026年10月12日 · 重要性：★★★★☆</div>
+      <p>AMD 发布 Helion Agentic AI Rack。</p>
+      <p>该方案支持 CPU-only 和 CPU/GPU 混合配置，并引入模型调用路由机制，用于在不同模型之间分配 Agent 工作负载。</p>
+      <p>AMD 计划于 2026 年 11 月开始提供相关系统配置。<a href="https://ir.amd.com/news-events/press-releases/detail/1301/introducing-amd-helion-agentic-ai-compute-at-rack-scale?utm_source=chatgpt.com" target="_blank">Advanced Micro Devices, Inc.</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>Agent 工作负载不仅需要大模型推理，还涉及工具执行、代码运行和任务调度。未来 AI 基础设施可能更加重视 CPU、GPU 和模型路由之间的协同，而不只是单一模型的推理速度。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 三、工业机器人与产业动态 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">三、工业机器人与产业动态 <span class="pct" style="background: rgba(16,185,129,0.1); color: var(--green);">10%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">INDUSTRY 10</div>
+      <h3>全球工业机器人运行总量达到 500 万台</h3>
+      <div class="meta">数据发布日期：2026年9月24日 · 行业背景更新</div>
+      <p>International Federation of Robotics 发布的《World Robotics 2026》数据显示：</p>
+      <p>2025 年全球工厂在役工业机器人达到约 <strong>500 万台</strong>，同比增长 9%。</p>
+      <p>全球年度新增安装量超过 <strong>60 万台</strong>，同比增长 11%。</p>
+      <p>其中，中国安装约 <strong>35.4 万台</strong>，占全球年度安装量约 59%；美国年度安装量增长约 12%，达到约 3.85 万台。<a href="https://ifr.org/ifr-press-releases/news/five-million-robots-now-operate-in-factories-globally?utm_source=chatgpt.com" target="_blank">IFR International Federation of Robotics</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>工业机器人市场仍在扩张，但传统工业机械臂与通用人形机器人处于不同的商业化阶段。具身智能技术若要实现规模化应用，需要证明其在实际生产中的任务可靠性、部署成本和投资回报。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 四、本期技术趋势判断 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">四、本期技术趋势判断</h2>
+    <div class="highlight-box">
+      <div class="highlight-item">
+        <span class="num">①</span>
+        <span><strong>机器人数据正在从示范动作扩展到多模态真实世界数据。</strong> 人类视频、三维空间信息、触觉信号和机器人交互轨迹正在被联合用于策略训练。数据质量、动作对齐和跨机器人泛化能力仍是关键问题。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">②</span>
+        <span><strong>机器人智能正在向分层架构发展。</strong> 大型视觉语言模型负责理解任务和生成高层动作，轻量级策略承担实时修正，底层控制器处理关节运动、接触约束和稳定性。这种架构有望兼顾通用性与实时性。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">③</span>
+        <span><strong>仿真与真实机器人之间的连接正在加强。</strong> 世界模型、视频生成仿真和强化学习逐渐形成互补关系，但 Sim-to-Real 的可靠性仍需要在不同任务、环境和硬件平台上验证。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 本期结论 -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <h2 class="section-h2">本期结论</h2>
+    <div class="conclusion-box">
+      <p>最值得关注的技术方向是：<strong>VLA + Robot Learning + 实时反馈控制的融合</strong>。</p>
+      <p>当前机器人领域并不缺少能够完成单次演示的系统，真正的挑战是让机器人在环境变化、接触误差和任务失败后，仍能可靠地完成工作。</p>
+      <p>本期最值得持续跟踪的三项成果分别是 <strong>Kosmo 的真实世界数据基础设施</strong>、<strong>LAPT-Scale 的人类视频预训练方法</strong>，以及 <strong>Real-Time EXPO-FT 的实时强化学习控制架构</strong>。它们分别对应机器人智能规模化发展的三个核心问题：数据从哪里来、策略如何学习、动作如何可靠执行。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    AI & Robotics Daily Brief · 2026-10-15
+  </div>
+</footer>
+
+</body>
+</html>
