@@ -1,0 +1,163 @@
+{
+  "src": "/home/user/Doubao/chats/38446065372416770/paper-notes/DynaRetarget_SBTO阅读笔记.html",
+  "url": "file:///home/user/Doubao/chats/38446065372416770/paper-notes/DynaRetarget_SBTO%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0.html",
+  "outdir": "/home/user/Doubao/chats/38446065372416770/paper-notes/_shots",
+  "include": [
+    "lint",
+    "screenshots",
+    "structure"
+  ],
+  "shots": {
+    "desktop": {
+      "revealed": 0,
+      "slices": [
+        "/home/user/Doubao/chats/38446065372416770/paper-notes/_shots/DynaRetarget_SBTO阅读笔记_desktop_p1of2.jpg",
+        "/home/user/Doubao/chats/38446065372416770/paper-notes/_shots/DynaRetarget_SBTO阅读笔记_desktop_p2of2.jpg"
+      ],
+      "sliceHint": "按顺序 Read slices 里的各分片。",
+      "truncated": false,
+      "structure": {
+        "title": "论文阅读笔记 · DynaRetarget: Dynamically-Feasible Retargeting using SBTO",
+        "firstH1": "DynaRetarget: Dynamically-Feasible Retargeting using Sampling-Based Trajectory O",
+        "viewport": {
+          "w": 1440,
+          "h": 900
+        },
+        "fullpage": {
+          "w": 1440,
+          "h": 6424
+        },
+        "counts": {
+          "section": 8,
+          "h1": 1,
+          "h2": 0,
+          "img": 0,
+          "canvas": 0,
+          "svg": 5,
+          "links": 0,
+          "buttons": 0
+        }
+      },
+      "consoleErrors": [
+        {
+          "type": "error",
+          "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED",
+          "location": "https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"
+        },
+        {
+          "type": "error",
+          "text": "echarts is not defined",
+          "location": ""
+        }
+      ],
+      "consoleWarnings": [],
+      "horizontalOverflow": [],
+      "resourceErrors": [
+        {
+          "url": "https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js",
+          "resourceType": "script",
+          "status": null,
+          "reason": "network_error"
+        }
+      ]
+    }
+  },
+  "engine": "playwright",
+  "chromiumExec": "/opt/vm/preinstall/ms-playwright/chromium-1169/chrome-linux/chrome",
+  "elapsedSec": 6.1,
+  "schemaVersion": 2,
+  "status": "fail",
+  "engineInfo": {
+    "name": "playwright",
+    "degraded": false,
+    "degradedReasons": []
+  },
+  "input": {
+    "original": "/home/user/Doubao/chats/38446065372416770/paper-notes/DynaRetarget_SBTO阅读笔记.html",
+    "resolvedPath": "/home/user/Doubao/chats/38446065372416770/paper-notes/DynaRetarget_SBTO阅读笔记.html",
+    "baseUrl": "file:///home/user/Doubao/chats/38446065372416770/paper-notes/DynaRetarget_SBTO%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0.html",
+    "protocol": "file",
+    "cwd": "/home/user/Doubao/chats/38446065372416770",
+    "mediaMode": {
+      "reducedMotion": true
+    }
+  },
+  "artifacts": {
+    "screenshots": [
+      {
+        "viewport": "desktop",
+        "tiles": [
+          "/home/user/Doubao/chats/38446065372416770/paper-notes/_shots/DynaRetarget_SBTO阅读笔记_desktop_p1of2.jpg",
+          "/home/user/Doubao/chats/38446065372416770/paper-notes/_shots/DynaRetarget_SBTO阅读笔记_desktop_p2of2.jpg"
+        ],
+        "visualCoverage": {
+          "complete": true,
+          "reason": null
+        }
+      }
+    ]
+  },
+  "summary": {
+    "blocker": 0,
+    "error": 3,
+    "warning": 0,
+    "info": 0
+  },
+  "findings": [
+    {
+      "ruleId": "consoleErrors",
+      "severity": "error",
+      "kind": "console",
+      "viewport": "desktop",
+      "selector": null,
+      "evidence": {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED",
+        "location": "https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"
+      },
+      "dedupeKey": "consoleErrors|desktop||0"
+    },
+    {
+      "ruleId": "consoleErrors",
+      "severity": "error",
+      "kind": "console",
+      "viewport": "desktop",
+      "selector": null,
+      "evidence": {
+        "type": "error",
+        "text": "echarts is not defined",
+        "location": ""
+      },
+      "dedupeKey": "consoleErrors|desktop||1"
+    },
+    {
+      "ruleId": "resourceErrors",
+      "severity": "error",
+      "kind": "network",
+      "viewport": "desktop",
+      "selector": null,
+      "evidence": {
+        "url": "https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js",
+        "resourceType": "script",
+        "status": null,
+        "reason": "network_error"
+      },
+      "dedupeKey": "resourceErrors|desktop||0"
+    }
+  ],
+  "prioritizedActions": [
+    {
+      "ruleId": "consoleErrors",
+      "severity": "error",
+      "viewport": "desktop",
+      "selector": null
+    },
+    {
+      "ruleId": "resourceErrors",
+      "severity": "error",
+      "viewport": "desktop",
+      "selector": null
+    }
+  ],
+  "reportPath": "/home/user/Doubao/chats/38446065372416770/paper-notes/_shots/report.json"
+}

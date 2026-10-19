@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语口语笔记 · Lessons 1-3: Shopping</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗣️</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--pink); border: 1px solid rgba(236,72,153,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .hero h1 .accent { color: var(--pink); }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 620px; line-height: 1.8; }
+  .hero-goal {
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2);
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; color: var(--pink);
+  }
+  .lesson-strip {
+    display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;
+  }
+  .lesson-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+    color: var(--text-secondary); background: var(--bg-card);
+  }
+  .lesson-pill b { color: var(--pink); }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--pink);
+    background: rgba(236,72,153,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+
+  /* Lesson intro band */
+  .lesson-band {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: 12px; padding: 18px 22px; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .lesson-band .tag {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 13px;
+    color: var(--pink); background: rgba(236,72,153,0.12);
+    padding: 4px 12px; border-radius: 6px; flex-shrink: 0;
+  }
+  .lesson-band p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+  .lesson-band p b { color: var(--text); }
+
+  /* Vocab cards */
+  .vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .vocab-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; border-left: 3px solid var(--pink);
+  }
+  .vocab-word {
+    font-size: 18px; font-weight: 700; color: var(--pink); margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .vocab-meaning { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+  .vocab-example {
+    font-size: 13px; color: var(--text); background: rgba(0,0,0,0.2);
+    padding: 10px 12px; border-radius: 6px; line-height: 1.6;
+  }
+  .vocab-example .cn { color: var(--text-muted); font-size: 12px; margin-top: 4px; display: block; }
+
+  /* Expressions */
+  .expr-list { display: flex; flex-direction: column; gap: 10px; }
+  .expr-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .expr-num {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(236,72,153,0.15); color: var(--pink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; margin-top: 2px;
+  }
+  .expr-en { font-size: 15px; color: var(--text); margin-bottom: 2px; }
+  .expr-cn { font-size: 13px; color: var(--text-muted); }
+
+  /* Q&A cards */
+  .qa-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; margin-bottom: 16px;
+  }
+  .qa-question {
+    font-size: 15px; font-weight: 600; color: var(--cyan); margin-bottom: 14px;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .qa-question::before { content: 'Q:'; color: var(--cyan); font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+  .qa-answer {
+    font-size: 14px; color: var(--text-secondary); line-height: 1.9;
+    padding-left: 24px; position: relative;
+  }
+  .qa-answer::before {
+    content: 'A:'; position: absolute; left: 0; top: 0;
+    color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 600;
+  }
+  .qa-answer .highlight { color: var(--pink); font-weight: 500; }
+
+  /* Sentence patterns */
+  .patterns-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .pattern-chip {
+    background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 8px; padding: 14px 16px; font-size: 14px;
+    color: var(--purple); font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+  }
+  .pattern-chip .fill {
+    background: rgba(139,92,246,0.2); padding: 1px 6px; border-radius: 4px;
+    color: var(--text);
+  }
+
+  /* Small talk blocks */
+  .st-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .st-card h4 {
+    font-size: 14px; font-weight: 700; color: var(--cyan);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .st-card h4::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan); flex-shrink: 0;
+  }
+  .st-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 8px; }
+  .st-card p:last-child { margin-bottom: 0; }
+  .st-card .en { color: var(--text); }
+  .st-card .cn { color: var(--text-muted); font-size: 13px; }
+  .st-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .st-chip {
+    background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; color: var(--text-secondary);
+  }
+  .st-chip .cn { color: var(--text-muted); }
+
+  /* Speaking notes */
+  .notes-box {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .notes-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--pink); }
+  .notes-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .notes-box p:last-child { margin-bottom: 0; }
+  .structure-flow {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    flex-wrap: wrap; margin: 16px 0;
+  }
+  .structure-flow .step {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(236,72,153,0.3);
+    border-radius: 6px; padding: 6px 14px; font-size: 13px; color: var(--pink);
+  }
+  .structure-flow .step .cn { color: var(--text-muted); font-size: 12px; display: block; }
+  .structure-flow .arrow { color: var(--text-muted); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .vocab-grid, .patterns-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+    .lesson-band { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">ENGLISH SPEAKING NOTEBOOK · LESSONS 1-3</div>
+    <h1>Shopping <span class="accent">购物英语</span> · 讨价还价 / 结账 / 退货退款</h1>
+    <p>German PhD Survival English — 德国博士生存英语：三个购物场景完整通关，构建个人答案库，附课前寒暄与退税词汇。</p>
+    <div class="hero-goal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      目标：德国博士生存英语 · 敢开口、能表达、有自己的答案
+    </div>
+    <div class="lesson-strip">
+      <div class="lesson-pill"><b>Lesson 1</b> · Bargaining</div>
+      <div class="lesson-pill"><b>Lesson 2</b> · Checking Out</div>
+      <div class="lesson-pill"><b>Lesson 3</b> · Return &amp; Refund</div>
+      <div class="lesson-pill">Small Talk</div>
+      <div class="lesson-pill">Tax Refund</div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 Lesson 1: Bargaining -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> Lesson 1 · Bargaining 讨价还价</div>
+
+    <div class="lesson-band">
+      <span class="tag">LESSON 1</span>
+      <p><b>场景：</b>学会在购物中讨价还价，说出自己的立场，并完成个人答案库。</p>
+    </div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">核心词汇 Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-word">bargain</div>
+        <div class="vocab-meaning">a good deal / a transaction — 划算的交易；成交</div>
+        <div class="vocab-example">
+          "It's a bargain."
+          <span class="cn">很划算 / 成交</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">set somebody back</div>
+        <div class="vocab-meaning">cost somebody a certain amount — 花了某人多少钱</div>
+        <div class="vocab-example">
+          "The phone set me back a lot of money."
+          <span class="cn">这个手机花了我很多钱</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">make an exception</div>
+        <div class="vocab-meaning">allow something different from the usual rule — 破例</div>
+        <div class="vocab-example">
+          "Could you make an exception for me?"
+          <span class="cn">可以为我破例吗？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">windfall</div>
+        <div class="vocab-meaning">unexpected money — 意外之财</div>
+        <div class="vocab-example">
+          "I received a windfall."
+          <span class="cn">获得一笔意外之财</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">常用表达 Useful Expressions</div>
+    <div class="expr-list">
+      <div class="expr-item">
+        <div class="expr-num">1</div>
+        <div><div class="expr-en">Could you go down on the price?</div><div class="expr-cn">可以便宜一点吗？</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">2</div>
+        <div><div class="expr-en">That would be my final offer.</div><div class="expr-cn">这是我的最终报价。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">3</div>
+        <div><div class="expr-en">The prices are clearly marked.</div><div class="expr-cn">价格明码标价。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">4</div>
+        <div><div class="expr-en">I'm not very good at bargaining.</div><div class="expr-cn">我不太擅长讨价还价。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">5</div>
+        <div><div class="expr-en">I don't know how to negotiate with sellers.</div><div class="expr-cn">我不知道怎么和卖家谈价格。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">6</div>
+        <div><div class="expr-en">It depends on the culture and the situation.</div><div class="expr-cn">这取决于文化和具体情况。</div></div>
+      </div>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">个人答案库 Personal Answer Bank</div>
+
+    <div class="qa-card">
+      <div class="qa-question">What do you think of bargaining?</div>
+      <div class="qa-answer">Personally, I prefer shopping in malls because the prices are <span class="highlight">clearly marked</span>. I don't really like bargaining because I sometimes feel uncomfortable doing it. However, if the price is obviously unreasonable, I would try to negotiate. But I wouldn't bargain just to get a small advantage.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Why don't you like bargaining?</div>
+      <div class="qa-answer">Actually, I'm not very good at bargaining because I don't know how to negotiate with sellers.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Should people learn how to bargain?</div>
+      <div class="qa-answer">Not everyone needs to learn how to bargain. It depends on the culture and the situation. However, I think <span class="highlight">basic communication skills are useful everywhere</span>.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">What is the most expensive thing you've ever bought?</div>
+      <div class="qa-answer">The most expensive thing I've ever bought is my iPhone. I didn't bargain because I bought it from a mall where the price was fixed. I regretted it a little because I bought accessory packages, like a phone case, a screen protector, and a power bank. Later, I found out they were <span class="highlight">much cheaper online</span>.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Would you buy it online if you could do it again?</div>
+      <div class="qa-answer">I would choose to buy it online because it is usually cheaper.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Lesson 2: Checking Out -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> Lesson 2 · Checking Out 结账</div>
+
+    <div class="lesson-band">
+      <span class="tag">LESSON 2</span>
+      <p><b>场景：</b>收银台结账 — 支付方式、刷卡故障、找零与小票。</p>
+    </div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">核心词汇 Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-word">check out</div>
+        <div class="vocab-meaning">to pay and leave — 结账；付款离开</div>
+        <div class="vocab-example">"Let's check out."<span class="cn">我们去结账吧。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">checkout</div>
+        <div class="vocab-meaning">the counter where you pay — 收银台</div>
+        <div class="vocab-example">"Where is the checkout?"<span class="cn">收银台在哪里？</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">credit / debit card</div>
+        <div class="vocab-meaning">信用卡 / 借记卡</div>
+        <div class="vocab-example">"I'll pay by credit card."<span class="cn">我用信用卡付款。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">error</div>
+        <div class="vocab-meaning">a mistake — 错误</div>
+        <div class="vocab-example">"There seems to be an error."<span class="cn">好像出了点问题。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">password</div>
+        <div class="vocab-meaning">密码</div>
+        <div class="vocab-example">"It says my password is incorrect."<span class="cn">它显示我的密码不正确。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">change</div>
+        <div class="vocab-meaning">the money returned — 找零</div>
+        <div class="vocab-example">"Here is your change and your receipt."<span class="cn">这是找零和小票。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">receipt</div>
+        <div class="vocab-meaning">收据 / 小票</div>
+        <div class="vocab-example">"Do you have the receipt?"<span class="cn">你带小票了吗？</span></div>
+      </div>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">常用表达 Useful Expressions</div>
+    <div class="expr-list">
+      <div class="expr-item">
+        <div class="expr-num">1</div>
+        <div><div class="expr-en">Where is the checkout?</div><div class="expr-cn">收银台在哪里？</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">2</div>
+        <div><div class="expr-en">Will you pay by card or in cash?</div><div class="expr-cn">你刷卡还是付现金？</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">3</div>
+        <div><div class="expr-en">I'll pay by credit card. / Can I pay by credit card?</div><div class="expr-cn">我用信用卡付款。/ 我可以用信用卡付款吗？</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">4</div>
+        <div><div class="expr-en">There seems to be an error.</div><div class="expr-cn">好像出了点问题。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">5</div>
+        <div><div class="expr-en">It says my password is incorrect.</div><div class="expr-cn">它显示我的密码不正确。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">6</div>
+        <div><div class="expr-en">I completely forgot my password.</div><div class="expr-cn">我完全忘了密码。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">7</div>
+        <div><div class="expr-en">How about paying in cash?</div><div class="expr-cn">用现金付款怎么样？</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">8</div>
+        <div><div class="expr-en">Here is your change and your receipt.</div><div class="expr-cn">这是找零和小票。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">9</div>
+        <div><div class="expr-en">The main reason is convenience.</div><div class="expr-cn">主要原因是方便。</div></div>
+      </div>
+      <div class="expr-item">
+        <div class="expr-num">10</div>
+        <div><div class="expr-en">I don't need to carry cash.</div><div class="expr-cn">我不需要带现金。</div></div>
+      </div>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">句子模式 Sentence Patterns</div>
+    <div class="patterns-grid">
+      <div class="pattern-chip">I usually use <span class="fill">…</span> because <span class="fill">…</span></div>
+      <div class="pattern-chip">The main reason is <span class="fill">…</span></div>
+      <div class="pattern-chip">One advantage is <span class="fill">…</span></div>
+      <div class="pattern-chip">However, <span class="fill">…</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Lesson 3: Return & Refund -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> Lesson 3 · Return &amp; Refund 退货与退款</div>
+
+    <div class="lesson-band">
+      <span class="tag">LESSON 3</span>
+      <p><b>场景：</b>退货退款 — 说明商品问题、与客服沟通、拿回退款。</p>
+    </div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">核心词汇 Vocabulary</div>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-word">return</div>
+        <div class="vocab-meaning">to give something back — 退货；归还</div>
+        <div class="vocab-example">"I'd like to return this item."<span class="cn">我想退这件商品。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">refund</div>
+        <div class="vocab-meaning">money given back — 退款</div>
+        <div class="vocab-example">"I'd like to ask for a refund."<span class="cn">我想申请退款。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">turn off / on one's own</div>
+        <div class="vocab-meaning">关机 / 自己、独自、自动地</div>
+        <div class="vocab-example">"It keeps turning off on its own."<span class="cn">它总是自己关机。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">take care of</div>
+        <div class="vocab-meaning">处理；照顾</div>
+        <div class="vocab-example">"I'll take care of this and give you the refund."<span class="cn">我来处理并给你退款。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">defective / damaged</div>
+        <div class="vocab-meaning">有瑕疵的 / 损坏的</div>
+        <div class="vocab-example">"The item was defective."<span class="cn">商品有瑕疵。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">knockoff / substandard</div>
+        <div class="vocab-meaning">假货 / 不合格的</div>
+        <div class="vocab-example">"It turned out to be a knockoff."<span class="cn">结果是个假货。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">replacement</div>
+        <div class="vocab-meaning">替换品；更换商品</div>
+        <div class="vocab-example">"They sent me a replacement."<span class="cn">他们给我寄来了一个替换品。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">tax refund</div>
+        <div class="vocab-meaning">退税</div>
+        <div class="vocab-example">"I bought a bag abroad and applied for a tax refund."<span class="cn">我在国外买了一个包并申请了退税。</span></div>
+      </div>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">常用表达 Useful Expressions</div>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-num">1</div><div><div class="expr-en">I'd like to return this item.</div><div class="expr-cn">我想退这件商品。</div></div></div>
+      <div class="expr-item"><div class="expr-num">2</div><div><div class="expr-en">I'd like to ask for a refund.</div><div class="expr-cn">我想申请退款。</div></div></div>
+      <div class="expr-item"><div class="expr-num">3</div><div><div class="expr-en">Is there something wrong with it?</div><div class="expr-cn">这个东西有什么问题吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">4</div><div><div class="expr-en">It keeps turning off on its own.</div><div class="expr-cn">它总是自己关机。</div></div></div>
+      <div class="expr-item"><div class="expr-num">5</div><div><div class="expr-en">It wouldn't heat up. There was something wrong with the power connection.</div><div class="expr-cn">它无法加热。电源接口出了点问题。</div></div></div>
+      <div class="expr-item"><div class="expr-num">6</div><div><div class="expr-en">Do you have the receipt with you? — I have it right here.</div><div class="expr-cn">你带小票了吗？— 我带着，就在这里。</div></div></div>
+      <div class="expr-item"><div class="expr-num">7</div><div><div class="expr-en">I'll take care of this and give you the refund.</div><div class="expr-cn">我来处理并给你退款。</div></div></div>
+      <div class="expr-item"><div class="expr-num">8</div><div><div class="expr-en">I sent a video to customer service. They sent me a replacement.</div><div class="expr-cn">我给客服发了视频。他们给我寄来了一个替换品。</div></div></div>
+      <div class="expr-item"><div class="expr-num">9</div><div><div class="expr-en">In most cases, they offer a replacement rather than a refund.</div><div class="expr-cn">大多数情况下，他们提供换货，而不是退款。</div></div></div>
+      <div class="expr-item"><div class="expr-num">10</div><div><div class="expr-en">The seller accepted my return quickly. I received the refund without any problems.</div><div class="expr-cn">卖家很快就接受了退货。我顺利收到了退款。</div></div></div>
+      <div class="expr-item"><div class="expr-num">11</div><div><div class="expr-en">They didn't fit me. They didn't look good on me.</div><div class="expr-cn">它们不合身。它们穿在我身上不好看。</div></div></div>
+      <div class="expr-item"><div class="expr-num">12</div><div><div class="expr-en">Return the product and ask for a refund.</div><div class="expr-cn">退货并申请退款。</div></div></div>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">个人答案库 Personal Answer Bank</div>
+
+    <div class="qa-card">
+      <div class="qa-question">Have you ever returned something to a shop? Why?</div>
+      <div class="qa-answer">Yes, I've returned clothes that I bought online, for example, on Taobao. Sometimes they didn't fit me or didn't look good on me, so I returned them. Many online stores offer a <span class="highlight">seven-day return policy</span> without giving a reason, so the process was quite easy. I got my refund successfully.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Another example — a defective product</div>
+      <div class="qa-answer">I also had a problem with a rice cooker I bought online. There was something wrong with the power connection, so it wouldn't heat up. I sent a video to customer service, and they sent me a replacement. In most cases, they offer <span class="highlight">a replacement rather than a refund</span>.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Was the return process easy?</div>
+      <div class="qa-answer">The seller accepted my return quickly, and I received the refund without any problems.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Do you support the seven-day return policy for online shopping?</div>
+      <div class="qa-answer">Yes, I support it. I think this policy makes people feel less worried about buying things online, so they are more willing to make a purchase. At the same time, it encourages sellers to provide <span class="highlight">better products and better customer service</span>.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Should physical stores also offer a seven-day return policy without giving a reason?</div>
+      <div class="qa-answer">Personally, I don't think it's necessary for physical stores to offer a seven-day return policy without giving a reason. First, customers can check or try products before buying them, so they can make a better decision. Second, too many returns could increase operating costs and affect stores' profits. Some people might also take advantage of the policy.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Small Talk -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> Small Talk · Before Class 课前寒暄</div>
+
+    <div class="st-card">
+      <h4>Weather 天气</h4>
+      <p class="en">"It's still sunny here. The weather has been pretty nice lately."</p>
+      <p class="cn">这里还出太阳。最近天气相当不错。</p>
+      <p class="en">"How's the weather where you are? Is it sunny there too?"</p>
+      <p class="cn">你那边天气怎么样？也出太阳吗？</p>
+    </div>
+
+    <div class="st-card">
+      <h4>Weekend 周末</h4>
+      <p class="en">"I had a really fun weekend! I went to a friend's place, and we had hot pot together. We also played badminton and a party game called Werewolf. It was a lot of fun!"</p>
+      <p class="cn">周末玩得很开心！去了朋友家吃火锅，还打了羽毛球、玩了狼人杀，特别好玩！</p>
+    </div>
+
+    <div class="st-card">
+      <h4>Useful Expressions 常用表达</h4>
+      <div class="st-chips">
+        <span class="st-chip">go to a friend's place / house <span class="cn">去朋友家</span></span>
+        <span class="st-chip">have hot pot <span class="cn">吃火锅</span></span>
+        <span class="st-chip">play badminton <span class="cn">打羽毛球</span></span>
+        <span class="st-chip">play Werewolf <span class="cn">玩狼人杀</span></span>
+        <span class="st-chip">over the weekend <span class="cn">在周末期间</span></span>
+        <span class="st-chip">hang out with friends <span class="cn">和朋友一起玩、聚会</span></span>
+        <span class="st-chip">I'm not very good at Werewolf because I'm not good at lying. <span class="cn">我不太会玩狼人杀，因为我不擅长撒谎。</span></span>
+        <span class="st-chip">I'm a terrible liar! <span class="cn">我特别不会撒谎！（口语、带幽默）</span></span>
+      </div>
+      <p style="margin-top: 10px;"><span class="en">"I love badminton. I play it regularly, about once a week. I usually play badminton with my friends, and I prefer playing for fun."</span></p>
+    </div>
+
+    <div class="st-card">
+      <h4>Ask the Teacher 反问老师</h4>
+      <p class="en">"How about you? How was your weekend?" / "What did you do over the weekend?"</p>
+      <p class="en">"Do you usually hang out with your friends on weekends?" / "Have you ever played Werewolf before?"</p>
+    </div>
+
+    <div class="st-card">
+      <h4>Responding to Praise &amp; Corrections 回应表扬与纠错</h4>
+      <p class="en">"Thank you! I'm still working on improving my speaking skills."</p>
+      <p class="en">"Thank you! I feel more confident speaking English now, but I still need more practice."</p>
+      <p class="en">"I see. Thank you for correcting me." / "That makes sense. I'll remember that."</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Tax Refund -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> Extra Vocabulary · Tax Refund 退税</div>
+
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-word">tax</div>
+        <div class="vocab-meaning">税</div>
+        <div class="vocab-example">"Can I get a tax refund on this purchase?"<span class="cn">这笔购物可以申请退税吗？</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">tax refund</div>
+        <div class="vocab-meaning">退税</div>
+        <div class="vocab-example">"Where can I claim my tax refund?"<span class="cn">我在哪里可以办理退税？</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">tax return</div>
+        <div class="vocab-meaning">报税 / 纳税申报（不是"退税"）</div>
+        <div class="vocab-example">"I'm applying for a tax refund."<span class="cn">我正在申请退税。</span></div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">refund</div>
+        <div class="vocab-meaning">退款；退还款项</div>
+        <div class="vocab-example">"I returned the rice cooker and got a refund."<span class="cn">我退了电饭煲并拿到了退款。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Speaking Reminder -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> Speaking Reminder 开口技巧</div>
+    <div class="notes-box">
+      <h3>回答开放式问题时，使用：</h3>
+      <div class="structure-flow">
+        <span class="step">Answer<span class="cn">先回答</span></span>
+        <span class="arrow">→</span>
+        <span class="step">Reason<span class="cn">给理由</span></span>
+        <span class="arrow">→</span>
+        <span class="step">Example<span class="cn">举例子</span></span>
+        <span class="arrow">→</span>
+        <span class="step">However<span class="cn">补转折</span></span>
+      </div>
+      <p>Don't stop at a one-sentence answer. Add one detail, then ask the other person a question.</p>
+      <p>不要只答一句话就停。补充一个细节，然后反问对方一个问题。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    Chloe's English Speaking Notebook · Lessons 1-3 · Shopping
+  </div>
+</footer>
+
+</body>
+</html>
