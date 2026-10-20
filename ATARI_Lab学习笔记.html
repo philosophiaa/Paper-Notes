@@ -368,7 +368,7 @@
     <div class="header-tag">LAB NOTES · WEEK 1 (DAY 1–7)</div>
     <h1>ATARI Lab <span class="accent">学习笔记</span></h1>
     <div class="meta">第一周：研究方向 · 控制路线 · 基础概念 · 三篇核心论文</div>
-    <p>第一周目标：了解导师团队的研究方向，建立腿式机器人<strong>规划与控制</strong>的基础认知，初步理解自己的博士研究计划处于什么位置。这份笔记整合了研究方向地图、博士课题定位、两条控制路线、三个基础概念、三篇核心论文与论文阅读方法。</p>
+    <p>ATARI 是 TUM（慕尼黑工业大学）的 <strong>Applied and Theoretical Aspects of Robot Intelligence</strong> 实验室。第一周目标：了解导师团队的研究方向，建立腿式机器人<strong>规划与控制</strong>的基础认知，初步理解自己的博士研究计划处于什么位置。这份笔记整合了研究方向地图、博士课题定位、两条控制路线、三个基础概念、三篇核心论文与论文阅读方法。</p>
   </div>
 </header>
 
@@ -536,6 +536,10 @@
   <div class="container">
     <div class="section-title"><span class="num">05</span> 机器人控制的两条主要路线</div>
 
+    <div class="one-liner" style="font-size: 14px; padding: 16px 22px; margin-bottom: 16px;">
+      阅读综述：<a href="https://journals.sagepub.com/doi/10.1177/02783649241312698?utm_source=chatgpt.com" target="_blank">Learning-based legged locomotion: a survey（SAGE Journals）</a>
+    </div>
+
     <div class="route-grid">
       <div class="route-card model">
         <span class="route-tag">MODEL-BASED</span>
@@ -698,7 +702,7 @@
     <div class="paper-card">
       <span class="paper-tag">PAPER 01 · BiConMP</span>
       <h3>BiConMP: A Nonlinear Model Predictive Control Framework for Whole Body Motion Planning</h3>
-      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2010.04514" target="_blank">arXiv 全文</a></div>
+      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2201.07601" target="_blank">arXiv 全文</a></div>
       <div class="p-row"><strong class="k">核心问题：</strong>如何高效地在线生成机器人全身运动轨迹？</div>
       <div class="p-row"><strong>核心思路：</strong></div>
       <ul class="gap-list" style="margin-bottom: 10px; list-style: none; padding: 0;">
@@ -714,7 +718,7 @@
     <div class="paper-card">
       <span class="paper-tag">PAPER 02 · Viability-based MPC</span>
       <h3>Robust Walking Based on MPC with Viability Guarantees</h3>
-      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2201.07601" target="_blank">arXiv 全文</a></div>
+      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2010.04514" target="_blank">arXiv 全文</a></div>
       <div class="p-row"><strong class="k">核心问题：</strong>当机器人受到扰动时，怎样提高步行规划的可行性与鲁棒性？</div>
       <div class="p-row"><strong>核心概念：Viability Kernel（可生存核）</strong> — 在给定动力学模型、控制限制和失败条件下，哪些状态仍然存在避免失败的控制策略。</div>
       <div class="p-row"><strong>主要机制：</strong></div>
@@ -809,68 +813,6 @@
     </div>
     <div class="note-box">
       <strong>阅读原则：</strong>第一轮阅读不需要立刻看懂所有公式。先建立问题、方法、证据和局限之间的联系，再决定哪些内容需要深入推导。
-    </div>
-  </div>
-</section>
-
-<!-- 10 第一周最重要的结论 -->
-<section class="section" style="border-bottom: none;">
-  <div class="container">
-    <div class="section-title"><span class="num">10</span> 第一周最重要的结论</div>
-
-    <div class="sub-title">ATARI 的研究可以理解为三条相互关联的主线</div>
-    <div class="concl-list">
-      <div class="concl-item plan">
-        <span class="c-tag">规划</span>
-        <p><strong>决定任务、接触方式与运动轨迹。</strong></p>
-      </div>
-      <div class="concl-item learn">
-        <span class="c-tag">学习</span>
-        <p><strong>从数据或交互中获得控制技能。</strong></p>
-      </div>
-      <div class="concl-item adapt">
-        <span class="c-tag">适应</span>
-        <p><strong>在不确定性、模型误差和环境变化下维持性能。</strong></p>
-      </div>
-    </div>
-
-    <div style="height: 28px;"></div>
-
-    <div class="sub-title">博士计划聚焦的三个问题</div>
-    <div class="phd-flow">
-      <div class="phd-step lp">
-        <div class="step-name">全局探索</div>
-        <div class="step-role">搜索不同的<br>运动方案</div>
-      </div>
-      <div class="phd-arrow">·</div>
-      <div class="phd-step sf">
-        <div class="step-name">安全</div>
-        <div class="step-role">处理搜索与执行中<br>的安全约束</div>
-      </div>
-      <div class="phd-arrow">·</div>
-      <div class="phd-step mpc">
-        <div class="step-name">可扩展性</div>
-        <div class="step-role">高自由度、复杂接触<br>下高效运行</div>
-      </div>
-    </div>
-
-    <div style="height: 28px;"></div>
-
-    <div class="sub-title">下一阶段</div>
-    <div class="one-liner" style="font-size: 14px; padding: 18px 22px;">
-      进一步学习 <strong>MPC 的数学形式、采样式 MPC、MPPI 和 CBO</strong>，并通过文献比较判断你的 proposal 是否存在足够明确、可验证的创新空间。
-    </div>
-
-    <div style="height: 28px;"></div>
-
-    <div class="sub-title">复习口诀</div>
-    <div class="mnemonic">
-      <h3>三篇论文一句话记忆</h3>
-      <p style="font-size: 14px; line-height: 2.2;">
-        <strong style="color: var(--cyan);">BiConMP</strong> 看「怎么高效算轨迹」；<br>
-        <strong style="color: var(--purple);">Viability-based MPC</strong> 看「怎么尽可能保持可行与可恢复」；<br>
-        <strong style="color: var(--orange);">TAMP</strong> 看「做什么、如何接触，以及怎样把它变成可执行运动」。
-      </p>
     </div>
   </div>
 </section>
