@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ATARI Lab 学习笔记 · Day 1-2</title>
+<title>ATARI Lab 学习笔记 · 第一周 Day 1-7</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
@@ -40,6 +40,14 @@
     font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan);
     background: rgba(6,182,212,0.1); padding: 2px 8px; border-radius: 4px;
   }
+  .sub-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sub-title::before { content: ''; width: 3px; height: 16px; background: var(--cyan); border-radius: 2px; }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
 
   /* 一句话 */
   .one-liner {
@@ -103,7 +111,23 @@
   }
   .note-box strong { color: var(--orange); }
 
-  /* Day 3 技术路线对比 */
+  /* 博士课题三问 */
+  .phd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .phd-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .phd-card .code {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    display: inline-block; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px;
+  }
+  .phd-card.explore .code { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .phd-card.safety .code { background: rgba(245,158,11,0.12); color: var(--orange); }
+  .phd-card.scale .code { background: rgba(139,92,246,0.12); color: var(--purple); }
+  .phd-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .phd-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+
+  /* 技术路线对比 */
   .route-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .route-card {
     background: var(--bg-card); border: 1px solid var(--border);
@@ -152,6 +176,88 @@
   .gap-box .bottom { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 13px; }
   .gap-box .bottom strong { color: var(--orange); }
 
+  /* 基础概念 */
+  .concept-grid { display: grid; gap: 14px; }
+  .concept-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .concept-card .concept-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .concept-card .c-idx {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    background: rgba(6,182,212,0.12); color: var(--cyan);
+    padding: 3px 10px; border-radius: 4px;
+  }
+  .concept-card h3 { font-size: 16px; font-weight: 700; }
+  .concept-card .core { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px; }
+  .concept-card .flow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: rgba(0,0,0,0.2); border-radius: 6px; padding: 10px 14px;
+    color: var(--text); line-height: 1.9; margin-bottom: 10px;
+  }
+  .concept-card ul { list-style: none; padding: 0; }
+  .concept-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.8; padding-left: 18px; position: relative; margin-bottom: 4px; }
+  .concept-card li::before { content: '▸'; position: absolute; left: 2px; color: var(--text-muted); }
+
+  /* 论文卡片 */
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin-bottom: 16px;
+  }
+  .paper-card .paper-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    background: rgba(139,92,246,0.12); color: var(--purple);
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; font-weight: 700;
+  }
+  .paper-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .paper-card .paper-link { font-size: 13px; margin-bottom: 14px; }
+  .paper-card .p-row { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 6px; }
+  .paper-card .p-row strong { color: var(--text); }
+  .paper-card .p-row strong.k { color: var(--cyan); }
+  .paper-card .p-row strong.remember { color: var(--orange); }
+  .paper-card .algo-line {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: rgba(0,0,0,0.2); border-radius: 6px; padding: 8px 14px;
+    color: var(--text); margin-bottom: 10px;
+  }
+
+  /* 横向比较流程 */
+  .cmp-steps {
+    display: flex; align-items: stretch; justify-content: center;
+    gap: 10px; flex-wrap: wrap; padding: 16px 0;
+  }
+  .cmp-step {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; text-align: center; flex: 1; min-width: 190px;
+  }
+  .cmp-step .step-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    display: inline-block; padding: 3px 10px; border-radius: 4px; margin-bottom: 8px;
+  }
+  .cmp-step.s1 .step-tag { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .cmp-step.s2 .step-tag { background: rgba(139,92,246,0.12); color: var(--purple); }
+  .cmp-step.s3 .step-tag { background: rgba(16,185,129,0.12); color: var(--green); }
+  .cmp-step .step-name { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .cmp-step p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .cmp-arrow { display: flex; align-items: center; color: var(--text-muted); font-size: 20px; }
+
+  /* 阅读五问 */
+  .five-q-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .five-q-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+  }
+  .five-q-item .q-idx {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 12px;
+    color: var(--purple); flex-shrink: 0; min-width: 72px;
+    background: rgba(139,92,246,0.1); border-radius: 4px; padding: 3px 8px; text-align: center;
+  }
+  .five-q-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+  .five-q-item strong { color: var(--text); }
+
   /* 博士课题框架流程 */
   .phd-flow {
     display: flex; align-items: center; justify-content: center;
@@ -188,9 +294,6 @@
   .five-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
   .five-item strong { color: var(--text); }
 
-  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
-  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
-
   /* 表格 */
   .table-wrap { overflow-x: auto; }
   .data-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
@@ -206,6 +309,24 @@
   .data-table td:first-child { color: var(--text); font-weight: 500; }
   .data-table tr:hover td { background: rgba(30,41,59,0.5); }
   .data-table .hint { color: var(--text-secondary); font-size: 13px; }
+
+  /* 结论清单 */
+  .concl-list { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .concl-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .concl-item .c-tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    flex-shrink: 0; min-width: 56px; text-align: center;
+    border-radius: 4px; padding: 3px 8px;
+  }
+  .concl-item.plan .c-tag { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .concl-item.learn .c-tag { background: rgba(139,92,246,0.12); color: var(--purple); }
+  .concl-item.adapt .c-tag { background: rgba(245,158,11,0.12); color: var(--orange); }
+  .concl-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+  .concl-item strong { color: var(--text); }
 
   /* 记忆口诀 */
   .mnemonic {
@@ -230,6 +351,9 @@
     .research-grid { grid-template-columns: 1fr; }
     .device-grid { grid-template-columns: 1fr; }
     .route-grid { grid-template-columns: 1fr; }
+    .phd-grid { grid-template-columns: 1fr; }
+    .cmp-steps { flex-direction: column; }
+    .cmp-arrow { transform: rotate(90deg); }
     .phd-flow { flex-direction: column; }
     .phd-arrow { transform: rotate(90deg); }
     .section-title { font-size: 17px; }
@@ -241,10 +365,10 @@
 
 <header class="header">
   <div class="container">
-    <div class="header-tag">LAB NOTES · DAY 1–3</div>
+    <div class="header-tag">LAB NOTES · WEEK 1 (DAY 1–7)</div>
     <h1>ATARI Lab <span class="accent">学习笔记</span></h1>
-    <div class="meta">Planning · Learning · Adaptation · Legged Locomotion</div>
-    <p>ATARI Lab 研究如何让机器人<strong>规划行动、学习技能，并适应复杂环境</strong>。这份笔记整理了三线研究框架、代表性研究者、实验室设备与研究方向，以及腿式机器人学习控制综述（Day 3）。</p>
+    <div class="meta">第一周：研究方向 · 控制路线 · 基础概念 · 三篇核心论文</div>
+    <p>第一周目标：了解导师团队的研究方向，建立腿式机器人<strong>规划与控制</strong>的基础认知，初步理解自己的博士研究计划处于什么位置。这份笔记整合了研究方向地图、博士课题定位、两条控制路线、三个基础概念、三篇核心论文与论文阅读方法。</p>
   </div>
 </header>
 
@@ -286,7 +410,7 @@
   </div>
 </section>
 
-<!-- 02 实验设备 -->
+<!-- 02 团队实验设备 -->
 <section class="section">
   <div class="container">
     <div class="section-title"><span class="num">02</span> 团队实验设备</div>
@@ -316,7 +440,7 @@
 </section>
 
 <!-- 03 研究方向地图 -->
-<section class="section" style="border-bottom: none;">
+<section class="section">
   <div class="container">
     <div class="section-title"><span class="num">03</span> 研究方向地图</div>
     <div class="table-wrap">
@@ -372,64 +496,88 @@
     </div>
 
     <div class="note-box" style="margin-top: 18px; background: rgba(139,92,246,0.07); border-color: rgba(139,92,246,0.2);">
-      <strong>关于团队成员：</strong>这些是前两天整理的代表性研究线索，不需要背诵全部姓名。首先要能根据一个研究问题，找到相应的方向和论文。
+      <strong>关于团队成员：</strong>这些是前几天整理的代表性研究线索，不需要背诵全部姓名。首先要能根据一个研究问题，找到相应的方向和论文。
     </div>
   </div>
 </section>
 
-<!-- 04 Day 3 腿式机器人学习控制综述 -->
-<section class="section" style="border-bottom: none;">
+<!-- 04 与博士课题的关系 -->
+<section class="section">
   <div class="container">
-    <div class="section-title"><span class="num">04</span> Day 3 ｜ 腿式机器人学习控制综述</div>
-
-    <div class="one-liner" style="margin-bottom: 24px;">
-      阅读主题：<strong>Learning-based Legged Locomotion</strong><br>
-      论文：<a href="https://journals.sagepub.com/doi/10.1177/02783649241312698?utm_source=chatgpt.com" target="_blank" style="color: var(--cyan);">Learning-based legged locomotion: a survey（SAGE Journals）</a>
+    <div class="section-title"><span class="num">04</span> 与博士课题的关系</div>
+    <div class="one-liner" style="margin-bottom: 20px;">
+      我的初步 proposal 主要关注三个问题：<strong>全局探索、安全、可扩展性</strong>。
     </div>
+    <div class="phd-grid">
+      <div class="phd-card explore">
+        <span class="code">Q1</span>
+        <h3>Global Exploration · 全局探索</h3>
+        <p>怎样搜索不同的运动方案，而不是局限于当前轨迹附近？</p>
+      </div>
+      <div class="phd-card safety">
+        <span class="code">Q2</span>
+        <h3>Safety · 安全</h3>
+        <p>怎样处理搜索过程与动作执行中的安全约束？</p>
+      </div>
+      <div class="phd-card scale">
+        <span class="code">Q3</span>
+        <h3>Scalability · 可扩展性</h3>
+        <p>怎样让算法在高自由度、复杂接触的人形机器人上高效运行？</p>
+      </div>
+    </div>
+    <div class="note-box">
+      <strong>初步定位：</strong>以优化和控制为核心，探索如何让人形机器人安全、高效地搜索运动方案；学习方法可以作为辅助。以上是当前研究定位，不代表三个方向都必须成为最终博士课题的独立创新点。
+    </div>
+  </div>
+</section>
 
-    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">两条主要技术路线</div>
+<!-- 05 机器人控制的两条主要路线 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> 机器人控制的两条主要路线</div>
+
     <div class="route-grid">
       <div class="route-card model">
         <span class="route-tag">MODEL-BASED</span>
         <h3>基于模型的控制</h3>
-        <div class="core">根据机器人动力学模型，通过优化计算控制动作。</div>
+        <div class="core">利用机器人动力学模型和优化算法计算动作。</div>
         <div class="flow">物理模型 → 优化计算 → 控制动作</div>
         <ul>
-          <li><span class="pros">优点：</span>可以显式处理动力学、任务目标和约束。</li>
-          <li><span class="cons">难点：</span>高自由度、非线性、多接触场景下，实时优化可能很困难。</li>
+          <li><span class="pros">优点：</span>可以显式描述动力学与接触约束；将任务目标、关节限制和其他约束写入优化问题；有利于分析算法的可行性与理论性质。</li>
+          <li><span class="cons">难点：</span>高自由度机器人具有复杂的非线性动力学；多接触会增加约束和离散状态切换；优化计算可能难以满足实时要求。</li>
         </ul>
       </div>
       <div class="route-card learn">
         <span class="route-tag">LEARNING-BASED</span>
         <h3>基于学习的控制</h3>
-        <div class="core">通过数据、示范或与环境交互，学习机器人控制策略。</div>
+        <div class="core">通过数据、示范或与环境交互，学习机器人如何行动。</div>
         <div class="flow">RL（强化学习）· IL（模仿学习）</div>
         <ul>
-          <li><span class="pros">优点：</span>能够学习复杂行为，执行时可以直接通过策略生成动作。</li>
-          <li><span class="cons">难点：</span>训练成本、奖励设计、泛化能力和安全保证。</li>
+          <li><span class="pros">优点：</span>可以学习复杂的控制行为；执行时可以直接通过策略生成动作。</li>
+          <li><span class="cons">难点：</span>训练成本和奖励设计；对新环境的泛化能力；仿真与现实之间的差距；安全性与可靠性。</li>
         </ul>
       </div>
     </div>
     <div class="route-note">
-      <strong>注意：</strong>两条路线并不冲突。现代机器人研究经常结合物理模型、优化和学习。
+      <strong>核心结论：</strong>Model-based 与 Learning-based 并不互斥，现代机器人研究经常将两者结合。
     </div>
 
     <div style="height: 28px;"></div>
 
-    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">核心问题：Sim-to-Real Gap</div>
+    <div class="sub-title">核心问题：Sim-to-Real Gap（仿真到现实的差距）</div>
     <div class="gap-box">
-      <p>仿真中训练成功，不代表真实机器人也能成功。</p>
+      <p>仿真中表现良好，不代表真实机器人也能成功。</p>
       <ul class="gap-list">
-        <li>地面摩擦力、质量和惯性存在误差。</li>
-        <li>电机响应、控制延迟和传感器噪声与仿真不同。</li>
-        <li>实际接触和碰撞难以被完全准确地模拟。</li>
+        <li>摩擦力、质量和惯性存在误差。</li>
+        <li>电机响应、控制延迟和传感器噪声不同。</li>
+        <li>实际接触和碰撞过程难以被完全准确地模拟。</li>
       </ul>
-      <p class="bottom"><strong>结论：</strong>机器人研究不能只看仿真成功率，还要关注模型误差、环境变化和真实机器人上的表现。</p>
+      <p class="bottom"><strong>结论：</strong>评估机器人算法不能只看仿真成功率，还需要关注扰动、模型误差和真实机器人上的表现。</p>
     </div>
 
     <div style="height: 28px;"></div>
 
-    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">学习控制的主要挑战</div>
+    <div class="sub-title">学习控制的主要挑战</div>
     <div class="table-wrap">
       <table class="data-table">
         <colgroup>
@@ -469,10 +617,7 @@
 
     <div style="height: 28px;"></div>
 
-    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">与博士课题的关系</div>
-    <div class="exp-card" style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 14px;">
-      <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">研究计划并不是单纯研究强化学习，而是希望结合<strong>学习策略、MPC 和安全过滤</strong>。</p>
-    </div>
+    <div class="sub-title">我的课题框架</div>
     <div class="phd-flow">
       <div class="phd-step lp">
         <div class="step-name">Learning Policy</div>
@@ -495,40 +640,244 @@
       </div>
     </div>
     <div class="note-box">
-      <strong>研究目标：</strong>在复杂人形机器人任务中，兼顾全局探索、安全性和计算效率。
+      <strong>研究目标：</strong>在复杂人形机器人任务中，兼顾全局探索、安全性和计算效率。我的研究计划希望结合 MPC、学习策略和安全过滤，而不是完全依赖强化学习。
+    </div>
+  </div>
+</section>
+
+<!-- 06 三个必须理解的基础概念 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> 三个必须理解的基础概念</div>
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="c-idx">C1</span>
+          <h3>MPC — Model Predictive Control（模型预测控制）</h3>
+        </div>
+        <div class="core">MPC 的核心是<strong>滚动时域优化</strong>：每步只执行当前需要的控制，然后基于新状态重新优化。</div>
+        <div class="flow">获取当前状态 → 预测未来运动 → 优化未来控制序列 → 只执行当前控制 → 获取新状态，重新优化</div>
+        <ul>
+          <li><strong>为什么要重新规划？</strong>因为实际运动与预测可能存在偏差，环境和外部扰动也可能发生变化。重新规划可以利用新观测调整后续动作。</li>
+        </ul>
+      </div>
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="c-idx">C2</span>
+          <h3>Whole-Body Motion Planning（全身运动规划）</h3>
+        </div>
+        <div class="core">人形机器人需要协调多个层次的状态，全身运动规划不只是规划脚步，而是让<strong>整个机器人协调运动</strong>。</div>
+        <ul>
+          <li>质心运动</li>
+          <li>躯干姿态</li>
+          <li>手脚位置</li>
+          <li>关节运动</li>
+          <li>接触力与关节力矩</li>
+        </ul>
+      </div>
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="c-idx">C3</span>
+          <h3>Contact Mode（接触模式）</h3>
+        </div>
+        <div class="core">描述机器人当前<strong>哪些部位与地面、物体或其他环境表面接触</strong>。接触关系的建立与解除会改变系统需要满足的动力学和接触约束。</div>
+        <ul>
+          <li><strong>示例（搬箱子）：</strong>双脚支撑 → 手与箱子接触 → 箱子离开高台 → 箱子接触地面。</li>
+          <li>Contact Mode 是连接<strong>离散接触决策</strong>与<strong>连续运动优化</strong>的重要概念。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 第一周的三篇核心论文 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">07</span> 第一周的三篇核心论文</div>
+
+    <div class="paper-card">
+      <span class="paper-tag">PAPER 01 · BiConMP</span>
+      <h3>BiConMP: A Nonlinear Model Predictive Control Framework for Whole Body Motion Planning</h3>
+      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2010.04514" target="_blank">arXiv 全文</a></div>
+      <div class="p-row"><strong class="k">核心问题：</strong>如何高效地在线生成机器人全身运动轨迹？</div>
+      <div class="p-row"><strong>核心思路：</strong></div>
+      <ul class="gap-list" style="margin-bottom: 10px; list-style: none; padding: 0;">
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>优化质心动力学与动量相关的运动。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>进一步优化全身关节运动，使其与整体运动规划协调。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>通过逆动力学等环节生成实际控制输入。</li>
+      </ul>
+      <div class="p-row"><strong>需要理解的算法：</strong><span class="algo-line" style="display: inline-block; margin: 4px 0 10px;">ADMM（交替方向乘子法）· FISTA（快速迭代收缩阈值算法）· DDP（微分动态规划）</span></div>
+      <div class="p-row"><strong>第一轮只需</strong>理解这些算法在整体框架中的作用，不必立即推导全部公式。</div>
+      <div class="p-row"><strong class="remember">需要记住：</strong>BiConMP 的重点是高效的非线性 MPC 与全身运动规划，<strong>不是</strong>无条件的全局最优或安全保证。</div>
+    </div>
+
+    <div class="paper-card">
+      <span class="paper-tag">PAPER 02 · Viability-based MPC</span>
+      <h3>Robust Walking Based on MPC with Viability Guarantees</h3>
+      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2201.07601" target="_blank">arXiv 全文</a></div>
+      <div class="p-row"><strong class="k">核心问题：</strong>当机器人受到扰动时，怎样提高步行规划的可行性与鲁棒性？</div>
+      <div class="p-row"><strong>核心概念：Viability Kernel（可生存核）</strong> — 在给定动力学模型、控制限制和失败条件下，哪些状态仍然存在避免失败的控制策略。</div>
+      <div class="p-row"><strong>主要机制：</strong></div>
+      <ul class="gap-list" style="margin-bottom: 10px; list-style: none; padding: 0;">
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>利用简化的 LIPM 模型计算可生存核。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>将可生存性信息用于慢速 MPC 的状态处理。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>采用慢速 MPC 与快速 MPC 的分层结构。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span>使用贝叶斯优化调整慢速 MPC 的代价权重。</li>
+      </ul>
+      <div class="p-row"><strong>必须区分三个概念：</strong>三者有关联，但不能相互替代。</div>
+      <div class="p-row"><strong class="remember">需要记住：</strong>机器人还没有倒下，不代表 MPC 一定有可行解；当前 MPC 无解，也不必然意味着机器人已经无法恢复。</div>
+    </div>
+
+    <div class="paper-card">
+      <span class="paper-tag">PAPER 03 · TAMP</span>
+      <h3>Task and Motion Planning for Humanoid Loco-manipulation</h3>
+      <div class="paper-link">阅读入口：<a href="https://arxiv.org/abs/2508.14099" target="_blank">arXiv 全文</a></div>
+      <div class="p-row"><strong class="k">核心问题：</strong>怎样将任务顺序、接触选择和连续运动规划连接起来？</div>
+      <div class="p-row"><strong>TAMP = Task and Motion Planning</strong></div>
+      <ul class="gap-list" style="margin-bottom: 10px; list-style: none; padding: 0;">
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span><strong>Task Planning：</strong>决定做什么、按什么顺序做。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span><strong>Motion Planning：</strong>计算具体怎么运动。</li>
+        <li style="padding-left: 18px; position: relative; font-size: 13px; color: var(--text-secondary); line-height: 1.8;"><span style="position: absolute; left: 2px; color: var(--text-muted);">▸</span><strong>Contact Planning：</strong>决定接触如何建立、保持或解除。</li>
+      </ul>
+      <div class="p-row"><strong>关键思路：</strong>将接触关系纳入统一的规划表示，通过搜索候选接触序列，并对候选方案进行轨迹优化，考虑全身动力学与执行器约束。</div>
+      <div class="p-row"><strong>固定接触序列的局限：</strong>如果接触顺序预先固定，优化器通常只能在这个序列允许的范围内搜索，可能错过更优的接触策略，甚至错过可行方案。</div>
+      <div class="p-row"><strong class="remember">需要记住：</strong>TAMP 不只是规划机器人做什么、怎样运动，还需要考虑接触关系如何变化，以及接触决策与连续运动之间的相互影响。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 三篇论文的横向比较 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> 三篇论文的横向比较</div>
+    <div class="one-liner" style="margin-bottom: 16px;">
+      三篇论文解决的是<strong>不同层次</strong>的问题，不能简单看成三个可以互相替代的算法。可以放在一个概念框架中理解：
+    </div>
+    <div class="cmp-steps">
+      <div class="cmp-step s1">
+        <span class="step-tag">LAYER 1</span>
+        <div class="step-name">任务与接触选择</div>
+        <p>TAMP：做什么、如何接触</p>
+      </div>
+      <div class="cmp-arrow">→</div>
+      <div class="cmp-step s2">
+        <span class="step-tag">LAYER 2</span>
+        <div class="step-name">全身轨迹优化</div>
+        <p>BiConMP：怎么高效算轨迹</p>
+      </div>
+      <div class="cmp-arrow">→</div>
+      <div class="cmp-step s3">
+        <span class="step-tag">LAYER 3</span>
+        <div class="step-name">可行性与鲁棒性检查</div>
+        <p>Viability-based MPC：保持可行与可恢复</p>
+      </div>
+    </div>
+    <div class="note-box">
+      <strong>注意：</strong>这只是学习用的概念图，并不代表三篇论文共同采用了同一套系统架构。
+    </div>
+  </div>
+</section>
+
+<!-- 09 论文阅读的五个固定问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">09</span> 论文阅读的五个固定问题</div>
+    <div class="one-liner" style="margin-bottom: 16px;">
+      以后每读一篇论文，都尝试回答以下五个问题：
+    </div>
+    <div class="five-q-list">
+      <div class="five-q-item">
+        <span class="q-idx">PROBLEM</span>
+        <p><strong>作者究竟要解决什么问题？</strong></p>
+      </div>
+      <div class="five-q-item">
+        <span class="q-idx">METHOD</span>
+        <p><strong>作者采用什么方法？</strong></p>
+      </div>
+      <div class="five-q-item">
+        <span class="q-idx">RESULT</span>
+        <p><strong>实验结果如何？</strong>使用了什么机器人和基线？</p>
+      </div>
+      <div class="five-q-item">
+        <span class="q-idx">LIMITATION</span>
+        <p><strong>方法有哪些局限？</strong>理论保证依赖什么假设？</p>
+      </div>
+      <div class="five-q-item">
+        <span class="q-idx">MY PHD</span>
+        <p><strong>这项工作与我的研究有什么关系？</strong></p>
+      </div>
+    </div>
+    <div class="note-box">
+      <strong>阅读原则：</strong>第一轮阅读不需要立刻看懂所有公式。先建立问题、方法、证据和局限之间的联系，再决定哪些内容需要深入推导。
+    </div>
+  </div>
+</section>
+
+<!-- 10 第一周最重要的结论 -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-title"><span class="num">10</span> 第一周最重要的结论</div>
+
+    <div class="sub-title">ATARI 的研究可以理解为三条相互关联的主线</div>
+    <div class="concl-list">
+      <div class="concl-item plan">
+        <span class="c-tag">规划</span>
+        <p><strong>决定任务、接触方式与运动轨迹。</strong></p>
+      </div>
+      <div class="concl-item learn">
+        <span class="c-tag">学习</span>
+        <p><strong>从数据或交互中获得控制技能。</strong></p>
+      </div>
+      <div class="concl-item adapt">
+        <span class="c-tag">适应</span>
+        <p><strong>在不确定性、模型误差和环境变化下维持性能。</strong></p>
+      </div>
     </div>
 
     <div style="height: 28px;"></div>
 
-    <div class="section-title" style="font-size: 16px; margin-bottom: 14px;">本节需要记住的 5 句话</div>
-    <div class="five-list">
-      <div class="five-item">
-        <span class="idx">1</span>
-        <p><strong>Model-based Control：</strong>根据物理模型和优化计算动作。</p>
+    <div class="sub-title">博士计划聚焦的三个问题</div>
+    <div class="phd-flow">
+      <div class="phd-step lp">
+        <div class="step-name">全局探索</div>
+        <div class="step-role">搜索不同的<br>运动方案</div>
       </div>
-      <div class="five-item">
-        <span class="idx">2</span>
-        <p><strong>Learning-based Control：</strong>从数据或交互中学习控制策略。</p>
+      <div class="phd-arrow">·</div>
+      <div class="phd-step sf">
+        <div class="step-name">安全</div>
+        <div class="step-role">处理搜索与执行中<br>的安全约束</div>
       </div>
-      <div class="five-item">
-        <span class="idx">3</span>
-        <p><strong>Sim-to-Real Gap：</strong>仿真表现好，不代表真实机器人表现好。</p>
+      <div class="phd-arrow">·</div>
+      <div class="phd-step mpc">
+        <div class="step-name">可扩展性</div>
+        <div class="step-role">高自由度、复杂接触<br>下高效运行</div>
       </div>
-      <div class="five-item">
-        <span class="idx">4</span>
-        <p><strong>强化学习仍面临</strong>训练效率、泛化和安全等挑战。</p>
-      </div>
-      <div class="five-item">
-        <span class="idx">5</span>
-        <p><strong>我的研究计划希望结合 MPC、学习策略和安全过滤</strong>，而不是完全依赖强化学习。</p>
-      </div>
+    </div>
+
+    <div style="height: 28px;"></div>
+
+    <div class="sub-title">下一阶段</div>
+    <div class="one-liner" style="font-size: 14px; padding: 18px 22px;">
+      进一步学习 <strong>MPC 的数学形式、采样式 MPC、MPPI 和 CBO</strong>，并通过文献比较判断你的 proposal 是否存在足够明确、可验证的创新空间。
+    </div>
+
+    <div style="height: 28px;"></div>
+
+    <div class="sub-title">复习口诀</div>
+    <div class="mnemonic">
+      <h3>三篇论文一句话记忆</h3>
+      <p style="font-size: 14px; line-height: 2.2;">
+        <strong style="color: var(--cyan);">BiConMP</strong> 看「怎么高效算轨迹」；<br>
+        <strong style="color: var(--purple);">Viability-based MPC</strong> 看「怎么尽可能保持可行与可恢复」；<br>
+        <strong style="color: var(--orange);">TAMP</strong> 看「做什么、如何接触，以及怎样把它变成可执行运动」。
+      </p>
     </div>
   </div>
 </section>
 
 <footer class="footer">
   <div class="container">
-    ATARI Lab Learning Notes · Day 1–3
+    ATARI Lab Learning Notes · Week 1 (Day 1–7)
   </div>
 </footer>
 
