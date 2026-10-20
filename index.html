@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paper Notes · 论文阅读笔记</title>
+<title>Paper Notes · 学习笔记库</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
@@ -90,7 +90,7 @@
   .stats {
     display: flex;
     justify-content: center;
-    gap: 48px;
+    gap: 36px;
     margin: 40px 0;
     flex-wrap: wrap;
   }
@@ -110,22 +110,50 @@
     letter-spacing: 0.5px;
   }
 
-  /* Section Title */
-  .section-title {
+  /* Category Title */
+  .cat-title {
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
   }
-  .section-title::before {
+  .cat-title::before {
     content: '';
-    width: 3px;
-    height: 18px;
-    background: var(--cyan);
+    width: 4px;
+    height: 20px;
     border-radius: 2px;
+    flex-shrink: 0;
   }
+  .cat-title .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .cat-title .desc {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+  .cat-brief::before { background: var(--cyan); }
+  .cat-brief .count { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .cat-paper::before { background: var(--purple); }
+  .cat-paper .count { background: rgba(139,92,246,0.12); color: var(--purple); }
+  .cat-exp::before { background: var(--green); }
+  .cat-exp .count { background: rgba(16,185,129,0.12); color: var(--green); }
+  .cat-env::before { background: var(--orange); }
+  .cat-env .count { background: rgba(245,158,11,0.12); color: var(--orange); }
+  .cat-english::before { background: var(--pink); }
+  .cat-english .count { background: rgba(236,72,153,0.12); color: var(--pink); }
+  .cat-lab::before { background: var(--cyan); }
+  .cat-lab .count { background: rgba(6,182,212,0.12); color: var(--cyan); }
 
   /* Notes List */
   .notes-list {
@@ -219,13 +247,8 @@
     color: var(--bg);
   }
 
-  /* Empty state */
-  .empty-hint {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-    font-size: 14px;
-  }
+  /* Category gap */
+  .cat-gap { height: 36px; }
 
   /* Footer */
   .footer {
@@ -245,7 +268,7 @@
     .hero { padding: 48px 0 32px; }
     .hero h1 { font-size: 28px; }
     .hero p { font-size: 14px; }
-    .stats { gap: 32px; }
+    .stats { gap: 24px; }
     .note-card { padding: 20px; }
     .note-title { font-size: 16px; }
   }
@@ -264,12 +287,12 @@
         <div class="label">笔记总数</div>
       </div>
       <div class="stat">
-        <div class="num">2</div>
-        <div class="label">论文精读</div>
+        <div class="num">4</div>
+        <div class="label">每日简报</div>
       </div>
       <div class="stat">
-        <div class="num">1</div>
-        <div class="label">环境搭建</div>
+        <div class="num">2</div>
+        <div class="label">论文精读</div>
       </div>
       <div class="stat">
         <div class="num">1</div>
@@ -277,11 +300,11 @@
       </div>
       <div class="stat">
         <div class="num">1</div>
-        <div class="label">英语口语</div>
+        <div class="label">环境搭建</div>
       </div>
       <div class="stat">
-        <div class="num">4</div>
-        <div class="label">每日简报</div>
+        <div class="num">1</div>
+        <div class="label">英语口语</div>
       </div>
       <div class="stat">
         <div class="num">1</div>
@@ -292,7 +315,9 @@
 </header>
 
 <main class="container notes-list">
-  <div class="section-title">最新笔记</div>
+
+  <!-- ===== 每日简报 ===== -->
+  <div class="cat-title cat-brief">每日简报 <span class="count">4</span><span class="desc">AI &amp; Robotics 行业日报，附论文与新闻链接</span></div>
 
   <a href="AI_Robotics_Daily_Brief_20261020.html" class="note-card">
     <div class="note-header">
@@ -312,27 +337,6 @@
       <span class="tag tag-purple">VLA</span>
       <span class="tag tag-green">Robot Agent</span>
       <span class="tag tag-orange">Peg-in-Hole</span>
-    </div>
-  </a>
-
-  <a href="ATARI_Lab学习笔记.html" class="note-card">
-    <div class="note-header">
-      <div>
-        <div class="note-number">LAB NOTES · DAY 1-3</div>
-        <div class="note-title">ATARI Lab 学习笔记：三线研究框架 + 腿式机器人学习控制综述</div>
-      </div>
-      <div class="note-arrow">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </div>
-    </div>
-    <div class="note-one-liner">
-      ATARI Lab 三线研究框架 + Day 3：Model-based vs Learning-based 控制、Sim-to-Real Gap、博士课题框架（Learning Policy → MPC → Safety Filter）。
-    </div>
-    <div class="note-tags">
-      <span class="tag tag-cyan">Lab Notes</span>
-      <span class="tag tag-purple">Planning</span>
-      <span class="tag tag-green">Learning</span>
-      <span class="tag tag-orange">Adaptation</span>
     </div>
   </a>
 
@@ -378,27 +382,6 @@
     </div>
   </a>
 
-  <a href="H1_站立平衡控制实验报告_Day1.html" class="note-card">
-    <div class="note-header">
-      <div>
-        <div class="note-number">EXPERIMENT · DAY 1</div>
-        <div class="note-title">H1 人形机器人站立平衡控制实验报告</div>
-      </div>
-      <div class="note-arrow">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </div>
-    </div>
-    <div class="note-one-liner">
-      从 Joint PD 基线（8.11s）出发，逐步引入 Torso Feedback、COM Feedback 和 Hip-Ankle 协同平衡控制，最终站立时间提升至 12.27s（+51%）。
-    </div>
-    <div class="note-tags">
-      <span class="tag tag-green">MuJoCo</span>
-      <span class="tag tag-cyan">H1 Robot</span>
-      <span class="tag tag-purple">Balance Control</span>
-      <span class="tag tag-orange">PD Control</span>
-    </div>
-  </a>
-
   <a href="AI_Robotics_Daily_Brief_20261014.html" class="note-card">
     <div class="note-header">
       <div>
@@ -420,7 +403,10 @@
     </div>
   </a>
 
-  <div class="section-title" style="margin-top: 20px;">论文精读</div>
+  <div class="cat-gap"></div>
+
+  <!-- ===== 论文精读 ===== -->
+  <div class="cat-title cat-paper">论文精读 <span class="count">2</span><span class="desc">人形机器人学习与控制论文深度笔记</span></div>
 
   <a href="人形机器人结构化策略阅读笔记.html" class="note-card">
     <div class="note-header">
@@ -464,6 +450,37 @@
     </div>
   </a>
 
+  <div class="cat-gap"></div>
+
+  <!-- ===== 实验报告 ===== -->
+  <div class="cat-title cat-exp">实验报告 <span class="count">1</span><span class="desc">MuJoCo 仿真实验记录与数据</span></div>
+
+  <a href="H1_站立平衡控制实验报告_Day1.html" class="note-card">
+    <div class="note-header">
+      <div>
+        <div class="note-number">EXPERIMENT · DAY 1</div>
+        <div class="note-title">H1 人形机器人站立平衡控制实验报告</div>
+      </div>
+      <div class="note-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+    </div>
+    <div class="note-one-liner">
+      从 Joint PD 基线（8.11s）出发，逐步引入 Torso Feedback、COM Feedback 和 Hip-Ankle 协同平衡控制，最终站立时间提升至 12.27s（+51%）。
+    </div>
+    <div class="note-tags">
+      <span class="tag tag-green">MuJoCo</span>
+      <span class="tag tag-cyan">H1 Robot</span>
+      <span class="tag tag-purple">Balance Control</span>
+      <span class="tag tag-orange">PD Control</span>
+    </div>
+  </a>
+
+  <div class="cat-gap"></div>
+
+  <!-- ===== 环境搭建 ===== -->
+  <div class="cat-title cat-env">环境搭建 <span class="count">1</span><span class="desc">仿真环境与工具链搭建记录</span></div>
+
   <a href="MuJoCo_H1仿真环境搭建笔记.html" class="note-card">
     <div class="note-header">
       <div>
@@ -485,6 +502,11 @@
     </div>
   </a>
 
+  <div class="cat-gap"></div>
+
+  <!-- ===== 英语口语 ===== -->
+  <div class="cat-title cat-english">英语口语 <span class="count">1</span><span class="desc">German PhD Survival English</span></div>
+
   <a href="英语口语笔记_Lessons1-3.html" class="note-card">
     <div class="note-header">
       <div>
@@ -503,6 +525,32 @@
       <span class="tag tag-purple">Bargaining</span>
       <span class="tag tag-green">Return & Refund</span>
       <span class="tag tag-cyan">Small Talk</span>
+    </div>
+  </a>
+
+  <div class="cat-gap"></div>
+
+  <!-- ===== 实验室笔记 ===== -->
+  <div class="cat-title cat-lab">实验室笔记 <span class="count">1</span><span class="desc">研究方向、框架与学习综述</span></div>
+
+  <a href="ATARI_Lab学习笔记.html" class="note-card">
+    <div class="note-header">
+      <div>
+        <div class="note-number">LAB NOTES · DAY 1-3</div>
+        <div class="note-title">ATARI Lab 学习笔记：三线研究框架 + 腿式机器人学习控制综述</div>
+      </div>
+      <div class="note-arrow">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+    </div>
+    <div class="note-one-liner">
+      ATARI Lab 三线研究框架 + Day 3：Model-based vs Learning-based 控制、Sim-to-Real Gap、博士课题框架（Learning Policy → MPC → Safety Filter）。
+    </div>
+    <div class="note-tags">
+      <span class="tag tag-cyan">Lab Notes</span>
+      <span class="tag tag-purple">Planning</span>
+      <span class="tag tag-green">Learning</span>
+      <span class="tag tag-orange">Adaptation</span>
     </div>
   </a>
 
