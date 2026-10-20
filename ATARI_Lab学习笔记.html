@@ -715,6 +715,114 @@
       <div class="p-row"><strong class="remember">需要记住：</strong>BiConMP 的重点是高效的非线性 MPC 与全身运动规划，<strong>不是</strong>无条件的全局最优或安全保证。</div>
     </div>
 
+    <div class="sub-title" style="margin-top: 28px;">BiConMP 使用的三个优化算法</div>
+    <div class="one-liner" style="font-size: 14px; padding: 16px 22px; margin-bottom: 16px;">
+      这三个算法并不是相互竞争、只能选一个的方法，而是在<strong>不同层次承担不同的优化任务</strong>。
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="c-idx">A · ADMM</span>
+          <h3>交替方向乘子法 — Alternating Direction Method of Multipliers</h3>
+        </div>
+        <div class="core"><strong>核心思想：</strong>拆分问题，交替求解，协调结果。</div>
+        <div class="flow">将优化问题拆成若干子问题 → 交替求解不同子问题 → 通过协调变量和乘子更新使结果满足一致性条件 → 重复迭代直到停止条件</div>
+        <ul>
+          <li><strong>在 BiConMP 中：</strong>利用质心动力学优化问题的结构，协调相关变量。</li>
+          <li><strong>注意：</strong>ADMM 并不是把任何复杂问题随意拆开都能保证收敛，其理论保证取决于问题结构与相应假设。</li>
+          <li><strong>记忆关键词：</strong>拆分、交替求解、协调。</li>
+        </ul>
+      </div>
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="c-idx">B · FISTA</span>
+          <h3>快速迭代收缩阈值算法 — Fast Iterative Shrinkage-Thresholding Algorithm</h3>
+        </div>
+        <div class="core"><strong>核心思想：</strong>利用梯度更新，并通过加速机制提高迭代效率。</div>
+        <div class="flow">根据当前解计算梯度 → 沿降低目标函数的方向更新变量 → 用近端算子（proximal operator）处理约束或正则项 → 加速机制改进下一轮迭代</div>
+        <ul>
+          <li><strong>在 BiConMP 中：</strong>求解 ADMM 框架内的相关凸子问题，包括适合采用近端步骤处理的约束。</li>
+          <li><strong>注意：</strong>FISTA 对适用的凸优化问题有成熟的收敛理论，但并不意味着可以直接求解任意非凸机器人优化问题并保证全局最优。</li>
+          <li><strong>记忆关键词：</strong>梯度更新、近端步骤、加速。</li>
+        </ul>
+      </div>
+      <div class="concept-card">
+        <div class="concept-head">
+          <span class="c-idx">C · DDP</span>
+          <h3>微分动态规划 — Differential Dynamic Programming</h3>
+        </div>
+        <div class="core"><strong>核心思想：</strong>从一条已有轨迹出发，分析动作调整对后续运动的影响，再逐步改进整条轨迹。</div>
+        <div class="flow">从初始轨迹出发 → 利用系统动力学和局部近似从后往前计算代价敏感性 → 计算控制输入调整 → 向前重新模拟更新轨迹 → 反复迭代直到满足停止条件</div>
+        <ul>
+          <li><strong>在 BiConMP 中：</strong>用于全身运动学轨迹优化，使全身关节运动与质心动量规划协调，并考虑摆动脚等运动任务。</li>
+          <li><strong>注意：</strong>DDP 利用动力学的时间序列结构，但通常属于局部轨迹优化方法，结果可能受初始轨迹影响。</li>
+          <li><strong>记忆关键词：</strong>轨迹优化、反向计算、前向更新。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="height: 28px;"></div>
+
+    <div class="sub-title">三种算法如何配合？</div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup>
+          <col style="width: 20%">
+          <col style="width: 38%">
+          <col style="width: 42%">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>算法</th>
+            <th>主要职责</th>
+            <th>通俗理解</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ADMM</td>
+            <td>拆分并协调优化变量</td>
+            <td>将问题拆开，轮流求解</td>
+          </tr>
+          <tr>
+            <td>FISTA</td>
+            <td>快速求解适用的凸子问题</td>
+            <td>利用梯度和加速机制改进解</td>
+          </tr>
+          <tr>
+            <td>DDP</td>
+            <td>优化全身运动学轨迹</td>
+            <td>从已有轨迹出发，迭代改进动作</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note-box" style="margin-top: 14px;">
+      <strong>BiConMP 的整体思路：</strong>先通过 ADMM 与 FISTA 求解结构化的质心动力学优化问题，再通过 DDP 优化全身运动学轨迹，并协调两个阶段的结果。最终，根据规划状态、加速度及接触力等信息，结合逆动力学计算实际控制输入。
+    </div>
+    <div class="note-box" style="background: rgba(139,92,246,0.07); border-color: rgba(139,92,246,0.2);">
+      <strong>重要区别：</strong>ADMM 与 CBO 虽然都涉及某种协调机制，但它们不是同一种算法。ADMM 主要协调优化问题的分块变量；CBO 则利用候选解群体的共识来搜索更优解。
+    </div>
+
+    <div style="height: 28px;"></div>
+
+    <div class="sub-title">BiConMP 需要记住什么？</div>
+    <div class="five-list">
+      <div class="five-item">
+        <span class="idx">1</span>
+        <p>它关注的是<strong>高效的非线性 MPC 与全身运动规划</strong>。</p>
+      </div>
+      <div class="five-item">
+        <span class="idx">2</span>
+        <p><strong>结构化优化</strong>是其重要设计思路。</p>
+      </div>
+      <div class="five-item">
+        <span class="idx">3</span>
+        <p>它不是无条件的<strong>全局最优算法</strong>，也不是完整的<strong>安全保证框架</strong>。</p>
+      </div>
+    </div>
+
     <div class="paper-card">
       <span class="paper-tag">PAPER 02 · Viability-based MPC</span>
       <h3>Robust Walking Based on MPC with Viability Guarantees</h3>
