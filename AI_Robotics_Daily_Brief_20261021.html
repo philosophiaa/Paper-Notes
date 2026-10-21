@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI & Robotics Daily Brief · 2026-10-21</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  .header { padding: 52px 0 36px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+  .header h1 .accent { color: var(--cyan); }
+  .header .date { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
+  .header p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-h2 {
+    font-size: 19px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .pct {
+    font-size: 12px; font-family: 'JetBrains Mono', monospace;
+    background: rgba(6,182,212,0.1); color: var(--cyan);
+    padding: 3px 10px; border-radius: 4px; font-weight: 500;
+  }
+  .section-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 22px; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(6,182,212,0.2);
+    border-radius: 12px; padding: 24px; margin-bottom: 8px;
+  }
+  .highlight-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .highlight-item:last-child { margin-bottom: 0; }
+  .highlight-item .num {
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--cyan);
+    flex-shrink: 0; min-width: 24px;
+  }
+
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 22px; margin-bottom: 16px;
+  }
+  .paper-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .paper-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; line-height: 1.5; }
+  .meta { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; font-family: 'JetBrains Mono', monospace; }
+  .paper-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 10px; }
+  .paper-card p:last-child { margin-bottom: 0; }
+  .paper-card strong { color: var(--text); }
+
+  .insight {
+    margin-top: 14px; padding: 14px 16px;
+    background: rgba(0,0,0,0.2); border-radius: 8px;
+    border-left: 3px solid var(--purple);
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .insight strong { color: var(--purple); }
+
+  .paper-meta-row {
+    margin: 10px 0 12px; padding: 10px 14px;
+    background: rgba(0,0,0,0.2); border-radius: 6px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .paper-meta-row b { color: var(--text); }
+
+  /* 表格 */
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(6,182,212,0.08); color: var(--cyan);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table tr:hover td { background: rgba(30,41,59,0.5); }
+
+  .conclusion-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,182,212,0.08));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .conclusion-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .conclusion-box p:last-child { margin-bottom: 0; }
+  .conclusion-box strong { color: var(--text); }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 21px; }
+    .section-h2 { font-size: 17px; }
+    .paper-card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">DAILY BRIEF</div>
+    <h1>🤖 AI &amp; Robotics <span class="accent">Daily Brief</span></h1>
+    <div class="date">2026年10月21日 · 星期三</div>
+    <p>机器人与具身智能 60% ｜ AI 基础模型与技术 30% ｜ 工业动态 10%<br>本期信息截至北京时间 10 月 21 日上午 9 点，重点追踪 10 月 19—20 日公开的论文、开源项目和产业消息。论文均附原文链接、研究团队及发表状态，并区分正式接收与预印本。</p>
+  </div>
+</header>
+
+<!-- 今日核心观察 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">今日核心观察</h2>
+    <div class="highlight-box">
+      <div class="highlight-item">
+        <span class="num">①</span>
+        <span><strong>机器人研究开始更加重视动作执行的可靠性。</strong> 今天最值得关注的变化，不只是让模型学会更多动作，而是让执行更可靠。有三个代表性进展。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">②</span>
+        <span><strong>机器人开始学习什么时候该用力。</strong> 新的 VLA 研究让模型判断当前操作是否需要依赖接触力反馈，而不是把所有传感器信息简单拼在一起。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">③</span>
+        <span><strong>机器人开始学习如何处理更长的任务。</strong> 卡内基梅隆大学等机构的研究尝试把复杂搜索过程学进策略，让机器人不必每次都重新进行大量规划。</span>
+      </div>
+      <div class="highlight-item">
+        <span class="num">④</span>
+        <span><strong>模型压缩与强化学习开始结合。</strong> 新论文表明，即使大幅压缩 VLA 的语言模型，也可以通过强化学习恢复相当一部分操作能力。</span>
+      </div>
+    </div>
+    <p class="section-sub" style="margin-top: 14px;">本期优先关注已被 CoRL 2026 接收的研究，同时保留几项尚未同行评审、但工程价值较高的工作。</p>
+  </div>
+</section>
+
+<!-- 一、机器人与具身智能 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">一、机器人与具身智能 <span class="pct">60%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">01 ｜ CoRL 2026</div>
+      <h3>FR-VLA：机器人开始判断什么时候需要"用力感知"</h3>
+      <div class="meta">让 VLA 理解接触力的重要性</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.25981?utm_source=chatgpt.com" target="_blank">FR-VLA: Implicit Force Reasoning VLA for Contact-Rich Manipulation</a></p>
+      <div class="paper-meta-row">
+        <b>作者：</b>Jiaju He、Zhiyuan Yang、Ruyang Han、Jiahong Tang、Zhiping Lin、Haiyue Zhu。<br>
+        <b>出处：</b>arXiv:2610.25981 ｜ <b>发表状态：</b>已接收 CoRL 2026。<br>
+        <b>学术认可度：</b>高。CoRL 是 Robot Learning 领域最重要的国际会议之一。研究机构以论文正式署名为准，目前未独立核实全部作者单位。<a href="https://arxiv.org/abs/2610.25981" target="_blank">arXiv</a>
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>假设机器人需要把插头插进插座。刚开始靠近插座时，视觉信息最重要；但真正接触插座后，机器人更需要知道有没有卡住、是否用力过大。传统 VLA 即使加入力传感器，也不一定知道什么时候应该重视这些信号。</p>
+      <p>FR-VLA 增加了一个判断机制：先理解当前任务和视觉场景，再决定接触力信息应该对动作产生多大影响。这样，机器人就能在不同操作阶段动态调整对力觉的依赖程度。</p>
+      <p><strong>实验结果：</strong>研究在两种机器人平台、五类接触操作任务上进行了真实实验。作者报告，该方法在比较的六个评估阶段中取得了最高的平均成功率，并且能够根据接触阶段改变对力觉信息的使用程度。</p>
+      <div class="insight">
+        <strong>影响分析：</strong>这项研究的价值不在于增加一种传感器，而在于让机器人学会合理使用传感器。对插拔、装配、旋拧和灵巧手操作等任务，这可能比单纯扩大 VLA 参数量更有实际意义。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">02 ｜ CoRL 2026 Oral</div>
+      <h3>DISCO：让机器人学会提前考虑十几步之后的结果</h3>
+      <div class="meta">CMU · 通过搜索训练长任务操作策略</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.25785?utm_source=chatgpt.com" target="_blank">Long-Horizon Multi-Object Rearrangement via Distilled Tree Search over Continuous Actions</a></p>
+      <div class="paper-meta-row">
+        <b>研究机构：</b>卡内基梅隆大学（CMU）机器人研究所等。<br>
+        <b>重要研究者：</b>David Held、Maxim Likhachev、Yejin Choi。David Held 长期研究机器人操作和学习，Maxim Likhachev 在机器人搜索与运动规划领域有代表性成果。<br>
+        <b>第一作者：</b>Kallol Saha。<br>
+        <b>出处：</b>arXiv:2610.25785 ｜ <b>发表状态：</b>CoRL 2026 Oral（口头报告）。<br>
+        <b>学术认可度：</b>很高。这不仅是一篇被 CoRL 接收的论文，还获得了 Oral 展示机会。<a href="https://arxiv.org/abs/2610.25785" target="_blank">arXiv</a><br>
+        <b>项目主页：</b><a href="https://distilled-search.github.io/?utm_source=chatgpt.com" target="_blank">DISCO Research</a>
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>假设机器人要整理一张堆满物品的桌子。它不能只考虑眼前应该拿起哪个物体——如果先把杯子放在错误的位置，可能会挡住后面要移动的盒子，导致整个任务失败。传统模仿学习容易学到局部动作，却不一定理解动作之间的长期关系。</p>
+      <p>DISCO 使用一种比较巧妙的方法：先在仿真里进行大量搜索，找出完成复杂任务的好方案，再让神经网络学习这些搜索结果。它采用蒙特卡洛树搜索（MCTS），并通过 GPU 并行仿真提高搜索效率。训练完成后，机器人可以直接使用学到的策略，不需要在每次执行时重新进行完整搜索。</p>
+      <p><strong>实验结果：</strong>论文在仿真和真实机器人多物体整理任务中进行了验证。作者报告，DISCO 的表现优于所比较的行为克隆、强化学习及搜索规划基线。</p>
+      <div class="insight">
+        <strong>影响分析：</strong>这是一个值得重视的技术组合：搜索负责发现好的长期决策，神经网络负责把这些决策变成快速执行的策略。相比完全依赖大模型一步步推理，这种方法可能更适合需要考虑物理约束的机器人长任务。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">03 ｜ CoRL 2026</div>
+      <h3>MoDex：让灵巧手一次抓住多个物体</h3>
+      <div class="meta">多物体灵巧抓取</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.23888?utm_source=chatgpt.com" target="_blank">MoDex: Towards Universal Multi-Object Dexterous Grasping</a></p>
+      <div class="paper-meta-row">
+        <b>作者：</b>Jing Xiong、Jiale Xie、Haoqi Yuan、Chaoyi Xu、Zongqing Lu。<br>
+        <b>出处：</b>arXiv:2610.23888 ｜ <b>发表状态：</b>已接收 CoRL 2026。<br>
+        <b>学术认可度：</b>高。<a href="https://arxiv.org/abs/2610.23888" target="_blank">arXiv</a><br>
+        <b>开源项目：</b><a href="https://github.com/?utm_source=chatgpt.com" target="_blank">MoDex GitHub</a>（具体仓库可通过论文中的 Code 链接进入）。
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>现在不少灵巧手研究集中在一次抓住一个物体。但现实生活中，人类经常一次拿起几个东西——例如，从桌面上同时抓起两支笔，或者一次拿起多个小零件。问题在于，多个物体之间的位置关系会不断变化，传统抓取策略很难适应。</p>
+      <p>MoDex 根据物体之间的空间关系，采用不同操作方式：物体靠得近时，尝试一次性抓取；物体分得比较开时，则先调整物体的位置，再完成抓取。</p>
+      <p><strong>实验结果：</strong>在未见过的物体、相互靠近的布局中，MoDex 达到 <strong>61.24% 的抓取成功率</strong>。论文还展示了跨机器人平台泛化，以及仅通过仿真训练后迁移到真实机器人的能力。作者公开了代码和预训练模型。</p>
+      <div class="insight">
+        <strong>影响分析：</strong>灵巧操作不能只看单物体抓取成功率。多物体操作涉及抓取顺序、接触关系和动作协调，是机器人进入真实家庭和工业场景必须面对的问题。MoDex 说明，通过合理设计任务结构，可以减少对大规模真实抓取数据的依赖。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">04 ｜ 预印本</div>
+      <h3>HAF-VLA：先管好走路，再管好双手</h3>
+      <div class="meta">人形机器人控制 · 分阶段生成全身动作</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.26584?utm_source=chatgpt.com" target="_blank">HAF-VLA: Hierarchical Action Flow Framework for Humanoid Vision-Language-Action Control</a></p>
+      <div class="paper-meta-row">
+        <b>作者：</b>Langzhe Gu、Chengkai Hou、Jian Tang、Shanghang Zhang、Zhengping Che 等。<br>
+        <b>出处：</b>arXiv:2610.26584 ｜ <b>发表状态：</b>10 月 19 日提交的预印本，尚未确认正式接收。<br>
+        <b>学术认可度：</b>待同行评审。
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>人形机器人一边走路一边拿东西，比固定机械臂复杂得多。假设机器人需要走到桌边、弯腰、伸手拿杯子——它不仅要控制双手，还得同时考虑腿、腰、头部和身体平衡。如果让 VLA 一次性生成全身动作，某个部位的动作不准确，可能引起其他部位不必要的补偿。</p>
+      <p>HAF-VLA 改成分阶段生成动作：先决定怎么移动身体和头部，再调整腰部，最后生成完整的操作动作。不同阶段之间会传递信息，避免后面的动作与前面的决策冲突。</p>
+      <p><strong>实验与影响：</strong>作者在六项真实人形机器人任务中进行了验证，报告了相比现有模型更好的全身移动操作表现。<a href="https://arxiv.org/list/cs.RO/new" target="_blank">arXiv</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>这说明通用 VLA 未必需要直接控制所有关节。分层控制可能更适合人形机器人，但分层方法是否优于完全端到端控制，还需要更大规模的对比实验。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">05 ｜ 预印本</div>
+      <h3>PaceVLA：让机器人该快的时候快，该慢的时候慢</h3>
+      <div class="meta">KAIST 等 · 自适应动作执行速度</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.25961" target="_blank">PaceVLA: Adaptive Temporal Action Quantization in Vision-Language-Action Models</a></p>
+      <div class="paper-meta-row">
+        <b>研究机构：</b>韩国科学技术院（KAIST）、RLWRLD、高丽大学、首尔大学。<br>
+        <b>重要研究者：</b>Jinwoo Shin。<br>
+        <b>出处：</b>arXiv:2610.25961 ｜ <b>发表状态：</b>10 月 19 日提交的预印本，未确认正式接收。<br>
+        <b>项目主页：</b><a href="https://pacevla.github.io/" target="_blank">PaceVLA</a>
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>很多机器人通过人类遥操作数据学习动作，但人类遥操作通常比较慢，机器人学会后也可能照着这种慢节奏执行。例如，把手臂从桌子左侧移动到右侧时，机器人完全可以快速移动；但真正抓住杯子时，就需要减速、精确调整。</p>
+      <p>PaceVLA 让机器人自己判断：当前动作能不能加速？如果能，可以一次执行多长的一段动作？在没有接触物体时，系统使用较大的动作步长；接近抓取和精细操作阶段时，再切换到更细的控制。</p>
+      <p><strong>实验结果：</strong>在一项真实机器人传送带搬运任务中：</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <colgroup><col style="width: 40%"><col style="width: 30%"><col style="width: 30%"></colgroup>
+          <thead><tr><th>指标</th><th>原始 GR00T N1.5</th><th>加入 PaceVLA</th></tr></thead>
+          <tbody>
+            <tr><td>每分钟处理包裹</td><td>3.6 个</td><td>6.3 个</td></tr>
+            <tr><td>吞吐量</td><td>—</td><td>提高约 75%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>研究还在双臂机器人、Franka 机械臂等平台进行了验证。<a href="https://pacevla.github.io/" target="_blank">pacevla.github.io</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>这是 VLA 工业化中很实际的问题。机器人不仅要完成任务，还需要达到一定的工作速度。相比单纯减少模型计算时间，PaceVLA 直接优化整个动作执行过程，因此更接近实际生产效率指标。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">06 ｜ 预印本</div>
+      <h3>SPAR：VLA 模型压缩 67%，再通过强化学习恢复能力</h3>
+      <div class="meta">重要性：★★★★★ ｜ 模型压缩、强化学习、边缘部署</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.26487" target="_blank">SPAR: Structural Pruning and Action Recovery for Vision-Language-Action Models</a></p>
+      <div class="paper-meta-row">
+        <b>作者：</b>Shenli Zheng、Zhou Fang、Yuan Du、Yijiang Liu、Li Du。<br>
+        <b>出处：</b>arXiv:2610.26487 ｜ <b>发表状态：</b>10 月 19 日提交的预印本，未确认正式接收。
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>VLA 往往包含一个比较大的视觉语言模型，以及负责生成动作的模块。但机器人端侧计算资源有限，直接运行完整模型可能成本较高。SPAR 尝试先把模型中不太重要的参数删除，再利用强化学习恢复操作能力。</p>
+      <p>可以理解成：大模型 → 删除部分参数 → 小模型能力下降 → 强化学习恢复能力。</p>
+      <p><strong>实验结果：</strong>以 π₀.₅ 为基础：</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <colgroup><col style="width: 34%"><col style="width: 22%"><col style="width: 22%"><col style="width: 22%"></colgroup>
+          <thead><tr><th>指标</th><th>压缩前</th><th>压缩后</th><th>变化</th></tr></thead>
+          <tbody>
+            <tr><td>语言主干参数</td><td>2.34B</td><td>0.09B</td><td>—</td></tr>
+            <tr><td>完整模型参数</td><td>3.37B</td><td>1.12B</td><td>减少约 67%</td></tr>
+            <tr><td>LIBERO 平均成功率</td><td>84.55%</td><td>压缩后经 RL 恢复至 93.45%</td><td>—</td></tr>
+            <tr><td>推理速度</td><td>1×</td><td>1.98×</td><td>完整策略推理速度达原模型 1.98 倍</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>压缩后经过强化学习，LIBERO 四套基准的平均成功率从 <strong>84.55% 恢复至 93.45%</strong>。<a href="https://arxiv.org/abs/2610.26487" target="_blank">arXiv</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>这篇论文值得关注，因为它把模型压缩和机器人强化学习连接了起来。以前常见的思路是通过蒸馏或监督微调恢复压缩模型的性能，SPAR 则表明，强化学习也可以成为模型压缩后的能力恢复手段。不过，目前主要证据来自 LIBERO 基准，真实机器人上的效果仍有待验证。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 二、AI 基础模型与相关技术 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">二、AI 基础模型与相关技术 <span class="pct" style="background: rgba(139,92,246,0.1); color: var(--purple);">30%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">07 ｜ 开源</div>
+      <h3>Google 与 Meta 联合开源 TorchTPU</h3>
+      <div class="meta">10 月 20 日正式开源 ｜ 重要性：★★★★★</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.24161" target="_blank">TorchTPU — A Hybrid Eager/Compiled Architecture for Native PyTorch Execution on TPU</a></p>
+      <div class="paper-meta-row">
+        <b>出处：</b>arXiv:2610.24161 ｜ <b>官方公告：</b><a href="https://cloud.google.com/blog/topics/ai-infrastructure/torchtpu-is-now-open-source-run-native-pytorch-on-tpus?utm_source=chatgpt.com" target="_blank">Google Cloud 10 月 20 日公告</a><br>
+        <b>发表状态：</b>开源系统技术论文，未确认正式会议接收。
+      </div>
+      <p><strong>这件事为什么重要？</strong></p>
+      <p>过去，PyTorch 开发者如果希望把模型从 GPU 迁移到 Google TPU，通常需要处理一些框架兼容问题。TorchTPU 的目标是让 TPU 成为 PyTorch 原生支持的计算设备。它同时支持即时执行和编译优化，并与 vLLM、SGLang 等推理框架集成。</p>
+      <div class="insight">
+        <strong>影响分析：</strong>这不是一个新的基础模型，而是基础模型训练与推理基础设施的变化。它降低了 PyTorch 模型使用 TPU 的门槛，让开发者拥有更多硬件选择。对于大模型和 Physical AI 训练平台而言，这有助于推动计算框架与硬件进一步解耦。但 TPU 与 GPU 的实际性能和成本仍取决于具体工作负载，不能简单认定某一种硬件更优。<a href="https://cloud.google.com/blog/topics/ai-infrastructure/torchtpu-is-now-open-source-run-native-pytorch-on-tpus?utm_source=chatgpt.com" target="_blank">Google Cloud</a>
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">08 ｜ 预印本</div>
+      <h3>MIT：让 AI 看着视频学动作，不需要人工标注每一步</h3>
+      <div class="meta">Mirror · 自我改进的视频到动作模型</div>
+      <p><strong>论文：</strong><a href="https://arxiv.org/abs/2610.24177" target="_blank">Self-Improving Video-to-Action Models</a></p>
+      <div class="paper-meta-row">
+        <b>研究机构：</b>麻省理工学院（MIT）。<br>
+        <b>作者：</b>Hyunwoo Ryu、Eric Ming Chen、Max Wilcoxson、Vincent Sitzmann。<br>
+        <b>出处：</b>arXiv:2610.24177 ｜ <b>发表状态：</b>10 月 16 日提交的预印本，未确认正式接收。<br>
+        <b>项目主页：</b><a href="https://wilcoxsonm21.github.io/mirror/" target="_blank">Mirror</a>
+      </div>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>假设 AI 看了一段人类完成任务的视频。视频告诉了 AI 任务应该如何完成，但没有告诉它每一帧对应什么具体动作。过去，通常需要大量视频与动作配对的数据，才能训练模型。Mirror 尝试减少这种依赖。</p>
+      <p>它先根据视频计划猜测应该执行什么动作，然后自己尝试。如果执行失败，就重新观察环境、调整动作，并利用这次尝试产生的数据继续训练。相当于先看视频学个大概，再通过不断尝试掌握具体动作。</p>
+      <p><strong>实验结果：</strong>研究在 Atari、DeepMind Control、OGBench 和 Minecraft 等环境中进行了验证。在 Minecraft 生存模式中，Mirror 不依赖专家动作标签或人工设计的任务奖励，通过自我改进完成了制作铁镐的长时序任务。在另一项熔岩逃生测试中，保留过去尝试记录后，30 次生命内的累计逃生成功率从 <strong>46% 提升至 76%</strong>。<a href="https://wilcoxsonm21.github.io/mirror/" target="_blank">Wilcoxson M21</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>这是视频世界模型与 Agent 学习结合的重要研究方向。如果模型能够通过视频计划和自身交互不断改进，未来可能减少机器人对昂贵动作标注数据的依赖。但目前这些成果主要来自游戏和模拟环境，不能直接等同于真实机器人的灵巧操作能力。<br>
+        <strong>开源状态：</strong>项目主页已开放，代码尚未发布。
+      </div>
+    </div>
+
+    <div class="paper-card">
+      <div class="paper-num">09 ｜ 公告</div>
+      <h3>Microsoft：未来可能需要专门的 Agent 来监督其他 Agent</h3>
+      <div class="meta">10 月 19 日公告 ｜ 重要性：★★★★☆</div>
+      <p><strong>官方出处：</strong><a href="https://blogs.microsoft.com/blog/2026/10/19/securing-the-agentic-insider/?utm_source=chatgpt.com" target="_blank">Securing the agentic insider</a></p>
+      <p><strong>它解决什么问题？</strong></p>
+      <p>企业开始让 Agent 自动读取文件、修改数据库、调用内部工具。但一个 Agent 即使没有被攻击，也可能因为错误理解任务而执行不合适的操作。Microsoft 提出，应该把 Agent 当成具有实际操作权限的软件主体来管理。</p>
+      <p>其 Project Perception 方案强调：给 Agent 独立身份 → 限制权限 → 实时监测行为 → 风险升高时自动干预。Microsoft 还提出 Guardian Agents 的概念，即使用专门的 Agent 监督其他 Agent 的执行行为。</p>
+      <div class="insight">
+        <strong>影响分析：</strong>Agent 正在从聊天工具走向真正的软件执行系统。未来的竞争不只是模型能不能完成任务，还包括能否证明它的执行过程可控、可审计、可中断。这一问题对机器人同样重要——物理机器人一旦执行错误动作，后果可能比普通软件操作更加直接。需要注意，Microsoft 的公告既包含现有安全能力，也包含进一步发展的方向，不能把所有描述都视为已经全面部署。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 三、工业与商业化动态 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">三、工业与商业化动态 <span class="pct" style="background: rgba(16,185,129,0.1); color: var(--green);">10%</span></h2>
+
+    <div class="paper-card">
+      <div class="paper-num">10 ｜ 公告</div>
+      <h3>西门子与 NVIDIA：Physical AI 开始深入真实工厂</h3>
+      <div class="meta">10 月 19 日公告 ｜ 重要性：★★★★★</div>
+      <p><strong>官方出处：</strong><a href="https://press.siemens.com/global/en/pressrelease/siemens-partners-nvidia-advance-ai-driven-autonomous-factories?utm_source=chatgpt.com" target="_blank">Siemens 新闻公告</a></p>
+      <p>Siemens 与 NVIDIA 公布了双方在德国埃尔朗根电子工厂的最新合作成果。</p>
+      <p><strong>双方具体做什么？</strong></p>
+      <p>这次合作不是简单地把 AI 接入工厂管理软件。核心是将工厂的真实生产流程搬进数字孪生环境，让 AI 在虚拟环境中预测和优化生产。例如，工厂准备引入一条新产线时，可以先在虚拟环境中测试设备布局、生产节拍和潜在问题，等方案验证后，再应用到真实工厂。双方还在尝试让 Agent 参与生产规划，根据设备状态和生产需求调整计划。</p>
+      <p><strong>公布的效果：</strong>根据 Siemens 官方披露：</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <colgroup><col style="width: 34%"><col style="width: 66%"></colgroup>
+          <thead><tr><th>应用</th><th>报告效果</th></tr></thead>
+          <tbody>
+            <tr><td>虚拟化生产准备</td><td>工程工作量最高减少 85%</td></tr>
+            <tr><td>Agent 辅助生产规划</td><td>成本最高节省 20%</td></tr>
+            <tr><td>数字孪生</td><td>用于生产方案验证与优化</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>这些数字是公司公布的特定应用效果，不能直接推广到所有工厂。<a href="https://press.siemens.com/global/en/pressrelease/siemens-partners-nvidia-advance-ai-driven-autonomous-factories?utm_source=chatgpt.com" target="_blank">西门子新闻</a></p>
+      <div class="insight">
+        <strong>影响分析：</strong>这项合作体现了 NVIDIA Physical AI 战略的一条重要商业化路线：不一定先让人形机器人进入工厂，而是先让整个工厂拥有更强的仿真、预测和优化能力。对 NVIDIA 而言，Omniverse、仿真计算和 AI 基础设施可以先进入工业流程；对 Siemens 而言，工业软件、自动化系统和生产数据是其核心优势。双方的合作实际上是把 AI 与已有工业系统结合，而不只是开发新的机器人模型。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 四、今日技术趋势判断 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">四、今日技术趋势判断</h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup><col style="width: 24%"><col style="width: 26%"><col style="width: 50%"></colgroup>
+        <thead><tr><th>技术方向</th><th>代表进展</th><th>主要变化</th></tr></thead>
+        <tbody>
+          <tr><td>力觉 VLA</td><td>FR-VLA</td><td>学会什么时候应该依赖接触力</td></tr>
+          <tr><td>长任务规划</td><td>DISCO</td><td>把复杂搜索得到的经验学进策略</td></tr>
+          <tr><td>灵巧操作</td><td>MoDex</td><td>从单物体抓取走向多物体操作</td></tr>
+          <tr><td>Humanoid</td><td>HAF-VLA</td><td>全身动作分阶段生成</td></tr>
+          <tr><td>VLA 执行效率</td><td>PaceVLA</td><td>根据任务阶段自动调整动作速度</td></tr>
+          <tr><td>模型压缩</td><td>SPAR</td><td>压缩后通过强化学习恢复能力</td></tr>
+          <tr><td>AI 计算平台</td><td>TorchTPU</td><td>降低基础模型使用不同硬件的门槛</td></tr>
+          <tr><td>视频与动作学习</td><td>Mirror</td><td>减少对专家动作标签的依赖</td></tr>
+          <tr><td>Agent 安全</td><td>Project Perception</td><td>从权限控制走向持续监督</td></tr>
+          <tr><td>工业 Physical AI</td><td>Siemens × NVIDIA</td><td>数字孪生与 AI 进入真实生产流程</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 五、本期综合判断 -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-h2">五、本期综合判断</h2>
+    <div class="conclusion-box">
+      <p>今天有两个特别值得关注的技术方向。</p>
+      <p><strong>第一个是 VLA 的工程化。</strong> FR-VLA、HAF-VLA 和 PaceVLA 分别解决接触力使用、全身动作协调和执行速度问题。这些问题看起来没有扩大模型参数规模那么引人注目，但它们直接影响机器人能否在真实环境中稳定工作。</p>
+      <p><strong>第二个是学习与规划的结合。</strong> DISCO 让机器人通过搜索学习长期决策，Mirror 则让模型通过视频计划和自身尝试逐渐掌握动作。它们都在尝试减少对人工示范和手工设计规则的依赖。</p>
+      <p>从产业角度看，Siemens 与 NVIDIA 的合作则提醒我们：Physical AI 的商业化不一定完全依赖人形机器人。数字孪生、工业仿真和生产优化，也可能率先形成成熟应用。</p>
+    </div>
+
+    <div style="height: 24px;"></div>
+
+    <div class="paper-card">
+      <div class="paper-num">QUALITY NOTE</div>
+      <h3>本期论文质量与可信度</h3>
+      <p>本期六篇机器人重点论文中，<strong>FR-VLA、DISCO 和 MoDex 已明确获得 CoRL 2026 接收</strong>，其中 DISCO 为 Oral。HAF-VLA、PaceVLA 和 SPAR 目前按预印本处理。</p>
+      <p>AI 部分的 TorchTPU 和 Mirror 属于公开技术研究，尚未确认正式会议接收。所有实验数字均为作者或公司在特定条件下报告的结果，不代表已经完成独立复现。</p>
+      <p><strong>本期最值得持续跟踪的三项研究：</strong>DISCO、FR-VLA、SPAR。它们分别对应机器人未来发展中的三个核心问题：如何规划复杂任务、如何理解真实物理接触，以及如何让强大的模型真正运行在机器人上。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    AI & Robotics Daily Brief · 2026-10-21
+  </div>
+</footer>
+
+</body>
+</html>
