@@ -155,6 +155,50 @@
   .cat-lab::before { background: var(--cyan); }
   .cat-lab .count { background: rgba(6,182,212,0.12); color: var(--cyan); }
 
+  /* 目录导航 */
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  .toc {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    padding: 12px 0; margin-bottom: 8px;
+    background: rgba(15,23,42,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .toc .toc-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--text-muted); letter-spacing: 1px; margin-right: 4px;
+  }
+  .toc a {
+    font-size: 13px; font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .toc a::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .toc a.toc-brief::before { background: var(--cyan); }
+  .toc a.toc-paper::before { background: var(--purple); }
+  .toc a.toc-exp::before { background: var(--green); }
+  .toc a.toc-english::before { background: var(--pink); }
+  .toc a.toc-lab::before { background: var(--cyan); }
+  .toc a:hover {
+    color: var(--text);
+    border-color: rgba(6,182,212,0.4);
+    background: var(--bg-card-hover);
+  }
+  .cat-title { scroll-margin-top: 70px; }
+
   /* Notes List */
   .notes-list {
     padding-bottom: 80px;
@@ -312,8 +356,17 @@
 
 <main class="container notes-list">
 
+  <nav class="toc" aria-label="目录导航">
+    <span class="toc-label">目录</span>
+    <a href="#sec-brief" class="toc-brief">每日简报</a>
+    <a href="#sec-paper" class="toc-paper">论文精读</a>
+    <a href="#sec-exp" class="toc-exp">实验与仿真</a>
+    <a href="#sec-english" class="toc-english">英语口语</a>
+    <a href="#sec-lab" class="toc-lab">实验室笔记</a>
+  </nav>
+
   <!-- ===== 每日简报 ===== -->
-  <div class="cat-title cat-brief">每日简报 <span class="count">5</span><span class="desc">AI &amp; Robotics 行业日报，附论文与新闻链接</span></div>
+  <div class="cat-title cat-brief" id="sec-brief">每日简报 <span class="count">5</span><span class="desc">AI &amp; Robotics 行业日报，附论文与新闻链接</span></div>
 
   <a href="AI_Robotics_Daily_Brief_20261021.html" class="note-card">
     <div class="note-header">
@@ -423,7 +476,7 @@
   <div class="cat-gap"></div>
 
   <!-- ===== 论文精读 ===== -->
-  <div class="cat-title cat-paper">论文精读 <span class="count">2</span><span class="desc">人形机器人学习与控制论文深度笔记</span></div>
+  <div class="cat-title cat-paper" id="sec-paper">论文精读 <span class="count">2</span><span class="desc">人形机器人学习与控制论文深度笔记</span></div>
 
   <a href="人形机器人结构化策略阅读笔记.html" class="note-card">
     <div class="note-header">
@@ -470,7 +523,7 @@
   <div class="cat-gap"></div>
 
   <!-- ===== 实验报告 ===== -->
-  <div class="cat-title cat-exp">实验与仿真 <span class="count">2</span><span class="desc">仿真环境搭建与实验记录</span></div>
+  <div class="cat-title cat-exp" id="sec-exp">实验与仿真 <span class="count">2</span><span class="desc">仿真环境搭建与实验记录</span></div>
 
   <a href="H1_站立平衡控制实验报告_Day1.html" class="note-card">
     <div class="note-header">
@@ -517,7 +570,7 @@
   <div class="cat-gap"></div>
 
   <!-- ===== 英语口语 ===== -->
-  <div class="cat-title cat-english">英语口语 <span class="count">1</span><span class="desc">German PhD Survival English</span></div>
+  <div class="cat-title cat-english" id="sec-english">英语口语 <span class="count">1</span><span class="desc">German PhD Survival English</span></div>
 
   <a href="英语口语笔记_Lessons1-4.html" class="note-card">
     <div class="note-header">
@@ -543,7 +596,7 @@
   <div class="cat-gap"></div>
 
   <!-- ===== 实验室笔记 ===== -->
-  <div class="cat-title cat-lab">实验室笔记 <span class="count">2</span><span class="desc">研究方向、框架与学习综述</span></div>
+  <div class="cat-title cat-lab" id="sec-lab">实验室笔记 <span class="count">2</span><span class="desc">研究方向、框架与学习综述</span></div>
 
   <a href="ATARI_Lab学习笔记_优化与安全控制.html" class="note-card">
     <div class="note-header">
