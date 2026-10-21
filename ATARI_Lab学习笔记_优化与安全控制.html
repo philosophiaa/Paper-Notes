@@ -101,13 +101,16 @@
 
   /* 公式 */
   .formula {
-    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 15px;
     background: rgba(0,0,0,0.3); border: 1px solid var(--border);
     border-left: 3px solid var(--cyan);
     border-radius: 8px; padding: 14px 18px; margin: 12px 0;
     color: var(--text); overflow-x: auto; white-space: nowrap;
+    letter-spacing: 0.5px;
   }
   .formula-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+  .formula i { color: var(--cyan); font-style: italic; }
+  .formula sub, .formula sup { font-size: 11px; color: var(--text-secondary); }
   .formula em { color: var(--cyan); font-style: normal; }
 
   /* MPC 流程 */
@@ -297,19 +300,19 @@
     <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">模型预测控制（Model Predictive Control，MPC）通过预测未来一段时间的运动，优化控制序列，然后只执行当前动作，再根据新的状态重新规划。</p>
 
     <div class="formula-label">动力学模型</div>
-    <div class="formula">x<em>_{t+1}</em> = f(x<em>_t</em>, u<em>_t</em>)</div>
+    <div class="formula"><i>x</i><sub>t+1</sub> = <i>f</i>(<i>x</i><sub>t</sub>, <i>u</i><sub>t</sub>)</div>
     <ul class="check-list">
-      <li><strong>x<em>_t</em></strong>：当前机器人状态。</li>
-      <li><strong>u<em>_t</em></strong>：控制输入。</li>
-      <li><strong>f</strong>：机器人动力学模型。</li>
-      <li><strong>x<em>_{t+1}</em></strong>：下一时刻的预测状态。</li>
+      <li><strong><i>x</i><sub>t</sub></strong>：当前机器人状态。</li>
+      <li><strong><i>u</i><sub>t</sub></strong>：控制输入。</li>
+      <li><strong><i>f</i></strong>：机器人动力学模型。</li>
+      <li><strong><i>x</i><sub>t+1</sub></strong>：下一时刻的预测状态。</li>
     </ul>
 
     <div style="height: 14px;"></div>
 
     <div class="formula-label">常见的累计代价</div>
-    <div class="formula">J(U) = Σ<em>_{t=0}^{H-1}</em> ℓ(x<em>_t</em>, u<em>_t</em>) + ℓ<em>_f</em>(x<em>_H</em>)</div>
-    <p style="font-size: 13px; color: var(--text-muted);">其中 U 是未来控制序列，H 是预测时域。</p>
+    <div class="formula"><i>J</i>(<i>U</i>) = Σ<sub>t=0</sub><sup>H−1</sup> ℓ(<i>x</i><sub>t</sub>, <i>u</i><sub>t</sub>) + ℓ<sub>f</sub>(<i>x</i><sub>H</sub>)</div>
+    <p style="font-size: 13px; color: var(--text-muted);">其中 <i style="color: var(--cyan);">U</i> 是未来控制序列，<i style="color: var(--cyan);">H</i> 是预测时域。</p>
 
     <div style="height: 14px;"></div>
 
@@ -379,8 +382,8 @@
         <li>根据加权扰动<strong>更新</strong>控制序列。</li>
       </ol>
       <div class="formula-label" style="margin-top: 12px;">常见的权重形式</div>
-      <div class="formula">w<em>_i</em> = exp(-J<em>_i</em>/λ) / Σ<em>_j</em> exp(-J<em>_j</em>/λ)</div>
-      <p style="font-size: 13px; color: var(--text-muted);">其中 J<em>_i</em> 是候选轨迹的代价，λ 是温度参数。其他条件相同时，低代价候选解通常获得更大的权重。</p>
+      <div class="formula"><i>w</i><sub>i</sub> = exp(−<i>J</i><sub>i</sub>/λ) / Σ<sub>j</sub> exp(−<i>J</i><sub>j</sub>/λ)</div>
+      <p style="font-size: 13px; color: var(--text-muted);">其中 <i style="color: var(--cyan);">J</i><sub style="color: var(--text-secondary);">i</sub> 是候选轨迹的代价，λ 是温度参数。其他条件相同时，低代价候选解通常获得更大的权重。</p>
     </div>
 
     <div class="algo-card">
