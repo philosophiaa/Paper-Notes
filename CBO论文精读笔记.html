@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBO 论文精读笔记 · 从局部采样优化到全局轨迹优化</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  .header { padding: 52px 0 36px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+  .header h1 .accent { color: var(--cyan); }
+  .header .meta { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
+  .header p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan);
+    background: rgba(6,182,212,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .sub-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sub-title::before { content: ''; width: 3px; height: 16px; background: var(--cyan); border-radius: 2px; }
+  .sub-title .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400;
+    color: var(--purple); background: rgba(139,92,246,0.12);
+    padding: 2px 8px; border-radius: 4px;
+  }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .paper-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .paper-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.85; margin-bottom: 8px; }
+  .paper-card p:last-child { margin-bottom: 0; }
+  .paper-card strong { color: var(--text); }
+
+  .note-box {
+    margin-top: 14px;
+    background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px; padding: 14px 18px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .note-box strong { color: var(--orange); }
+
+  .purple-note {
+    margin-top: 14px;
+    background: rgba(139,92,246,0.07); border: 1px solid rgba(139,92,246,0.25);
+    border-radius: 10px; padding: 14px 18px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .purple-note strong { color: var(--purple); }
+
+  .green-note {
+    margin-top: 14px;
+    background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 10px; padding: 14px 18px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .green-note strong { color: var(--green); }
+
+  .red-note {
+    margin-top: 14px;
+    background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.22);
+    border-radius: 10px; padding: 14px 18px;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .red-note strong { color: var(--red); }
+
+  /* 公式 */
+  .formula {
+    font-family: 'JetBrains Mono', monospace; font-size: 15px;
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan);
+    border-radius: 8px; padding: 14px 18px; margin: 12px 0;
+    color: var(--text); overflow-x: auto; white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .formula-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+  .formula i { color: var(--cyan); font-style: italic; }
+  .formula sub, .formula sup { font-size: 11px; color: var(--text-secondary); }
+  .formula .hl { color: var(--purple); font-weight: 600; }
+
+  .algo-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .algo-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--cyan); }
+  .algo-card ol { margin-left: 20px; }
+  .algo-card li { font-size: 14px; color: var(--text-secondary); line-height: 1.9; }
+  .algo-card li strong { color: var(--text); }
+
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .feature-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .feature-card .idx {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green);
+    display: block; margin-bottom: 6px;
+  }
+  .feature-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .feature-card p { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+  .feature-card p strong { color: var(--text-secondary); }
+
+  .check-list { margin: 10px 0 0; list-style: none; }
+  .check-list li {
+    font-size: 14px; color: var(--text-secondary); line-height: 1.9;
+    padding-left: 24px; position: relative; margin-bottom: 6px;
+  }
+  .check-list li::before {
+    content: ''; position: absolute; left: 2px; top: 10px;
+    width: 8px; height: 8px; border-radius: 2px;
+    background: rgba(6,182,212,0.7);
+  }
+  .check-list li strong { color: var(--text); }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(6,182,212,0.08); color: var(--cyan);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table tr:hover td { background: rgba(30,41,59,0.5); }
+
+  .ref-list { list-style: none; counter-reset: ref; }
+  .ref-list li {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+    padding-left: 34px; position: relative; margin-bottom: 8px;
+  }
+  .ref-list li::before {
+    counter-increment: ref; content: '[' counter(ref) ']';
+    position: absolute; left: 0; top: 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan);
+  }
+
+  .conclusion-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,182,212,0.08));
+    border: 1px solid rgba(16,185,129,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .conclusion-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .conclusion-box p:last-child { margin-bottom: 0; }
+  .conclusion-box strong { color: var(--text); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 22px; }
+    .section-title { font-size: 17px; }
+    .feature-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">PAPER NOTES · CBO</div>
+    <h1>CBO 论文精读笔记</h1>
+    <div class="meta">从局部采样优化到全局轨迹优化 · arXiv:2602.06868</div>
+    <p>精读 <strong>Consensus-based Optimization (CBO): Towards Global Optimality in Robotics</strong>（Sun, Jordana, Fornasier, Etesami, Khadiv, 2026，对应 RSS 2026 实验）。这篇笔记按论文结构逐节梳理：Introduction 动机、统一的全局优化视角、CBO 核心算法与收敛理论、三个机器人实验、局限与总结，并保留阅读时必须注意的边界条件。</p>
+  </div>
+</header>
+
+<!-- 01 论文基本信息 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> 论文基本信息</div>
+    <div class="paper-card">
+      <h4>Consensus-based Optimization (CBO): Towards Global Optimality in Robotics</h4>
+      <p><strong>作者：</strong>Xudong Sun、Armand Jordana、Massimo Fornasier、Jalal Etesami、Majid Khadiv</p>
+      <p><strong>发表信息：</strong>2026 年 arXiv 预印本。公开代码库说明，该工作对应 RSS 2026 的实验。</p>
+      <p><strong>论文链接：</strong><a href="https://arxiv.org/abs/2602.06868" target="_blank">https://arxiv.org/abs/2602.06868</a> ｜ <strong>公开代码：</strong><a href="https://github.com/Atarilab/cbo_to" target="_blank">github.com/Atarilab/cbo_to</a></p>
+      <p><strong>核心研究方向：</strong>无梯度优化、全局优化、机器人轨迹优化。</p>
+    </div>
+    <div class="note-box">
+      <strong>论文定位：</strong>论文的主要贡献不是首次提出 CBO，而是把已有的共识优化方法系统地引入机器人轨迹优化——通过统一的数学视角解释其搜索机制，并在长时域规划、双倒立摆和人形机器人任务中与 MPPI、CMA-ES 等方法进行比较。
+    </div>
+  </div>
+</section>
+
+<!-- 02 Introduction 精读 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> Introduction 精读：为什么需要 CBO？</div>
+
+    <div class="sub-title">2.1 机器人轨迹优化为什么困难？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">机器人轨迹优化的目标，是寻找一段控制序列，使机器人在满足系统动力学的情况下，尽可能好地完成任务（例如到达目标位置、保持平衡、避开障碍物，或在有限时间内完成某个动作）。传统优化控制方法通常依赖精心设计的代价函数，不同目标之间的权重如何设置往往需要反复调试——机器人运动越复杂，代价函数设计与优化就越困难。</p>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">此外，机器人轨迹优化通常具有以下特点：</p>
+    <ul class="check-list">
+      <li><strong>目标函数高度非凸。</strong>同一个任务可能存在多个局部最优解，而局部最优解未必是整体最好的方案。</li>
+      <li><strong>规划时域可能很长。</strong>控制序列包含很多时间节点，导致优化变量维度很高。</li>
+      <li><strong>接触动力学复杂。</strong>足底接触、碰撞和摩擦等现象会使系统动力学呈现混合、非光滑的特征。</li>
+      <li><strong>有效解可能只占搜索空间的一小部分。</strong>在障碍物密集或约束严格的环境中，只有部分控制序列能够产生有效运动。</li>
+    </ul>
+    <div class="note-box" style="margin-top: 14px;">
+      <strong>关键理解：</strong>这些特点使机器人轨迹优化不只是一个普通的数值最小化问题。算法既要找到效果好的方案，也需要有能力探索不同的候选方案。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">2.2 为什么论文关注无梯度优化？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">梯度优化通常利用目标函数的梯度，判断应该朝哪个方向调整优化变量。然而，在复杂接触场景中，获得准确、稳定的梯度可能并不容易——特别是当接触状态发生变化时，系统动力学可能不够光滑，梯度信息也可能难以可靠地指导搜索。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">随着 GPU 并行仿真技术的发展，可以同时模拟大量不同的控制序列，并直接比较它们的运动结果。因此，论文关注的是 zero-order optimization（零阶优化 / 无梯度优化）。其基本思路是：</p>
+    <div class="algo-card" style="margin-top: 12px;">
+      <ol>
+        <li>生成多个候选控制序列；</li>
+        <li>分别运行仿真并计算代价；</li>
+        <li>根据候选方案的表现调整下一轮搜索；</li>
+        <li>重复上述过程，逐渐找到更好的方案。</li>
+      </ol>
+    </div>
+    <div class="purple-note">
+      <strong>需要注意：</strong>无梯度并不等于完全不需要模型。轨迹优化仍然需要通过某种方式评估候选控制输入的结果，只是不必直接依赖目标函数的解析梯度。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">2.3 MPPI、CEM 和 CMA-ES 有什么共同问题？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">论文重点讨论了三种机器人领域常见的零阶优化方法：</p>
+    <ul class="check-list">
+      <li><strong>MPPI</strong>：Model Predictive Path Integral Control（模型预测路径积分控制）；</li>
+      <li><strong>CEM</strong>：Cross-Entropy Method（交叉熵方法）；</li>
+      <li><strong>CMA-ES</strong>：Covariance Matrix Adaptation Evolution Strategy（协方差矩阵自适应进化策略）。</li>
+    </ul>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-top: 10px;">这些方法都可以通过采样候选方案、评价代价和更新搜索分布来优化控制序列。论文从统一的数学框架出发，指出它们常见的搜索机制具有一个特点：<strong>围绕当前估计解建立一个参数化的采样分布，再逐步调整这个分布</strong>。例如，使用高斯分布时，算法通常在当前均值附近采样，再利用低代价样本调整均值、协方差或搜索尺度。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">这类机制有明显优点：当当前估计已经接近较好的解时，可以有效地进行局部精细搜索。但当当前搜索区域距离更好的解很远，或者不同局部最优解之间存在较大差距时，局部采样可能很难探索到其他有希望的区域。</p>
+    <div class="purple-note">
+      <strong>准确理解作者的论点：</strong>论文不是说 MPPI、CEM 和 CMA-ES 在所有问题上都会失败，而是指出它们常见的参数化局部搜索机制存在局限，并通过实验展示这些局限在特定机器人任务中的表现。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">2.4 CBO 的基本思路是什么？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">CBO 的全称是 Consensus-Based Optimization，即<strong>共识优化</strong>。它与反复围绕单一均值采样的思路不同：CBO 直接维护一群候选解（粒子）。每个粒子都代表一个候选控制序列，粒子之间通过一个由代价加权形成的<strong>共识点</strong>产生联系。具体来说：</p>
+    <ul class="check-list">
+      <li>每个粒子代表一套候选控制输入。</li>
+      <li>仿真器评价每套输入的代价。</li>
+      <li>低代价粒子在共识点计算中具有更大的影响力。</li>
+      <li>每个粒子在向共识点移动的同时，保留一定的随机探索。</li>
+      <li>如果新的候选解表现更好，共识点就会发生变化，从而改变整个粒子群的搜索方向。</li>
+    </ul>
+    <div class="green-note">
+      <strong>Introduction 的核心逻辑：</strong>复杂机器人任务需要强大的轨迹优化方法 → 局部采样可能陷入局部最优 → CBO 通过粒子群、代价加权共识和随机扩散，提供了一种具有全局收敛理论基础的替代方案。
+    </div>
+  </div>
+</section>
+
+<!-- 03 Section II-B 统一视角 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> Section II-B：统一的全局优化视角</div>
+
+    <div class="sub-title">3.1 轨迹优化问题如何表示？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">论文首先把机器人轨迹优化写成一个标准的优化问题：</p>
+    <div class="formula">min<sub>u₀</sub> <i>J</i>(u₀ | x₀)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中，控制序列为：</p>
+    <div class="formula">u₀ = (u₀, u₁, …, u<sub>T−1</sub>)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);"><i style="color: var(--cyan);">x₀</i> 表示初始状态，<i style="color: var(--cyan);">T</i> 表示规划时域。代价函数可以写成：</p>
+    <div class="formula"><i>J</i> = Σ<sub>t=0</sub><sup>T−1</sup> ℓ<sub>t</sub>(<i>x</i><sub>t</sub>, <i>u</i><sub>t</sub>) + ℓ<sub>T</sub>(<i>x</i><sub>T</sub>)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">同时，机器人状态需要满足系统动力学：</p>
+    <div class="formula"><i>x</i><sub>t+1</sub> = dyn(<i>x</i><sub>t</sub>, <i>u</i><sub>t</sub>)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中 ℓ<sub>t</sub> 是每个时间步的运行代价，ℓ<sub>T</sub> 是终端代价，x<sub>t</sub> 是机器人状态，u<sub>t</sub> 是控制输入。</p>
+    <div class="note-box">
+      <strong>这里最重要的是：</strong>优化变量是一整段控制序列，而不是单独某一个时刻的输入。如果每个时刻有 n<sub>a</sub> 个控制维度，那么整个控制序列的维度为 T·n<sub>a</sub>。随着控制维度和规划时域增长，搜索问题会迅速变得高维。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">3.2 为什么要引入分布？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">论文随后引入控制变量上的概率分布 𝕌，并定义一个平滑后的目标函数：</p>
+    <div class="formula">∫ <i>J</i>(u | x₀) d𝕌(u)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">这意味着，不再只考虑一个确定的控制序列，而是考虑一个控制序列分布下的<strong>期望代价</strong>。直观上，可以把它理解成对代价地形进行平滑：原始代价地形可能存在许多局部低谷，对附近的一批候选方案进行评价，可以让搜索过程利用一片区域的信息，而不只是某个单点的信息。</p>
+    <div class="purple-note">
+      <strong>平滑也存在代价：</strong>平滑后的目标函数，其最优位置不一定与原始目标函数的全局最优位置完全一致。论文指出，一个自然的思路是先利用较强的平滑作用探索，再逐步收缩搜索范围，进行更精细的优化。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">3.3 参数化分布的局限</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">常见方法通常选择高斯分布：</p>
+    <div class="formula">𝕌(· | ū) = 𝒩(ū, Σ)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中 ū 是均值，Σ 是协方差矩阵。均值决定搜索中心，协方差决定搜索的方向和尺度。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">这种表示方式简洁、便于计算，但也限制了分布的形状——特别是在复杂的非凸问题中，真正有希望的候选解区域可能是不对称的，或者包含多个相距较远的区域。</p>
+    <div class="green-note">
+      <strong>论文提出的关键问题：</strong>如何让搜索分布既能够覆盖有希望的区域，又能在找到较好方案后逐步集中？CBO 的粒子群动力学就是围绕这个问题设计的。
+    </div>
+  </div>
+</section>
+
+<!-- 04 Section II-C MPPI 与 CMA-ES -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> Section II-C：MPPI 和 CMA-ES 的机制</div>
+
+    <div class="sub-title">4.1 MPPI：根据代价加权更新控制序列</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">MPPI 从当前控制序列估计值附近采样：</p>
+    <div class="formula">u<sup>(r,i)</sup> ~ 𝒩(ū<sup>(r)</sup>, Σ)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">然后根据每个候选方案的代价计算权重：</p>
+    <div class="formula"><i>w</i><sub>i</sub> = exp(−ρ<i>J</i><sub>i</sub>) / Σ<sub>j</sub> exp(−ρ<i>J</i><sub>j</sub>)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">最后计算下一轮控制序列估计：</p>
+    <div class="formula">ū<sup>(r+1)</sup> = Σ<sub>i</sub> <i>w</i><sub>i</sub> u<sup>(r,i)</sup></div>
+    <p style="font-size: 14px; color: var(--text-secondary);">代价较低的方案通常会获得更高的权重。在论文的统一框架下，MPPI 可以被理解为通过采样估计一个平滑目标函数，再更新其搜索分布的均值。</p>
+    <div class="purple-note">
+      <strong>主要局限：</strong>候选解往往集中在当前估计附近，而每轮采样会重新生成——粒子本身并不会像 CBO 粒子那样持续沿着自己的动力学轨迹演化。这可能使它难以持续探索远离当前搜索中心的区域。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">4.2 CMA-ES：同时调整均值和协方差</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">CMA-ES 不仅更新搜索均值，还会调整协方差矩阵。其采样形式可以概括为：</p>
+    <div class="formula">ū<sup>(r)</sup> + α<sup>(r)</sup> A<sup>(r)</sup> ε<sub>i</sub></div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中协方差由 (α<sup>(r)</sup>)² A<sup>(r)</sup>(A<sup>(r)</sup>)<sup>⊤</sup> 表示，ε<sub>i</sub> 是标准高斯随机变量。CMA-ES 根据表现较好的样本更新均值和协方差，并通过进化路径等机制调整整体搜索尺度。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">直观上，它不仅在决定"向哪里移动搜索中心"，还在学习"哪些方向值得多搜索，哪些方向应该少搜索"。与固定协方差的高斯采样相比，这显著提高了分布的适应能力。但论文指出，参数化高斯分布仍然受到其形状限制，难以充分表达某些不规则、不对称的搜索区域。</p>
+    <div class="note-box">
+      <strong>阅读注意：</strong>论文对 CMA-ES 的公式展示是简化版本，完整的 CMA-ES 还包括更复杂的进化路径和步长更新机制。
+    </div>
+  </div>
+</section>
+
+<!-- 05 Section III CBO 核心算法 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> Section III：CBO 的核心算法</div>
+
+    <div class="sub-title">5.1 共识点如何计算？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">论文沿用代价加权的共识点形式：</p>
+    <div class="formula">v<sup>(r)</sup> = Σ<sub>i</sub> <i>w</i><sub>i</sub><sup>(r)</sup> u<sup>(r,i)</sup></div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中权重为：</p>
+    <div class="formula"><i>w</i><sub>i</sub><sup>(r)</sup> = exp(−ρ<i>J</i><sub>i</sub><sup>(r)</sup>) / Σ<sub>j</sub> exp(−ρ<i>J</i><sub>j</sub><sup>(r)</sup>)</div>
+    <div class="red-note">
+      <strong>需要特别记住的公式细节：</strong>在本文的参数化方式中，权重是 <span style="font-family: 'JetBrains Mono', monospace;">exp(−ρJ)</span>，<strong>不是</strong> exp(−J/ρ)。因此，其他条件不变时，增大 ρ 会使低代价方案的权重更加突出。虽然论文将 ρ 称为温度参数，但它在公式中扮演的是<strong>逆温度式的选择性控制作用</strong>——这与另一些采用 exp(−J/τ) 的文献中"温度越高、权重越平均"的参数化方式正好相反。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">5.2 粒子如何更新？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">论文首先用随机微分方程描述粒子动力学：</p>
+    <div class="formula">du<sub>i</sub> = −λ(u<sub>i</sub> − ū) dr + σ |u<sub>i</sub> − ū| dW<sub>i</sub></div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中 u<sub>i</sub> 是第 i 个粒子，ū 是共识点，λ 是漂移强度，σ 是随机扩散强度，W<sub>i</sub> 是布朗运动，r 是优化迭代对应的连续化时间变量。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">离散化后，可写成：</p>
+    <div class="formula">u<sub>i</sub><sup>(r+1)</sup> = u<sub>i</sub><sup>(r)</sup> − λΔr(u<sub>i</sub><sup>(r)</sup> − ū<sup>(r)</sup>) + σ√Δr |u<sub>i</sub><sup>(r)</sup> − ū<sup>(r)</sup>| ξ<sub>i</sub><sup>(r)</sup></div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中 ξ<sub>i</sub><sup>(r)</sup> 是标准正态随机向量。这个公式有两个核心部分：</p>
+    <ul class="check-list">
+      <li><strong>第一部分 · 漂移：</strong>−λΔr(u<sub>i</sub> − ū)——使粒子朝共识点靠近。</li>
+      <li><strong>第二部分 · 扩散：</strong>σ√Δr |u<sub>i</sub> − ū| ξ<sub>i</sub>——使粒子保留随机探索能力，而且噪声幅度与粒子到共识点的距离相关。</li>
+    </ul>
+    <div class="green-note">
+      <strong>关键区别：</strong>远离共识点的粒子通常拥有更强的随机探索；已经接近共识点的粒子，其随机扰动也会减小。这一点是 CBO 与简单的"所有粒子添加同等强度噪声"机制的重要区别。
+    </div>
+
+    <div style="height: 22px;"></div>
+
+    <div class="sub-title">5.3 CBO 的完整迭代流程</div>
+    <div class="algo-card">
+      <ol>
+        <li>初始化一群候选控制序列。</li>
+        <li>评价每个候选序列的代价。</li>
+        <li>根据代价计算共识点。</li>
+        <li>根据漂移和随机扩散更新所有粒子。</li>
+        <li>重新评价新一轮候选方案。</li>
+        <li>重复迭代，直到满足停止条件。</li>
+      </ol>
+    </div>
+    <div class="note-box">
+      <strong>计算优势：</strong>由于每个候选序列的仿真评价可以并行执行，CBO 适合利用并行物理仿真器进行优化。
+    </div>
+  </div>
+</section>
+
+<!-- 06 CBO 为什么可能实现全局优化 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> CBO 为什么可能实现全局优化？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 14px;">论文认为，CBO 的优势不只是"随机搜索"，而是粒子群的整体动力学。</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="idx">6.1</span>
+        <h4>粒子不直接沿局部梯度移动</h4>
+        <p>传统局部优化可能沿着某个局部低谷不断改进，最后停留在局部最优附近。CBO 粒子主要受到当前<strong>共识点</strong>的引导，而不是直接由局部梯度决定运动方向——因此粒子有机会经过某个局部最优区域，继续向当前共识点移动。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">6.2</span>
+        <h4>每个粒子保留自己的位置与搜索历史</h4>
+        <p>MPPI 等每轮重新采样的机制中，候选样本通常围绕当前分布中心重新生成。CBO 则保留每个粒子当前的位置并持续更新其状态：粒子既受共识点吸引，又具有与自身位置有关的随机探索，使不同粒子可以沿不同路径探索。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">6.3</span>
+        <h4>更好的候选解会改变整个群体的搜索方向</h4>
+        <p>当某个区域出现代价更低的粒子时，它会影响共识点；共识点变化后，所有粒子的漂移方向也随之变化。粒子群不只是围绕一个固定中心搜索，而是可能随新发现的候选解<strong>改变整体探索方向</strong>。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">6.4</span>
+        <h4>粒子群不被单一高斯形状限制</h4>
+        <p>CBO 直接通过粒子群的经验分布表示搜索状态，而不是始终使用一个固定形状的高斯分布。这种<strong>非参数化表示</strong>具有更大的形状灵活性，能够表达不对称的搜索区域和不同方向上的分散程度。</p>
+      </div>
+    </div>
+
+    <div class="red-note">
+      <strong>必须分清：</strong>这些机制只是解释了 CBO 为什么可能具有较强的全局搜索能力，它们本身并不是全局收敛证明。真正的理论结论还依赖目标函数性质、算法参数和收敛分析。
+    </div>
+  </div>
+</section>
+
+<!-- 07 全局收敛性 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">07</span> 全局收敛性：论文究竟证明了什么？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 12px;">这是整篇论文中必须谨慎理解的部分。</p>
+
+    <div class="sub-title">7.1 全局最优是什么意思？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">设原始优化问题为：</p>
+    <div class="formula">u* ∈ arg min<sub>u</sub> <i>J</i>(u)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);"><strong>局部最优</strong>是指：在某个解附近，无法找到代价更低的方案。<strong>全局最优</strong>则是指：在整个定义的搜索空间中，没有其他可行解具有更低的目标函数值。因此，全局优化的关键在于，不仅需要改进当前方案，还需要避免只关注某一个局部区域。</p>
+
+    <div style="height: 18px;"></div>
+
+    <div class="sub-title">7.2 论文给出的理论条件</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">在 Section III-C 中，作者引入了关于目标函数的两个条件：</p>
+    <ul class="check-list">
+      <li><strong>inverse continuity property</strong>（逆连续性性质）；</li>
+      <li><strong>relaxed Lipschitz continuity property</strong>（松弛 Lipschitz 连续性性质）。</li>
+    </ul>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-top: 10px;">这些条件要求目标函数值与最优解附近的变量距离之间具有适当的控制关系。直观上，它们限制了目标函数在最优解附近的行为，使得代价差异能够为收敛分析提供有效信息。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">在这些条件成立时，论文的 Proposition 2 给出：存在足够大的温度参数 ρ 和迭代时间 r*，使 CBO 以高概率改善相应的平滑目标，并且共识点以高概率收敛到全局优化器。论文给出的迭代时间关系为：</p>
+    <div class="formula">r* ∝ 1 / (2λ − n<sub>a</sub>T σ²)</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">并指出，动力学收敛需要满足：</p>
+    <div class="formula">2λ &gt; n<sub>a</sub>T σ²</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">其中 n<sub>a</sub>T 是控制序列的决策变量维度。此外，论文建议在数值实现中考虑 λΔr &lt; 1。作者还指出，增大 λ 可以加快收敛，但过大的漂移强度也可能损害实际优化表现。</p>
+
+    <div style="height: 18px;"></div>
+
+    <div class="sub-title">7.3 这些条件在直觉上意味着什么？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">可以从三个方面理解：</p>
+    <ul class="check-list">
+      <li><strong>第一，漂移不能被随机扩散完全压制。</strong>当决策维度很高、随机扩散强度很大时，系统更难集中到有希望的区域——因此漂移强度与扩散强度需要满足相应的关系（2λ &gt; n<sub>a</sub>Tσ²）。</li>
+      <li><strong>第二，参数设置会影响收敛。</strong>即使采用同一种算法，不同的漂移强度、扩散强度、时间步长和温度参数，也可能产生不同的优化表现。</li>
+      <li><strong>第三，目标函数必须满足理论分析的假设。</strong>理论保证不是对所有任意目标函数、所有参数和所有初始条件无条件成立的。</li>
+    </ul>
+
+    <div style="height: 18px;"></div>
+
+    <div class="sub-title">7.4 为什么全局收敛理论不意味着每次实验都能找到全局最优？</div>
+    <p style="font-size: 14px; color: var(--text-secondary);">因为还需要区分<strong>理论层面</strong>与<strong>有限计算预算下的数值实现</strong>。理论分析可以研究在给定假设下，算法在足够长的迭代时间或相应极限意义下的收敛性质；实际程序却只有有限数量的粒子、有限次数的迭代和有限的计算资源。</p>
+    <p style="font-size: 14px; color: var(--text-secondary);">论文引用的均值场近似分析指出，有限粒子群与极限分布之间的误差具有与问题复杂度相关的系数。即使理论上的误差界成立，如果问题对应的复杂度系数很大，有限数量的粒子也可能不足以准确逼近理想的分布演化。</p>
+    <div class="red-note">
+      <strong>正确结论：</strong>CBO 具有在特定条件下收敛到全局优化器的理论依据，但有限计算预算下的全局最优发现仍然具有不确定性。
+    </div>
+  </div>
+</section>
+
+<!-- 08 实验部分 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> 实验部分：作者如何验证 CBO？</div>
+    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 14px;">论文设计了三个机器人相关任务，并与 MPPI、CMA-ES 比较。</p>
+
+    <div class="algo-card">
+      <h4>8.1 长时域路径规划</h4>
+      <p style="font-size: 14px; color: var(--text-secondary);">作者使用一个简化的点质量系统，在存在墙壁和障碍物的狭窄空间中规划轨迹。实验刻意构造了局部最优陷阱，使得沿局部方向改进可能导致无法通过狭窄通道。</p>
+      <p style="font-size: 14px; color: var(--text-secondary);">结果显示，CBO 在这些实验中明显优于 MPPI 和 CMA-ES，能够找到绕过障碍物并进入通道的方案。不过，作者也明确指出：在这个特别困难的任务中，CBO 仍未到达精确目标点，并认为提高粒子数量可能进一步改善表现。</p>
+      <div class="note-box">
+        <strong>解读：</strong>CBO 的相对优势并不意味着有限计算预算下总能获得精确的全局最优解。
+      </div>
+    </div>
+
+    <div class="algo-card">
+      <h4>8.2 双倒立摆</h4>
+      <p style="font-size: 14px; color: var(--text-secondary);">作者研究了双倒立摆的摆起问题。该任务采用较长的规划时域和较小的控制范围，以增加优化难度。实验比较了各方法的代价变化和最终表现：CBO 的表现最好，且代价变化相对稳定；CMA-ES 在该实验中的代价波动更明显。</p>
+      <p style="font-size: 14px; color: var(--text-secondary);">这个实验主要用于检验算法在长时域、受限控制输入条件下的搜索能力。</p>
+    </div>
+
+    <div class="algo-card">
+      <h4>8.3 人形机器人</h4>
+      <p style="font-size: 14px; color: var(--text-secondary);">论文使用的是 <strong>Unitree G1</strong> 人形机器人，而不是所有人形机器人模型都具有的通用实验结果。主要设置包括：</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <colgroup><col style="width: 50%"><col style="width: 50%"></colgroup>
+          <thead><tr><th>设置项</th><th>数值</th></tr></thead>
+          <tbody>
+            <tr><td>机器人自由度</td><td>23</td></tr>
+            <tr><td>控制节点数</td><td>6</td></tr>
+            <tr><td>规划时长</td><td>2 秒</td></tr>
+            <tr><td>决策变量维度</td><td>6 × 23 = 138</td></tr>
+            <tr><td>每轮粒子数量</td><td>10,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 14px; color: var(--text-secondary);">优化变量是多个时间节点上的 PD 目标关节位置。作者只使用终端基座构型误差作为代价，没有设置运行代价。实验结果显示，CBO 的代价显著低于 MPPI 和 CMA-ES，但 CBO 自身也表现出较大的结果方差。</p>
+      <div class="red-note">
+        <strong>边界：</strong>这一实验支持了 CBO 在特定高维人形机器人轨迹优化问题中的有效性，但不能直接推出它在所有人形机器人任务中都优于其他方法。尤其需要注意，优化终端基座构型与证明整个运动过程安全，是两个不同的问题。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 论文主要局限 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">09</span> 论文的主要局限</div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="idx">9.1</span>
+        <h4>理论条件并非无条件成立</h4>
+        <p>全局收敛结论依赖目标函数性质、参数条件以及理论分析所采用的假设。不能理解为：只要使用 CBO，不论目标函数、初始化和参数如何设置，都一定找到全局最优。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">9.2</span>
+        <h4>有限粒子数量可能不足</h4>
+        <p>高维和长时域问题会增加搜索难度。论文的长时域规划实验已展示这一点：CBO 虽明显优于对比方法，但仍未到达精确目标。增加粒子数量可能提高搜索质量，却也会增加计算成本。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">9.3</span>
+        <h4>高维人形机器人实验存在较大方差</h4>
+        <p>CBO 在人形机器人实验中的结果方差较大，说明算法在不同运行之间仍存在差异。仅展示最佳轨迹或最低代价，不足以全面评价方法的稳定性和一致性。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">9.4</span>
+        <h4>约束处理尚不完整</h4>
+        <p>论文的结论部分把约束处理列为未来工作之一。不能认为该方法已经完整解决了机器人轨迹优化中的全部硬约束问题——全局优化理论也不等于安全保证。</p>
+      </div>
+      <div class="feature-card">
+        <span class="idx">9.5</span>
+        <h4>尚缺少真实机器人实验</h4>
+        <p>论文的实验主要基于仿真，作者将真实机器人实验列为未来工作方向。仿真中的低代价结果不能自动证明算法在真实机器人上具有同等表现。</p>
+      </div>
+    </div>
+    <div class="note-box">
+      <strong>补充：</strong>仿真结果仍然受到代价函数设计的影响。如果目标函数没有充分反映任务真正关心的行为，那么优化器即使成功找到目标函数的全局最优解，也未必得到现实中最理想的方案。
+    </div>
+  </div>
+</section>
+
+<!-- 10 论文总结 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">10</span> 论文总结</div>
+    <div class="conclusion-box">
+      <p>这篇论文的核心价值，是<strong>把 CBO 引入机器人轨迹优化</strong>，并尝试用统一的优化框架解释它相对于常见零阶方法的优势。与围绕当前均值反复采样的方法不同，CBO 通过粒子群的持续演化、代价加权共识和距离相关的随机扩散，提供了另一种探索复杂搜索空间的机制。作者通过理论分析和三个机器人相关任务，展示了 CBO 在特定问题上的全局搜索潜力和较好的实验表现。</p>
+      <p>但阅读时必须保留三个判断：</p>
+      <p><strong>第一，</strong>理论全局收敛不等于有限计算预算下必然找到全局最优。</p>
+      <p><strong>第二，</strong>在论文实验中表现更好，不等于在所有机器人任务中都更好。</p>
+      <p><strong>第三，</strong>找到代价更低的轨迹，不等于已经证明该轨迹满足所有物理约束或具有真实世界安全性。</p>
+      <p>从论文自身的研究脉络来看，CBO 的贡献主要在于优化算法及其搜索机制，而约束处理、复杂多模态行为和真实机器人验证仍是需要进一步研究的问题。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 参考文献 -->
+<section class="section" style="border-bottom: none;">
+  <div class="container">
+    <div class="section-title"><span class="num">※</span> 参考文献</div>
+    <ol class="ref-list">
+      <li>Sun, X., Jordana, A., Fornasier, M., Etesami, J., &amp; Khadiv, M. (2026). Consensus-based Optimization (CBO): Towards Global Optimality in Robotics. arXiv:2602.06868. <a href="https://arxiv.org/abs/2602.06868" target="_blank">arXiv 链接</a></li>
+      <li>Fornasier, M., Klock, T., &amp; Riedl, K. (2024). Consensus-based Optimization Methods Converge Globally. SIAM Journal on Optimization, 34(3), 2973–3004. DOI: 10.1137/22M1527805. <a href="https://doi.org/10.1137/22M1527805" target="_blank">DOI 链接</a></li>
+      <li>Pinnau, R., Totzeck, C., Tse, O., &amp; Martin, S. (2017). A consensus-based model for global optimization and its mean-field limit. Mathematical Models and Methods in Applied Sciences, 27(1), 183–204.</li>
+      <li>Hansen, N., &amp; Ostermeier, A. (2001). Completely derandomized self-adaptation in evolution strategies. Evolutionary Computation, 9(2), 159–195.</li>
+      <li>Williams, G., et al. (2017). Model predictive path integral control: From theory to parallel computation. Journal of Guidance, Control, and Dynamics, 40, 344–357.</li>
+    </ol>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    CBO Paper Notes · arXiv:2602.06868
+  </div>
+</footer>
+
+</body>
+</html>
