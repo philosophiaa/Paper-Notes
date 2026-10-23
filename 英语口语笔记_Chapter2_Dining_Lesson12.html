@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语口语笔记 · Chapter 2 Dining · Lesson 12: In a Restaurant</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--pink); border: 1px solid rgba(236,72,153,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .hero h1 .accent { color: var(--pink); }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 640px; line-height: 1.8; }
+  .hero-goal {
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2);
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; color: var(--pink);
+  }
+  .lesson-strip { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .lesson-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+    color: var(--text-secondary); background: var(--bg-card);
+  }
+  .lesson-pill b { color: var(--pink); }
+  .lesson-pill.chapter { border-color: rgba(236,72,153,0.4); color: var(--pink); }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--pink);
+    background: rgba(236,72,153,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .section-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+  /* Vocab cards */
+  .vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .vocab-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; border-left: 3px solid var(--pink);
+  }
+  .vocab-word {
+    font-size: 18px; font-weight: 700; color: var(--pink); margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .vocab-meaning { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
+  .vocab-example {
+    font-size: 13px; color: var(--text); background: rgba(0,0,0,0.2);
+    padding: 10px 12px; border-radius: 6px; line-height: 1.6;
+  }
+  .vocab-example .cn { color: var(--text-muted); font-size: 12px; margin-top: 4px; display: block; }
+
+  /* Expressions */
+  .expr-list { display: flex; flex-direction: column; gap: 10px; }
+  .expr-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .expr-num {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(236,72,153,0.15); color: var(--pink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; margin-top: 2px;
+  }
+  .expr-en { font-size: 15px; color: var(--text); margin-bottom: 2px; }
+  .expr-cn { font-size: 13px; color: var(--text-muted); }
+
+  /* Comparison table */
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(236,72,153,0.08); color: var(--pink);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.7;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .en { color: var(--text); }
+
+  /* Topic cards */
+  .st-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .st-card h4 {
+    font-size: 14px; font-weight: 700; color: var(--cyan);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .st-card h4::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan); flex-shrink: 0;
+  }
+  .st-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 8px; }
+  .st-card p:last-child { margin-bottom: 0; }
+  .st-card .en { color: var(--text); }
+  .st-card .cn { color: var(--text-muted); font-size: 13px; }
+  .st-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .st-chip {
+    background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; color: var(--text-secondary);
+  }
+  .st-chip .cn { color: var(--text-muted); }
+
+  /* Q&A cards */
+  .qa-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; margin-bottom: 16px;
+  }
+  .qa-question {
+    font-size: 15px; font-weight: 600; color: var(--cyan); margin-bottom: 14px;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .qa-question::before { content: 'Q:'; color: var(--cyan); font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+  .qa-answer {
+    font-size: 14px; color: var(--text-secondary); line-height: 1.9;
+    padding-left: 24px; position: relative; margin-bottom: 12px;
+  }
+  .qa-answer:last-child { margin-bottom: 0; }
+  .qa-answer::before {
+    content: 'A:'; position: absolute; left: 0; top: 0;
+    color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 600;
+  }
+  .qa-answer .highlight { color: var(--pink); font-weight: 500; }
+  .qa-label {
+    font-size: 13px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted);
+    margin: 10px 0 8px 24px;
+  }
+
+  /* Speaking reminder */
+  .notes-box {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .notes-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--pink); }
+  .notes-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .notes-box p:last-child { margin-bottom: 0; }
+  .structure-flow {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    flex-wrap: wrap; margin: 16px 0;
+  }
+  .structure-flow .step {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(236,72,153,0.3);
+    border-radius: 6px; padding: 6px 14px; font-size: 13px; color: var(--pink);
+  }
+  .structure-flow .step .cn { color: var(--text-muted); font-size: 12px; display: block; }
+  .structure-flow .arrow { color: var(--text-muted); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .vocab-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">ENGLISH SPEAKING NOTEBOOK · CHAPTER 2: DINING · LESSON 12</div>
+    <h1>In a Restaurant <span class="accent">餐厅英语</span> · 点餐 / 结账 / 外出就餐</h1>
+    <p>Chapter 2: Dining 餐厅主题第一课：核心词汇、餐厅实用表达、主菜与主食辨析、外出就餐与外卖场景，以及三个课堂讨论话题。</p>
+    <div class="hero-goal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      目标：敢在餐厅开口点餐结账 · 能聊自己的饮食习惯
+    </div>
+    <div class="lesson-strip">
+      <div class="lesson-pill chapter">Chapter 2 · Dining</div>
+      <div class="lesson-pill"><b>Lesson 12</b> · In a Restaurant</div>
+      <div class="lesson-pill">Main Course vs. Staple Food</div>
+      <div class="lesson-pill">Eating Out &amp; Delivery</div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 Core Vocabulary -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">01</span> CORE VOCABULARY 核心词汇</h2>
+    <p class="section-sub">餐厅场景高频词汇，词义 + 例句，直接积累可复用的表达。</p>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-word">free of charge</div>
+        <div class="vocab-meaning">免费</div>
+        <div class="vocab-example">Is this bread free of charge?
+          <span class="cn">这份面包免费吗？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">main course</div>
+        <div class="vocab-meaning">主菜</div>
+        <div class="vocab-example">I’ll have salmon for my main course.
+          <span class="cn">我要三文鱼作为主菜。</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">special / today’s specials</div>
+        <div class="vocab-meaning">特色菜 / 今日特色菜</div>
+        <div class="vocab-example">What specials do you have tonight?
+          <span class="cn">你们今晚有什么特色菜？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">offer</div>
+        <div class="vocab-meaning">提供；供应</div>
+        <div class="vocab-example">What dishes do you offer?
+          <span class="cn">你们供应哪些菜？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">appetizer / starter</div>
+        <div class="vocab-meaning">前菜、开胃菜</div>
+        <div class="vocab-example">We’ll start with the appetizers.
+          <span class="cn">我们先上前菜。</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">side dish</div>
+        <div class="vocab-meaning">配菜</div>
+        <div class="vocab-example">I’d like a side dish of vegetables.
+          <span class="cn">我想要一份蔬菜配菜。</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">dessert</div>
+        <div class="vocab-meaning">甜点</div>
+        <div class="vocab-example">What dessert do you recommend?
+          <span class="cn">你推荐什么甜点？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">menu</div>
+        <div class="vocab-meaning">菜单</div>
+        <div class="vocab-example">Could I see the menu, please?
+          <span class="cn">可以给我看一下菜单吗？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">reservation</div>
+        <div class="vocab-meaning">预订</div>
+        <div class="vocab-example">I have a reservation for two.
+          <span class="cn">我预订了两个人的位子。</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">bill (UK) / check (US)</div>
+        <div class="vocab-meaning">账单</div>
+        <div class="vocab-example">Could we have the bill, please?
+          <span class="cn">可以结账吗？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">tip</div>
+        <div class="vocab-meaning">小费</div>
+        <div class="vocab-example">Should we leave a tip here?
+          <span class="cn">我们要留小费吗？</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">split the bill</div>
+        <div class="vocab-meaning">平摊账单</div>
+        <div class="vocab-example">Let’s split the bill.
+          <span class="cn">我们平摊账单吧。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Useful Expressions -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">02</span> USEFUL EXPRESSIONS AT A RESTAURANT 餐厅实用表达</h2>
+    <p class="section-sub">从点餐到结账的完整对话链，按场景顺序排列。</p>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-num">1</div><div><div class="expr-en">Are you ready to order?</div><div class="expr-cn">你准备好点餐了吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">2</div><div><div class="expr-en">May I take your order?</div><div class="expr-cn">我可以帮您点餐了吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">3</div><div><div class="expr-en">Could I see the menu, please?</div><div class="expr-cn">可以给我看一下菜单吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">4</div><div><div class="expr-en">What would you recommend?</div><div class="expr-cn">你有什么推荐的吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">5</div><div><div class="expr-en">I’ll have the roast chicken, please.</div><div class="expr-cn">我要一份烤鸡，谢谢。</div></div></div>
+      <div class="expr-item"><div class="expr-num">6</div><div><div class="expr-en">Is this dish spicy?</div><div class="expr-cn">这道菜辣吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">7</div><div><div class="expr-en">What does this dish contain?</div><div class="expr-cn">这道菜里面有什么？</div></div></div>
+      <div class="expr-item"><div class="expr-num">8</div><div><div class="expr-en">Could I have it without onions?</div><div class="expr-cn">可以不要洋葱吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">9</div><div><div class="expr-en">Could I have some tap water, please?</div><div class="expr-cn">可以给我一些自来水吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">10</div><div><div class="expr-en">Could we have the bill, please?</div><div class="expr-cn">可以结账吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">11</div><div><div class="expr-en">Can we pay separately?</div><div class="expr-cn">我们可以分开付款吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">12</div><div><div class="expr-en">Can I pay by card?</div><div class="expr-cn">可以刷卡吗？</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Main Course vs Staple Food -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">03</span> MAIN COURSE VS. STAPLE FOOD 主菜 vs 主食</h2>
+    <p class="section-sub">两个容易混淆的概念，点餐时经常一起出现。</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup><col style="width: 24%"><col style="width: 38%"><col style="width: 38%"></colgroup>
+        <thead><tr><th>概念</th><th>含义</th><th>例子</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="en">main course</span> 主菜</td>
+            <td>通常指一餐中最主要的一道菜</td>
+            <td>牛排、烤鸡或三文鱼</td>
+          </tr>
+          <tr>
+            <td><span class="en">staple food</span> 主食</td>
+            <td>餐食中作为主体的主食</td>
+            <td>米饭、面条、馒头</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="st-card">
+      <h4>EXAMPLE SENTENCES 例句</h4>
+      <p><span class="en">I’d like the roast chicken for my main course.</span><br><span class="cn">我要烤鸡作为主菜。</span></p>
+      <p><span class="en">Can I have a bowl of rice with it?</span><br><span class="cn">可以配一碗米饭吗？</span></p>
+      <p><span class="en">I usually have rice as my staple food.</span><br><span class="cn">我通常以米饭为主食。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Eating Out and Food Delivery -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">04</span> EATING OUT AND FOOD DELIVERY 外出就餐与外卖</h2>
+    <p class="section-sub">聊"平时怎么吃饭"的高频表达：外出、外卖、合租与厨具。</p>
+    <div class="st-chips">
+      <div class="st-chip">eat out <span class="cn">外出就餐</span></div>
+      <div class="st-chip">order food delivery <span class="cn">点外卖（送到家）</span></div>
+      <div class="st-chip">order takeout <span class="cn">点外卖 / 外带</span></div>
+      <div class="st-chip">cooking equipment <span class="cn">厨具</span></div>
+      <div class="st-chip">share an apartment <span class="cn">合租</span></div>
+      <div class="st-chip">roommate <span class="cn">室友</span></div>
+      <div class="st-chip">not eat much <span class="cn">饭量不大</span></div>
+      <div class="st-chip">cook at home <span class="cn">在家做饭</span></div>
+    </div>
+    <div class="st-card" style="margin-top: 16px;">
+      <h4>USEFUL EXPRESSIONS 实用句</h4>
+      <p><span class="en">I often order food delivery.</span><br><span class="cn">我经常点外卖。</span></p>
+      <p><span class="en">I usually order food delivery because it’s convenient.</span><br><span class="cn">我通常点外卖，因为很方便。</span></p>
+      <p><span class="en">I share an apartment with other people, and I don’t have any cooking equipment.</span><br><span class="cn">我跟别人合租，而且没有厨具。</span></p>
+      <p><span class="en">I don’t eat much, so I don’t cook very often.</span><br><span class="cn">我饭量不大，所以不经常做饭。</span></p>
+      <p><span class="en">I usually order food or eat something simple.</span><br><span class="cn">我通常点外卖或者吃点简单的东西。</span></p>
+      <p><span class="en">I don’t eat out very often.</span><br><span class="cn">我不太经常外出就餐。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Discussion Topics -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">05</span> DISCUSSION TOPICS 讨论话题</h2>
+    <p class="section-sub">课堂讨论参考：观点 + 理由 + 细节，用自己的话回答。</p>
+
+    <div class="qa-card">
+      <div class="qa-question">How often do you eat out? Who do you usually go with?</div>
+      <div class="qa-label">IDEAS 参考思路</div>
+      <div class="qa-answer"><span class="highlight">I don’t eat out very often.</span> I usually order food delivery or eat something simple. I share an apartment with other people, and I don’t have any cooking equipment, so cooking at home is hard for me.</div>
+      <div class="qa-answer">I don’t eat much, so I don’t cook very often either.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">Do you like trying new restaurants, or do you prefer familiar ones?</div>
+      <div class="qa-label">USEFUL PHRASES 实用短语</div>
+      <div class="st-chips" style="margin: 0 0 12px 24px;">
+        <div class="st-chip">try different dishes <span class="cn">尝试不同的菜</span></div>
+        <div class="st-chip">have a new experience <span class="cn">获得新体验</span></div>
+        <div class="st-chip">stick to my favorite restaurants <span class="cn">一直去自己喜欢的餐厅</span></div>
+        <div class="st-chip">avoid disappointing experiences <span class="cn">避免令人失望的体验</span></div>
+      </div>
+      <div class="qa-answer">I like to <span class="highlight">try different dishes</span> because I enjoy having a new experience. But sometimes I also stick to my favorite restaurants to avoid disappointing experiences.</div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-question">How can people develop healthy eating habits?</div>
+      <div class="qa-label">USEFUL PHRASES 实用短语</div>
+      <div class="st-chips" style="margin: 0 0 12px 24px;">
+        <div class="st-chip">eat a balanced diet <span class="cn">均衡饮食</span></div>
+        <div class="st-chip">eat regular meals <span class="cn">规律吃饭</span></div>
+        <div class="st-chip">eat more vegetables and fruit <span class="cn">多吃蔬菜和水果</span></div>
+        <div class="st-chip">cut down on processed food <span class="cn">减少加工食品</span></div>
+        <div class="st-chip">control portion sizes <span class="cn">控制每餐食量</span></div>
+      </div>
+      <div class="qa-answer">People can <span class="highlight">eat a balanced diet</span> and have regular meals. It also helps to eat more vegetables and fruit, cut down on processed food, and control portion sizes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Speaking Reminder -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">06</span> SPEAKING REMINDER 口语提示</h2>
+    <div class="notes-box">
+      <h3>准备想法和关键词，而不是完整稿子</h3>
+      <p>上课时尽量用自己的话自然回答。讨论题按照固定结构组织答案，逻辑更清晰、也更容易临场发挥：</p>
+      <div class="structure-flow">
+        <div class="step">Answer<span class="cn">直接回答</span></div>
+        <span class="arrow">→</span>
+        <div class="step">Reason<span class="cn">给出理由</span></div>
+        <span class="arrow">→</span>
+        <div class="step">One detail or example<span class="cn">一个细节或例子</span></div>
+      </div>
+      <p>例如："I don’t eat out very often. Because I don’t have cooking equipment. For example, I usually order food delivery."</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    English Speaking Notebook · Chapter 2: Dining · Lesson 12 — In a Restaurant
+  </div>
+</footer>
+
+</body>
+</html>
