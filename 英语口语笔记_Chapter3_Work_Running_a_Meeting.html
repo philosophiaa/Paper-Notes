@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语口语笔记 · Chapter 3 Work · Running a Meeting</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--pink); border: 1px solid rgba(236,72,153,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .hero h1 .accent { color: var(--pink); }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 640px; line-height: 1.8; }
+  .hero-goal {
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2);
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; color: var(--pink);
+  }
+  .lesson-strip { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .lesson-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+    color: var(--text-secondary); background: var(--bg-card);
+  }
+  .lesson-pill b { color: var(--pink); }
+  .lesson-pill.chapter { border-color: rgba(236,72,153,0.4); color: var(--pink); }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--pink);
+    background: rgba(236,72,153,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .section-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+  /* Steps flow */
+  .step-flow { display: flex; flex-direction: column; gap: 12px; }
+  .step-row {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px;
+  }
+  .step-num {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(236,72,153,0.15); color: var(--pink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  }
+  .step-body .en { font-size: 15px; color: var(--text); margin-bottom: 4px; }
+  .step-body .cn { font-size: 13px; color: var(--text-muted); }
+  .step-body .ex {
+    font-size: 13px; color: var(--pink); margin-top: 6px; font-style: italic;
+  }
+
+  /* Comparison table */
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(236,72,153,0.08); color: var(--pink);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.7;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .en { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  .data-table .arrow-cell { text-align: center; color: var(--pink); font-weight: 700; width: 40px; }
+
+  /* Cards */
+  .st-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .st-card h4 {
+    font-size: 14px; font-weight: 700; color: var(--cyan);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+  }
+  .st-card h4::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan); flex-shrink: 0;
+  }
+  .st-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 8px; }
+  .st-card p:last-child { margin-bottom: 0; }
+  .st-card .en { color: var(--text); }
+  .st-card .cn { color: var(--text-muted); font-size: 13px; }
+  .st-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .st-chip {
+    background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; color: var(--text-secondary);
+  }
+  .st-chip .cn { color: var(--text-muted); }
+
+  /* Expressions list */
+  .expr-list { display: flex; flex-direction: column; gap: 10px; }
+  .expr-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .expr-num {
+    flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(236,72,153,0.15); color: var(--pink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; margin-top: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .expr-en { font-size: 15px; color: var(--text); margin-bottom: 2px; }
+  .expr-cn { font-size: 13px; color: var(--text-muted); }
+
+  /* Email template */
+  .email-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; border-left: 3px solid var(--cyan);
+  }
+  .email-box .email-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); margin-bottom: 16px; letter-spacing: 1px;
+  }
+  .email-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .email-box p:last-child { margin-bottom: 0; }
+  .email-box .en { color: var(--text); }
+  .email-box .cn { color: var(--text-muted); font-size: 13px; display: block; }
+  .email-box .action-label {
+    color: var(--pink); font-weight: 600;
+  }
+
+  /* Notes box */
+  .notes-box {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .notes-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--pink); }
+  .notes-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 10px; }
+  .notes-box p:last-child { margin-bottom: 0; }
+
+  /* Warning callout */
+  .callout {
+    margin-top: 14px; padding: 12px 16px;
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .callout strong { color: var(--orange); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 22px; }
+    .step-row { flex-direction: row; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">ENGLISH SPEAKING NOTEBOOK · CHAPTER 3: WORK · RUNNING A MEETING</div>
+    <h1>Running a Meeting <span class="accent">主持会议</span> · 结束会议 / 转述 / 会议总结邮件</h1>
+    <p>EF 成人英语 · Communicating with Work：结束会议四步法、间接引语语序、say vs. tell、anyone/anything、会议总结邮件结构，以及 8 个必背表达。</p>
+    <div class="hero-goal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      目标：能主持一场英文会议收尾 · 能写出合格的会议总结邮件
+    </div>
+    <div class="lesson-strip">
+      <div class="lesson-pill chapter">Chapter 3 · Work</div>
+      <div class="lesson-pill"><b>Topic</b> · Running a Meeting</div>
+      <div class="lesson-pill">Reported Questions</div>
+      <div class="lesson-pill">Meeting Summary Email</div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 Closing a Meeting -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">01</span> CLOSING A MEETING 结束会议</h2>
+    <p class="section-sub">会议结束时按以下四步顺序进行，逻辑清晰、专业得体。</p>
+    <div class="step-flow">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="en">Ask for final questions ｜ 询问是否还有问题</div>
+          <div class="ex">"Are there any further questions?" — 还有其他问题吗？</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="en">Summarize the meeting ｜ 总结会议</div>
+          <div class="ex">"To summarize, sales look good." — 总结一下，销售情况看起来不错。</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="en">State the action items ｜ 说明后续行动事项</div>
+          <div class="ex">"Remember, there is one action item: confirm your team sales." — 请记住，有一项后续任务：确认你们团队的销售数据。</div>
+          <div class="cn" style="margin-top:4px;">action item — 会后需要完成的行动事项／待办任务</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="en">Close the meeting ｜ 结束会议</div>
+          <div class="ex">"That's it. Thanks. Have a great day." — 就这些，谢谢。祝你今天愉快。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Reported Questions -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">02</span> REPORTED QUESTIONS 转述问题</h2>
+    <p class="section-sub">转述别人的问题时，用"主语 + 动词"的正常语序，而不是直接问题中的倒装语序。</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup><col style="width: 38%"><col style="width: 8%"><col style="width: 54%"></colgroup>
+        <thead><tr><th>Direct Question 直接问句</th><th></th><th>Reported 转述句</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="en">How is the team doing?</span></td>
+            <td class="arrow-cell">→</td>
+            <td>Cody asked <span class="en">how the team is doing</span>. Cody 问团队目前进展怎么样。</td>
+          </tr>
+          <tr>
+            <td><span class="en">When are we going to get a new computer?</span></td>
+            <td class="arrow-cell">→</td>
+            <td>John asked <span class="en">when we were going to get a new computer</span>. John 问我们什么时候能拿到新电脑。</td>
+          </tr>
+          <tr>
+            <td><span class="en">Where are you meeting?</span></td>
+            <td class="arrow-cell">→</td>
+            <td>Cody asked <span class="en">where we are meeting</span>. Cody 问我们在哪里开会。</td>
+          </tr>
+          <tr>
+            <td><span class="en">Who are the visitors?</span></td>
+            <td class="arrow-cell">→</td>
+            <td>Cody asked <span class="en">who the visitors are</span>. Cody 问来访者是谁。</td>
+          </tr>
+          <tr>
+            <td><span class="en">Why are the visitors coming?</span></td>
+            <td class="arrow-cell">→</td>
+            <td>Cody asked <span class="en">why the visitors are coming</span>. Cody 问来访者为什么来。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>时态提示：</strong>有时使用过去时（如 asked / were going）；如果事情仍与现在相关，也可以保留现在时（如 asked where we are meeting）。
+    </div>
+  </div>
+</section>
+
+<!-- 03 Say vs Tell -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">03</span> SAY VS. TELL 说与告诉</h2>
+    <p class="section-sub">两个高频词的核心区别：say 强调"说了什么"，tell 强调"告诉谁"。</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup><col style="width: 22%"><col style="width: 42%"><col style="width: 36%"></colgroup>
+        <thead><tr><th>词</th><th>用法</th><th>例句</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="en">say / said</span></td>
+            <td>强调"说了什么"，后面常接说的话或 that 从句</td>
+            <td>"He said that the meeting was over."</td>
+          </tr>
+          <tr>
+            <td><span class="en">tell / told</span></td>
+            <td>常用于"告诉某人"，后面通常指出告诉谁</td>
+            <td>"Tell me the truth." / "Don't tell anyone."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="st-card">
+      <h4>课件原句</h4>
+      <p><span class="en">Brad said we're moving to a new office.</span> <span class="cn">Brad 说我们要搬到新办公室。</span></p>
+      <p><span class="en">What can I tell Sally and Harry?</span> <span class="cn">我可以把什么告诉 Sally 和 Harry？</span></p>
+      <p><span class="en">Don't tell anyone about this.</span> <span class="cn">不要把这件事告诉任何人。</span></p>
+      <p><span class="en">Vince said that he hasn't heard from anyone yet.</span> <span class="cn">Vince 说他还没有收到任何人的消息。</span></p>
+    </div>
+    <div class="st-card">
+      <h4>常用表达</h4>
+      <p><span class="en">It's best to be honest.</span> <span class="cn">最好实话实说。</span></p>
+      <p><span class="en">You can confirm that …</span> <span class="cn">你可以确认／告知……</span></p>
+      <p><span class="en">If I were you, I'd tell them …</span> <span class="cn">如果我是你，我会告诉他们……</span></p>
+      <p><span class="en">You have to tell them …</span> <span class="cn">你必须告诉他们……</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Anyone & Anything -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">04</span> ANYONE &amp; ANYTHING 任何人、任何事</h2>
+    <p class="section-sub">当具体人数或具体事物不重要、或难以确定时，疑问句和否定句中常用 anyone / anything。</p>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">Don't tell anyone about this.</div><div class="expr-cn">不要把这件事告诉任何人。</div></div></div>
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">Does anyone have questions?</div><div class="expr-cn">有人有问题吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">I don't have anything to report.</div><div class="expr-cn">我没有什么要汇报的。</div></div></div>
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">Mike, do you want to say anything?</div><div class="expr-cn">Mike，你有什么想说的吗？</div></div></div>
+    </div>
+    <div class="st-chips" style="margin-top: 16px;">
+      <div class="st-chip">anyone <span class="cn">任何人／有人</span></div>
+      <div class="st-chip">anything <span class="cn">任何事／任何内容</span></div>
+      <div class="st-chip">have anything to report <span class="cn">有内容要汇报</span></div>
+      <div class="st-chip">say anything <span class="cn">说点什么</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Writing a Meeting Summary -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">05</span> WRITING A MEETING SUMMARY 会议总结邮件</h2>
+    <p class="section-sub">课件建议的四步结构：主题 → 目的 → 讨论内容 → 行动事项。</p>
+
+    <div class="st-card">
+      <h4>1 · 写一个简短、明确的邮件主题</h4>
+      <p><span class="en">Royal project meeting summary</span></p>
+      <p><span class="en">Summary of Thursday's budget meeting</span></p>
+      <p><span class="en">Summary of Friday's sales meeting</span></p>
+    </div>
+
+    <div class="st-card">
+      <h4>2 · 简要说明邮件目的</h4>
+      <p><span class="en">I'm writing to summarize our meeting about the Royal project.</span> <span class="cn">我写这封邮件是为了总结我们关于 Royal 项目的会议。</span></p>
+    </div>
+
+    <div class="st-card">
+      <h4>3 · 列出主要讨论内容（main topics）</h4>
+      <p><span class="en">Randy asked who is working on the project.</span> <span class="cn">Randy 问谁在负责这个项目。</span></p>
+      <p><span class="en">Jeremy said that Bill and Lucy are working on the project.</span> <span class="cn">Jeremy 说 Bill 和 Lucy 正在负责这个项目。</span></p>
+    </div>
+
+    <div class="st-card">
+      <h4>4 · 列出后续行动事项（action items）</h4>
+      <p><span class="en">Jeremy said that he can confirm the budget by Monday.</span> <span class="cn">Jeremy 说他可以在周一之前确认预算。</span></p>
+    </div>
+
+    <div class="email-box">
+      <div class="email-title">EMAIL TEMPLATE · 完整范例</div>
+      <p><span class="en">I'm writing to summarize our sales meeting from Friday.</span><span class="cn">我写这封邮件是为了总结周五的销售会议。</span></p>
+      <p><span class="en">Robert asked what customers are saying about the new product.</span><span class="cn">Robert 问客户对新产品有什么反馈。</span></p>
+      <p><span class="en">Vince said that he hasn't heard from anyone yet.</span><span class="cn">Vince 说他还没有收到任何人的消息。</span></p>
+      <p><span class="en">Mary asked how many new customers there are.</span><span class="cn">Mary 问现在有多少新客户。</span></p>
+      <p><span class="en">Vince said that there are more than 300 new customers.</span><span class="cn">Vince 说新客户超过 300 位。</span></p>
+      <p><span class="action-label">Action items: </span><span class="en">Vince said that we need to think of ways to get new customers.</span><span class="cn">后续任务：Vince 说我们需要想办法获得新客户。</span></p>
+      <p><span class="en">Did I miss anything? Please let me know.</span><span class="cn">我有没有遗漏什么？请告诉我。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Describing Thoughts & Feelings -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">06</span> DESCRIBING THOUGHTS &amp; FEELINGS 表达想法和感受</h2>
+    <p class="section-sub">表达看法、感受，以及汇报别人说过的话。</p>
+
+    <div class="st-card">
+      <h4>表达想法与感受</h4>
+      <p><span class="en">I was wondering when we'll move to a new office.</span> <span class="cn">我在想我们什么时候会搬到新办公室。</span></p>
+      <p><span class="en">As you know, we need to move pretty soon.</span> <span class="cn">如你所知，我们很快就需要搬迁。</span></p>
+      <p><span class="en">We expect big changes in the next few months.</span> <span class="cn">我们预计未来几个月会有很大变化。</span></p>
+      <p><span class="en">I get it.</span> <span class="cn">我明白了。</span></p>
+      <p><span class="en">People are worrying about job cuts.</span> <span class="cn">人们担心裁员。</span></p>
+      <p><span class="en">It doesn't surprise me.</span> <span class="cn">这并不让我意外。</span></p>
+    </div>
+
+    <div class="st-card">
+      <h4>汇报别人说过的话</h4>
+      <p><span class="en">Brad said we're moving to a new office.</span> <span class="cn">Brad 说我们要搬到新办公室。</span></p>
+      <p><span class="en">Some people are saying that's going to be really far from the center.</span> <span class="cn">有些人说那地方会离市中心很远。</span></p>
+      <p><span class="en">Tanya says there's no subway station nearby.</span> <span class="cn">Tanya 说附近没有地铁站。</span></p>
+      <div class="callout" style="margin-top:12px;">
+        <strong>时态区别：</strong><b>said</b> 强调消息是之前说的；<b>says / are saying</b> 强调这条消息目前仍在传播，或与现在有关。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 Asking What You Can Share -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">07</span> ASKING WHAT YOU CAN SHARE 确认哪些信息可以公开</h2>
+    <p class="section-sub">涉及公司内部消息时，先确认哪些能对外说。</p>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">What can I tell people about the move?</div><div class="expr-cn">关于搬迁，我可以告诉大家什么？</div></div></div>
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">Should I tell the guys?</div><div class="expr-cn">我应该告诉大家吗？</div></div></div>
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">It's best to be honest. It will happen very soon.</div><div class="expr-cn">最好实话实说。事情很快就会发生。</div></div></div>
+      <div class="expr-item"><div class="expr-num">·</div><div><div class="expr-en">If I were you, I wouldn't say anything for now.</div><div class="expr-cn">如果我是你，我暂时什么都不会说。</div></div></div>
+    </div>
+    <div class="callout" style="margin-top:14px;">
+      <strong>职场提示：</strong>涉及公司内部消息时，不要擅自公开不确定或未获准分享的信息；先向负责人确认。
+    </div>
+  </div>
+</section>
+
+<!-- 08 Quick Review -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">08</span> QUICK REVIEW 课后快速复习</h2>
+    <p class="section-sub">优先记住这 8 个表达。</p>
+    <div class="notes-box">
+      <h3>必背 8 句</h3>
+      <p><strong>1.</strong> "Are there any further questions?" — 还有其他问题吗？</p>
+      <p><strong>2.</strong> "To summarize, …" — 总结一下，……</p>
+      <p><strong>3.</strong> action item — 后续行动事项</p>
+      <p><strong>4.</strong> "That's it. Thanks. Have a great day." — 就这些，谢谢，祝你今天愉快。</p>
+      <p><strong>5.</strong> "X asked how / when / where …" — X 问……</p>
+      <p><strong>6.</strong> "I'm writing to summarize …" — 我写这封邮件是为了总结……</p>
+      <p><strong>7.</strong> "Does anyone have questions?" — 有人有问题吗？</p>
+      <p><strong>8.</strong> "Did I miss anything? Please let me know." — 我有没有遗漏什么？请告诉我。</p>
+    </div>
+    <div class="notes-box" style="margin-top: 16px;">
+      <h3>学习方法</h3>
+      <p>不必背整段会议稿。先理解每个表达的用途，再用关键词练习自己组织句子。课堂上说法和例句不完全相同也没关系。</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    English Speaking Notebook · Chapter 3: Work · Running a Meeting
+  </div>
+</footer>
+
+</body>
+</html>
