@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语口语笔记 · Chapter 4 Health · Going to the Doctor's</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--pink); border: 1px solid rgba(236,72,153,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .hero h1 .accent { color: var(--pink); }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 640px; line-height: 1.8; }
+  .hero-goal {
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2);
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; color: var(--pink);
+  }
+  .lesson-strip { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .lesson-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+    color: var(--text-secondary); background: var(--bg-card);
+  }
+  .lesson-pill b { color: var(--pink); }
+  .lesson-pill.chapter { border-color: rgba(236,72,153,0.4); color: var(--pink); }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--pink);
+    background: rgba(236,72,153,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .section-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+  /* Vocab chips grid */
+  .vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .vocab-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--pink);
+  }
+  .vocab-word {
+    font-size: 16px; font-weight: 700; color: var(--pink); margin-bottom: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .vocab-meaning { font-size: 13px; color: var(--text-secondary); }
+  .vocab-example {
+    font-size: 12px; color: var(--text-muted); margin-top: 6px; font-style: italic;
+  }
+
+  /* Expressions */
+  .expr-list { display: flex; flex-direction: column; gap: 10px; }
+  .expr-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .expr-tag {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px; margin-top: 3px;
+  }
+  .expr-tag.doctor { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .expr-tag.patient { background: rgba(236,72,153,0.12); color: var(--pink); }
+  .expr-en { font-size: 15px; color: var(--text); margin-bottom: 2px; }
+  .expr-cn { font-size: 13px; color: var(--text-muted); }
+
+  /* Pattern box */
+  .pattern-box {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(236,72,153,0.08));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 12px; padding: 22px; margin: 16px 0;
+  }
+  .pattern-box h4 { font-size: 15px; color: var(--purple); margin-bottom: 12px; }
+  .pattern-box .formula {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    color: var(--text); background: rgba(0,0,0,0.2);
+    padding: 10px 14px; border-radius: 6px; margin: 8px 0; line-height: 1.7;
+  }
+  .pattern-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
+
+  /* Comparison table */
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(236,72,153,0.08); color: var(--pink);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.7;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .en { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  /* Chips */
+  .st-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .st-chip {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px; font-size: 13px; color: var(--text-secondary);
+  }
+  .st-chip b { color: var(--pink); font-family: 'JetBrains Mono', monospace; }
+  .st-chip .cn { color: var(--text-muted); }
+
+  /* Label block */
+  .label-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 10px;
+    border-left: 3px solid var(--green);
+  }
+  .label-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .label-card .en { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; display: block; margin-bottom: 2px; }
+
+  /* Notes box */
+  .notes-box {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .notes-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--pink); }
+  .notes-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 8px; }
+  .notes-box p:last-child { margin-bottom: 0; }
+  .notes-box strong { color: var(--text); }
+
+  /* Callout */
+  .callout {
+    margin-top: 14px; padding: 12px 16px;
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .callout strong { color: var(--orange); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .vocab-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">ENGLISH SPEAKING NOTEBOOK · CHAPTER 4: HEALTH · GOING TO THE DOCTOR'S</div>
+    <h1>Going to the Doctor's <span class="accent">看医生</span> · 症状 / 问诊 / 药房 / 处方标签</h1>
+    <p>EF 成人英语 Unit 2：预约、和医生沟通、配药取药、描述疾病或受伤。覆盖症状词汇、现在完成进行时、药房术语与处方标签读法。</p>
+    <div class="hero-goal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      目标：能用英语描述症状 · 能读懂处方标签 · 能完成问诊和取药对话
+    </div>
+    <div class="lesson-strip">
+      <div class="lesson-pill chapter">Chapter 4 · Health</div>
+      <div class="lesson-pill"><b>Lesson 1</b> · Appointment</div>
+      <div class="lesson-pill"><b>Lesson 2</b> · Talking with Doctor</div>
+      <div class="lesson-pill"><b>Lesson 3</b> · Filling Prescription</div>
+      <div class="lesson-pill"><b>Lesson 4</b> · Illness &amp; Injury</div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 Basic Medical Symptoms -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">01</span> BASIC MEDICAL SYMPTOMS 常见症状</h2>
+    <p class="section-sub">描述身体不适的高频词，配例句直接套用。</p>
+    <div class="vocab-grid">
+      <div class="vocab-card">
+        <div class="vocab-word">have a fever</div>
+        <div class="vocab-meaning">发烧</div>
+        <div class="vocab-example">"I have a fever." 我发烧了。</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">have diarrhea</div>
+        <div class="vocab-meaning">腹泻</div>
+        <div class="vocab-example">"He has diarrhea." 他腹泻。</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">have a bad cough</div>
+        <div class="vocab-meaning">咳嗽得很厉害</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">have a sore throat</div>
+        <div class="vocab-meaning">喉咙痛</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">have a headache</div>
+        <div class="vocab-meaning">头痛</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">have a stomachache</div>
+        <div class="vocab-meaning">胃痛／肚子痛</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">feel / be dizzy</div>
+        <div class="vocab-meaning">头晕</div>
+        <div class="vocab-example">"I'm dizzy." 我头晕。</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">feel / be nauseous</div>
+        <div class="vocab-meaning">感到恶心</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-word">vomit / be vomiting</div>
+        <div class="vocab-meaning">呕吐</div>
+        <div class="vocab-example">"I've been vomiting for about an hour." 我已经吐了大约一个小时。</div>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>小规律：</strong><b>have + 症状</b>（have a fever / have a headache / have a sore throat）；<b>feel + 形容词</b>（feel dizzy / feel nauseous）；<b>-ache</b> 常用于某些疼痛（headache 头痛、stomachache 胃痛）。
+    </div>
+  </div>
+</section>
+
+<!-- 02 Talking to the Doctor -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">02</span> TALKING TO THE DOCTOR 和医生沟通</h2>
+    <p class="section-sub">医生问诊常用句 + 患者描述症状常用句。</p>
+
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-tag doctor">DOCTOR</div><div><div class="expr-en">What seems to be the problem?</div><div class="expr-cn">您哪里不舒服？</div></div></div>
+      <div class="expr-item"><div class="expr-tag doctor">DOCTOR</div><div><div class="expr-en">How long has this been going on?</div><div class="expr-cn">这种情况持续多久了？</div></div></div>
+      <div class="expr-item"><div class="expr-tag doctor">DOCTOR</div><div><div class="expr-en">How long have you been feeling like this?</div><div class="expr-cn">您这样感觉多久了？</div></div></div>
+      <div class="expr-item"><div class="expr-tag doctor">DOCTOR</div><div><div class="expr-en">Have you been experiencing any other problems?</div><div class="expr-cn">您还有其他不舒服吗？</div></div></div>
+      <div class="expr-item"><div class="expr-tag doctor">DOCTOR</div><div><div class="expr-en">Have you been taking anything?</div><div class="expr-cn">您有吃什么药吗？</div></div></div>
+      <div class="expr-item"><div class="expr-tag patient">PATIENT</div><div><div class="expr-en">I've been vomiting, and I have diarrhea.</div><div class="expr-cn">我一直在呕吐，而且腹泻。</div></div></div>
+      <div class="expr-item"><div class="expr-tag patient">PATIENT</div><div><div class="expr-en">I've been feeling really tired for a few days.</div><div class="expr-cn">我这几天一直觉得很累。</div></div></div>
+      <div class="expr-item"><div class="expr-tag patient">PATIENT</div><div><div class="expr-en">I haven't been sleeping well.</div><div class="expr-cn">我最近一直睡不好。</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Grammar: Present Perfect Continuous -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">03</span> GRAMMAR: PRESENT PERFECT CONTINUOUS 现在完成进行时</h2>
+    <p class="section-sub">课件用它描述从过去开始、持续到现在的症状或情况。</p>
+    <div class="pattern-box">
+      <h4>结构</h4>
+      <div class="formula">have / has + been + 动词-ing</div>
+      <p>描述一个动作或状态从过去开始、一直持续到现在，常用于描述症状已经持续了多久。</p>
+      <div class="formula">"I've been vomiting a lot." 我一直吐得很厉害。<br>"I've been having problems sleeping." 我一直有睡眠问题。<br>"I've been feeling very bad for the last two days." 过去两天我一直感觉很不舒服。</div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup><col style="width: 20%"><col style="width: 34%"><col style="width: 46%"></colgroup>
+        <thead><tr><th>用法</th><th>搭配</th><th>例句</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="en">for</span></td>
+            <td>+ 一段时间</td>
+            <td>"I've been feeling bad <span class="en">for a few days</span>." 我已经难受好几天了。<br><span class="en">for three days / for two hours</span></td>
+          </tr>
+          <tr>
+            <td><span class="en">since</span></td>
+            <td>+ 起始时间</td>
+            <td>"I've been feeling nauseous <span class="en">since Tuesday</span>." 我从周二开始就一直恶心。<br><span class="en">since last Friday / since I arrived</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <strong>经典句：</strong>"Since I got home, I've been feeling terrible." — 从我到家以后，我就一直感觉很糟。
+    </div>
+  </div>
+</section>
+
+<!-- 04 Pharmacy Vocabulary -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">04</span> PHARMACY VOCABULARY 药房与处方</h2>
+    <p class="section-sub">从进药房、取到处方，到药物剂型和副作用，一套完整术语。</p>
+
+    <div class="st-chips">
+      <div class="st-chip"><b>pharmacy</b> <span class="cn">药房</span></div>
+      <div class="st-chip"><b>pharmacist</b> <span class="cn">药剂师</span></div>
+      <div class="st-chip"><b>prescription</b> <span class="cn">处方</span></div>
+      <div class="st-chip"><b>fill a prescription</b> <span class="cn">配处方药</span></div>
+      <div class="st-chip"><b>medicine</b> <span class="cn">药（口语）</span></div>
+      <div class="st-chip"><b>medication</b> <span class="cn">药物（正式）</span></div>
+      <div class="st-chip"><b>pick up my medication</b> <span class="cn">取药</span></div>
+      <div class="st-chip"><b>take medicine</b> <span class="cn">服药</span></div>
+      <div class="st-chip"><b>pill</b> <span class="cn">药丸泛称</span></div>
+      <div class="st-chip"><b>tablet</b> <span class="cn">药片</span></div>
+      <div class="st-chip"><b>capsule</b> <span class="cn">胶囊</span></div>
+      <div class="st-chip"><b>syrup</b> <span class="cn">糖浆剂</span></div>
+      <div class="st-chip"><b>teaspoon</b> <span class="cn">茶匙（量）</span></div>
+      <div class="st-chip"><b>dosage</b> <span class="cn">剂量</span></div>
+      <div class="st-chip"><b>side effect</b> <span class="cn">副作用</span></div>
+      <div class="st-chip"><b>drowsiness</b> <span class="cn">嗜睡</span></div>
+      <div class="st-chip"><b>loss of appetite</b> <span class="cn">食欲下降</span></div>
+      <div class="st-chip"><b>be allergic to</b> <span class="cn">对……过敏</span></div>
+      <div class="st-chip"><b>insurance cover</b> <span class="cn">保险报销</span></div>
+    </div>
+
+    <div class="expr-list" style="margin-top: 20px;">
+      <div class="expr-item"><div class="expr-tag patient">取药</div><div><div class="expr-en">I'm here to pick up my medication.</div><div class="expr-cn">我来取药。</div></div></div>
+      <div class="expr-item"><div class="expr-tag doctor">问诊</div><div><div class="expr-en">Are you allergic to any medication?</div><div class="expr-cn">您对什么药物过敏吗？</div></div></div>
+      <div class="expr-item"><div class="expr-tag doctor">问诊</div><div><div class="expr-en">Are you currently taking any other medication?</div><div class="expr-cn">您目前还在服用其他药物吗？</div></div></div>
+      <div class="expr-item"><div class="expr-tag patient">问保险</div><div><div class="expr-en">Does my insurance cover this medication?</div><div class="expr-cn">我的保险报销这种药吗？</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Understanding Prescription Labels -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">05</span> UNDERSTANDING PRESCRIPTION LABELS 看懂处方标签</h2>
+    <p class="section-sub">药瓶／药盒上常见的英文标签句，学会读懂服用剂量与注意事项。</p>
+
+    <div class="label-card">
+      <span class="en">Take four tablets, twice a day.</span>
+      <p>每天两次，每次四片。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">The medicine comes in capsules. Take two every day.</span>
+      <p>这种药是胶囊，每天服用两粒。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">Take one teaspoon after meals.</span>
+      <p>饭后服用一茶匙。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">Maximum dosage: two teaspoons per day.</span>
+      <p>每日最大剂量为两茶匙。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">Side effects may include drowsiness.</span>
+      <p>副作用可能包括嗜睡。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">Side effects may include loss of appetite.</span>
+      <p>副作用可能包括食欲下降。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">Suitable for adults and children over 12 years old.</span>
+      <p>适用于成人和 12 岁以上儿童。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">Take three capsules every 24 hours.</span>
+      <p>每 24 小时服用三粒胶囊。</p>
+    </div>
+    <div class="label-card">
+      <span class="en">May cause drowsiness. Suitable for all ages.</span>
+      <p>可能引起嗜睡。适用于所有年龄段。</p>
+    </div>
+
+    <div class="st-chips">
+      <div class="st-chip"><b>maximum dosage</b> <span class="cn">最大剂量</span></div>
+      <div class="st-chip"><b>side effects</b> <span class="cn">副作用</span></div>
+      <div class="st-chip"><b>suitable for</b> <span class="cn">适用于</span></div>
+      <div class="st-chip"><b>after meals</b> <span class="cn">饭后</span></div>
+      <div class="st-chip"><b>twice a day</b> <span class="cn">每天两次</span></div>
+      <div class="st-chip"><b>every 24 hours</b> <span class="cn">每 24 小时</span></div>
+    </div>
+
+    <div class="callout">
+      <strong>注意：</strong>以上剂量句子是课件中的英语示例，用于学习读懂标签；实际用药请遵照医生处方和药品标签。
+    </div>
+  </div>
+</section>
+
+<!-- 06 Quick Review -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="num">06</span> QUICK REVIEW 优先记住的表达</h2>
+    <div class="notes-box">
+      <h3>必背 8 句</h3>
+      <p><strong>1.</strong> "I have a sore throat." — 我喉咙痛。</p>
+      <p><strong>2.</strong> "I've been feeling bad for a few days." — 我已经难受好几天了。</p>
+      <p><strong>3.</strong> "How long has this been going on?" — 这种情况持续多久了？</p>
+      <p><strong>4.</strong> "Have you been experiencing any other problems?" — 您还有其他不舒服吗？</p>
+      <p><strong>5.</strong> "Have you been taking anything?" — 您有吃什么药吗？</p>
+      <p><strong>6.</strong> "I'm here to pick up my medication." — 我来取药。</p>
+      <p><strong>7.</strong> "Are you allergic to any medication?" — 您对什么药物过敏吗？</p>
+      <p><strong>8.</strong> "Does my insurance cover this medication?" — 我的保险报销这种药吗？</p>
+    </div>
+    <div class="notes-box" style="margin-top: 16px;">
+      <h3>复习方法</h3>
+      <p>不必背完整对话。先记住症状词汇、持续时间的说法，以及看医生和取药时最实用的问句。可以替换症状和时间练习：</p>
+      <p style="margin-top: 8px;"><span style="color: var(--pink); font-family: 'JetBrains Mono', monospace;">"I've been coughing for two days."</span> ｜ <span style="color: var(--pink); font-family: 'JetBrains Mono', monospace;">"I've had a headache since yesterday."</span></p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    English Speaking Notebook · Chapter 4: Health · Going to the Doctor's
+  </div>
+</footer>
+
+</body>
+</html>
