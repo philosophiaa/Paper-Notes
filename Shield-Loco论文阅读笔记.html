@@ -176,7 +176,7 @@
   <div class="container">
     <div class="header-tag">PAPER NOTES · SHIELD-LOCO</div>
     <h1>Shield-Loco 论文阅读笔记</h1>
-    <div class="meta">Shielding Locomotion Policies with Predictive Safety Filtering · 2026-10-29</div>
+    <div class="meta">Shielding Locomotion Policies with Predictive Safety Filtering · <a href="https://arxiv.org/abs/2606.07193?utm_source=chatgpt.com" target="_blank">arXiv:2606.07193</a> · 2026-10-29</div>
     <p>从机器人安全策略基础概念到 <strong>Shield-Loco</strong> 论文精读与复现路线：CBF、预测式安全过滤器、HJ 可达性等常见安全方法 → 硬/软/概率约束与递归可行性 → Shield-Loco 的预测式过滤架构、SDF+QP 几何投影、采样优化器与消融实验 → 局限、复现阶段与记忆框架。</p>
     <p style="margin-top:10px; font-size:12px; color: var(--text-muted);">方法直觉、延伸解释和复现建议用于学习辅助，不应误认为论文作者原文结论。正式引用时请核对论文 PDF 首页的作者、版本与发表信息。</p>
   </div>
@@ -259,7 +259,8 @@
   <div class="container">
     <div class="section-title"><span class="num">04</span> Shield-Loco：研究问题与整体架构</div>
     <div class="paper-card">
-      <h4>Shield-Loco: Shielding Locomotion Policies with Predictive Safety Filtering</h4>
+      <h4><a href="https://arxiv.org/abs/2606.07193?utm_source=chatgpt.com" target="_blank">Shield-Loco: Shielding Locomotion Policies with Predictive Safety Filtering</a></h4>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:-4px;">论文链接：<a href="https://arxiv.org/abs/2606.07193?utm_source=chatgpt.com" target="_blank">https://arxiv.org/abs/2606.07193</a></p>
       <p><strong>研究对象：</strong>Unitree Go2 四足机器人。</p>
       <p><strong>核心问题：</strong>已有强化学习运动策略在障碍物环境中可能产生不安全的落脚目标。作者希望<strong>保留原有 RL 策略、不重新训练底层运动策略</strong>，而是在其前面增加预测式安全过滤层。</p>
       <div class="sub-title" style="margin-top:16px;">整体流程 <span class="tag">6 步</span></div>
