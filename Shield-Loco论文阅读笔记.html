@@ -396,6 +396,53 @@
   </div>
 </section>
 
+<!-- 08 人形机器人全身控制 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> 如何把这些概念用于人形机器人的全身控制？</div>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.9; margin-bottom:14px;">对人形机器人而言，可以把控制架构分为三个层次：</p>
+    <div class="flow-list">
+      <div class="flow-step">
+        <div class="flow-num">上层</div>
+        <div><p><strong>任务规划</strong> — 决定机器人去哪里、怎样绕过障碍物、期望在哪里落脚。</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">中层</div>
+        <div><p><strong>安全过滤与轨迹优化</strong> — 检查未来轨迹，处理碰撞、接触条件、可行性，并在需要时修改落脚计划或动作。</p></div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">底层</div>
+        <div><p><strong>全身控制（WBC）</strong> — 结合机器人动力学、接触约束、任务优先级和执行器限制，计算关节力矩或其他底层控制指令。</p></div>
+      </div>
+    </div>
+    <div class="warn-box">
+      <strong>注意：</strong>这是一个可采用的架构思路，不是 Shield-Loco 已经验证过的人形机器人系统。
+    </div>
+    <div class="paper-card">
+      <p>人形机器人具有<strong>更复杂的全身动力学、多个接触点以及躯干和手臂的协调需求</strong>。即使上层落脚位置合理，也仍需检查全身轨迹、接触力、关节力矩和底层控制的实际跟踪误差。</p>
+      <p>所以，安全策略不能只看上层规划是否避开障碍物，还需要关注底层执行是否真正实现了预期行为。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 最终记忆框架 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">09</span> 最终记忆框架</div>
+    <div class="memory-list">
+      <div class="memory-item"><div class="memory-num">1</div><p><strong>CBF：</strong>通过控制条件限制系统的安全演化。</p></div>
+      <div class="memory-item"><div class="memory-num">2</div><p><strong>预测式安全过滤器：</strong>预测未来行为，有风险时修改原始计划。</p></div>
+      <div class="memory-item"><div class="memory-num">3</div><p><strong>硬约束与软约束：</strong>一个要求严格满足条件，另一个允许用代价权衡违规。</p></div>
+      <div class="memory-item"><div class="memory-num">4</div><p><strong>递归可行性：</strong>不仅当前有解，还要关注未来每一步能否继续找到可行解。</p></div>
+      <div class="memory-item"><div class="memory-num">5</div><p><strong>备份控制器：</strong>为正常控制失败或优化无解提供恢复机制，但自身也需要验证。</p></div>
+      <div class="memory-item"><div class="memory-num">6</div><p><strong>Shield-Loco：</strong>通过优化四足机器人的落脚位置减少碰撞，但尚未提供形式化安全保证。</p></div>
+    </div>
+    <div class="note-box" style="margin-top:16px;">
+      <strong>最重要的一点：</strong>安全约束是设计要求，优化器是求解工具，安全保证则需要明确的理论条件或经过充分验证的机制。三者不能互相替代。
+    </div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="container">
     Shield-Loco 论文阅读笔记 · 从基础概念到论文精读 · 2026-10-29
