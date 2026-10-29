@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语口语笔记 · Chapter 5 Problems &amp; Solutions</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.7; font-size: 15px;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 56px 0 40px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; top: -30%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--pink); border: 1px solid rgba(236,72,153,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+  .hero h1 .accent { color: var(--pink); }
+  .hero p { font-size: 15px; color: var(--text-secondary); max-width: 680px; line-height: 1.8; }
+  .hero-goal {
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.2);
+    padding: 8px 16px; border-radius: 8px; font-size: 13px; color: var(--pink);
+  }
+  .lesson-strip { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .lesson-pill {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+    color: var(--text-secondary); background: var(--bg-card);
+  }
+  .lesson-pill b { color: var(--pink); }
+  .lesson-pill.chapter { border-color: rgba(236,72,153,0.4); color: var(--pink); }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--pink);
+    background: rgba(236,72,153,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .section-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+  .vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .vocab-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; border-left: 3px solid var(--pink);
+  }
+  .vocab-word {
+    font-size: 15px; font-weight: 700; color: var(--pink); margin-bottom: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .vocab-meaning { font-size: 13px; color: var(--text-secondary); }
+
+  .expr-list { display: flex; flex-direction: column; gap: 10px; }
+  .expr-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .expr-tag {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px; margin-top: 3px;
+  }
+  .expr-tag.en { background: rgba(236,72,153,0.12); color: var(--pink); }
+  .expr-tag.cn { background: rgba(6,182,212,0.12); color: var(--cyan); }
+  .expr-en { font-size: 15px; color: var(--text); margin-bottom: 2px; }
+  .expr-cn { font-size: 13px; color: var(--text-muted); }
+
+  .pattern-box {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(236,72,153,0.08));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 12px; padding: 22px; margin: 16px 0;
+  }
+  .pattern-box h4 { font-size: 15px; color: var(--purple); margin-bottom: 12px; }
+  .pattern-box .formula {
+    font-family: 'JetBrains Mono', monospace; font-size: 14px;
+    color: var(--text); background: rgba(0,0,0,0.2);
+    padding: 10px 14px; border-radius: 6px; margin: 8px 0; line-height: 1.7;
+  }
+  .pattern-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 14px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(236,72,153,0.08); color: var(--pink);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.7;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .en { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+
+  .st-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .st-chip {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px; font-size: 13px; color: var(--text-secondary);
+  }
+  .st-chip b { color: var(--pink); font-family: 'JetBrains Mono', monospace; }
+  .st-chip .cn { color: var(--text-muted); }
+
+  .label-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 10px;
+    border-left: 3px solid var(--green);
+  }
+  .label-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .label-card .en { color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 13px; display: block; margin-bottom: 2px; }
+
+  .dialogue {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 12px;
+  }
+  .dialogue h5 { font-size: 14px; color: var(--cyan); margin-bottom: 10px; }
+  .dialogue .line { font-size: 14px; color: var(--text-secondary); line-height: 1.9; }
+  .dialogue .line b { color: var(--pink); font-weight: 600; }
+  .dialogue .line .cn { color: var(--text-muted); font-size: 12px; }
+
+  .notes-box {
+    background: linear-gradient(135deg, rgba(236,72,153,0.08), rgba(139,92,246,0.08));
+    border: 1px solid rgba(236,72,153,0.2);
+    border-radius: 12px; padding: 24px;
+  }
+  .notes-box h3 { font-size: 16px; margin-bottom: 14px; color: var(--pink); }
+  .notes-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 8px; }
+  .notes-box p:last-child { margin-bottom: 0; }
+  .notes-box strong { color: var(--text); }
+
+  .callout {
+    margin-top: 14px; padding: 12px 16px;
+    background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px; font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .callout strong { color: var(--orange); }
+
+  .memory-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .memory-item {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+    border-left: 3px solid var(--pink);
+  }
+  .memory-item .en { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); display: block; margin-bottom: 2px; }
+  .memory-item .cn { font-size: 12px; color: var(--text-muted); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .vocab-grid, .memory-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-tag">ENGLISH SPEAKING NOTEBOOK · CHAPTER 5: PROBLEMS &amp; SOLUTIONS</div>
+    <h1>Problems &amp; Solutions <span class="accent">问题与解决方案</span> · 描述问题 / 给建议 / 职场与公司问题</h1>
+    <p>EF 成人英语 Unit 3：Explaining a Problem · Giving Advice · Problems at Work · Company Problems · Offering Solutions · Relative Clauses · Homework。覆盖问题描述句型、建议表达、职场与公司问题词汇、定语从句 who/that，以及"描述问题—说明影响—表达关心／提出建议"的表达框架。</p>
+    <div class="hero-goal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      目标：能描述问题 · 能给出建议 · 能表达关心与提出解决方案
+    </div>
+    <div class="lesson-strip">
+      <span class="lesson-pill chapter">EF Unit 3</span>
+      <span class="lesson-pill">The problem is that …</span>
+      <span class="lesson-pill">You should / ought to …</span>
+      <span class="lesson-pill">One solution could be to …</span>
+      <span class="lesson-pill">Relative Clauses who / that</span>
+    </div>
+  </div>
+</header>
+
+<!-- 一、描述问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> Explaining a Problem｜描述问题</div>
+    <div class="section-sub">核心句型 + 个人问题词汇 + 实用搭配 + 课堂易错点</div>
+    <div class="pattern-box">
+      <h4>核心句型</h4>
+      <div class="formula">The problem is that … — 问题是……</div>
+      <div class="formula">One big problem is that … — 一个大问题是……</div>
+      <div class="formula">The trouble is that … — 麻烦在于……</div>
+    </div>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">The problem is that people can't sleep well.</div><div class="expr-cn">问题是人们睡不好。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">The trouble is that people are addicted to coffee.</div><div class="expr-cn">麻烦在于人们对咖啡上瘾。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">One big problem is that they may have health problems.</div><div class="expr-cn">一个大问题是他们可能会有健康问题。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">The problem is that they have many bills to pay.</div><div class="expr-cn">问题是他们有很多账单要付。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">One big problem is that employee morale may be low.</div><div class="expr-cn">一个大问题是员工士气可能低落。</div></div></div>
+    </div>
+    <div class="sub-title" style="font-size:15px;font-weight:700;color:var(--pink);margin:20px 0 12px;">个人问题词汇</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vocab-word">be addicted to …</div><div class="vocab-meaning">对……上瘾</div></div>
+      <div class="vocab-card"><div class="vocab-word">financial problems</div><div class="vocab-meaning">经济问题</div></div>
+      <div class="vocab-card"><div class="vocab-word">a weight problem</div><div class="vocab-meaning">体重问题</div></div>
+      <div class="vocab-card"><div class="vocab-word">overweight</div><div class="vocab-meaning">超重的</div></div>
+      <div class="vocab-card"><div class="vocab-word">have a problem sleeping</div><div class="vocab-meaning">有睡眠问题</div></div>
+      <div class="vocab-card"><div class="vocab-word">insomnia</div><div class="vocab-meaning">失眠</div></div>
+      <div class="vocab-card"><div class="vocab-word">marital problems</div><div class="vocab-meaning">婚姻问题</div></div>
+      <div class="vocab-card"><div class="vocab-word">bills to pay</div><div class="vocab-meaning">要支付的账单</div></div>
+      <div class="vocab-card"><div class="vocab-word">feel tired all day</div><div class="vocab-meaning">整天感到疲倦</div></div>
+      <div class="vocab-card"><div class="vocab-word">affect my health</div><div class="vocab-meaning">影响我的健康</div></div>
+    </div>
+    <div class="sub-title" style="font-size:15px;font-weight:700;color:var(--pink);margin:20px 0 12px;">描述问题时的实用搭配</div>
+    <div class="st-chips">
+      <span class="st-chip"><b>He's addicted to coffee.</b> <span class="cn">他对咖啡上瘾。</span></span>
+      <span class="st-chip"><b>I have insomnia.</b> <span class="cn">我有失眠问题。</span></span>
+      <span class="st-chip"><b>I can't sleep well.</b> <span class="cn">我睡不好。</span></span>
+      <span class="st-chip"><b>They may lose a lot of money.</b> <span class="cn">他们可能会损失很多钱。</span></span>
+      <span class="st-chip"><b>They may have financial problems.</b> <span class="cn">他们可能会遇到经济困难。</span></span>
+      <span class="st-chip"><b>They have many bills to pay.</b> <span class="cn">他们有很多账单要付。</span></span>
+    </div>
+    <div class="callout"><strong>课堂练习易错点：</strong> ① I'm <b style="color:var(--text)">overweight</b>（不是 overweighting，overweight 是形容词不加 -ing）；② The problem is that I <b style="color:var(--text)">have</b> insomnia（不是 I am insomnia，insomnia 是名词，用 have insomnia）；③ he/she/it 作一般现在时主语时行为动词加 -s：He <b style="color:var(--text)">drinks</b> too much coffee；④ may 后面接动词原形：They may <b style="color:var(--text)">forget</b> important tasks and <b style="color:var(--text)">miss</b> deadlines。</div>
+  </div>
+</section>
+
+<!-- 二、给建议 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> Giving Advice｜给建议</div>
+    <div class="section-sub">常用句型 + 语法结构 + 课堂练习纠正</div>
+    <div class="pattern-box">
+      <h4>常用句型</h4>
+      <div class="formula">You should … — 你应该……</div>
+      <div class="formula">You ought to … — 你应该……</div>
+      <div class="formula">You had better … / You'd better … — 你最好……（语气较强）</div>
+      <div class="formula">Make sure to … / Make sure not to … — 一定要…… / 一定不要……</div>
+      <div class="formula">Be sure to … — 务必…… · Don't … — 不要……</div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <colgroup><col style="width: 30%"><col style="width: 40%"><col style="width: 30%"></colgroup>
+        <thead><tr><th>结构</th><th>例句</th><th>含义</th></tr></thead>
+        <tbody>
+          <tr><td>should + 动词原形</td><td class="en">You should exercise more.</td><td>你应该多锻炼。</td></tr>
+          <tr><td>ought to + 动词原形</td><td class="en">You ought to get enough sleep.</td><td>你应该保证充足睡眠。</td></tr>
+          <tr><td>had better + 动词原形</td><td class="en">You had better quit smoking.</td><td>你最好戒烟。</td></tr>
+          <tr><td>had better not + 动词原形</td><td class="en">You had better not drink coffee at night.</td><td>你最好晚上不要喝咖啡。</td></tr>
+          <tr><td>Make sure to + 动词原形</td><td class="en">Make sure to get enough sleep every night.</td><td>一定要保证每晚睡眠充足。</td></tr>
+          <tr><td>Make sure not to + 动词原形</td><td class="en">Make sure not to drink coffee at night.</td><td>晚上一定不要喝咖啡。</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><strong>课堂练习纠正：</strong> 不说 You should <b style="color:var(--text)">to</b> exercise more；不说 You had better <b style="color:var(--text)">don't</b> drink coffee at night（应说 You had better <b style="color:var(--text)">not</b> drink…）；不说 You had better not <b style="color:var(--text)">to</b> drink…；更自然地说法：Make sure to <b style="color:var(--text)">get enough sleep</b>（睡眠充足，不说 sleep enough time）。</div>
+  </div>
+</section>
+
+<!-- 三、工作中的问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> Problems on the Job｜工作中的问题</div>
+    <div class="section-sub">核心词汇 + 实用句子 + 课堂个人回答</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vocab-word">being late</div><div class="vocab-meaning">迟到</div></div>
+      <div class="vocab-card"><div class="vocab-word">disorganized</div><div class="vocab-meaning">做事没条理</div></div>
+      <div class="vocab-card"><div class="vocab-word">lazy</div><div class="vocab-meaning">懒惰的</div></div>
+      <div class="vocab-card"><div class="vocab-word">sloppy</div><div class="vocab-meaning">马虎的、不认真的</div></div>
+      <div class="vocab-card"><div class="vocab-word">argumentative</div><div class="vocab-meaning">爱争辩的</div></div>
+      <div class="vocab-card"><div class="vocab-word">offensive</div><div class="vocab-meaning">冒犯人的</div></div>
+      <div class="vocab-card"><div class="vocab-word">not flexible</div><div class="vocab-meaning">不够灵活</div></div>
+      <div class="vocab-card"><div class="vocab-word">not following instructions</div><div class="vocab-meaning">不按指示做事</div></div>
+      <div class="vocab-card"><div class="vocab-word">not working well with the team</div><div class="vocab-meaning">团队合作不好</div></div>
+      <div class="vocab-card"><div class="vocab-word">not meeting deadlines</div><div class="vocab-meaning">没有按时完成任务</div></div>
+      <div class="vocab-card"><div class="vocab-word">miss deadlines</div><div class="vocab-meaning">错过截止日期</div></div>
+      <div class="vocab-card"><div class="vocab-word">make mistakes</div><div class="vocab-meaning">犯错</div></div>
+      <div class="vocab-card"><div class="vocab-word">forget important tasks</div><div class="vocab-meaning">忘记重要任务</div></div>
+      <div class="vocab-card"><div class="vocab-word">teamwork</div><div class="vocab-meaning">团队协作</div></div>
+    </div>
+    <div class="sub-title" style="font-size:15px;font-weight:700;color:var(--pink);margin:20px 0 12px;">实用句子</div>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">He's often late for work.</div><div class="expr-cn">他上班经常迟到。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">She's disorganized.</div><div class="expr-cn">她做事没条理。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">He doesn't follow instructions.</div><div class="expr-cn">他不按指示做事。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">She doesn't work well with the team.</div><div class="expr-cn">她团队合作不好。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">He has trouble meeting deadlines.</div><div class="expr-cn">他很难按时完成任务。</div></div></div>
+    </div>
+    <div class="label-card">
+      <span class="en">I think not working well with the team is worse because it affects teamwork and project progress.</span>
+      <p>我认为团队合作不好更严重，因为这会影响团队协作和项目进度。</p>
+      <p style="font-size:12px;color:var(--text-muted);">注意：泛指 teamwork 时通常不加 the；project progress 表示项目进度，比 project process 更符合这里的意思。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 四、公司问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> Company Problems｜公司面临的问题</div>
+    <div class="section-sub">核心词汇 + 实用句子 + 课堂回答修正版</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vocab-word">poor communication</div><div class="vocab-meaning">沟通不畅</div></div>
+      <div class="vocab-card"><div class="vocab-word">employee morale is low</div><div class="vocab-meaning">员工士气低落</div></div>
+      <div class="vocab-card"><div class="vocab-word">costs are going up</div><div class="vocab-meaning">成本不断上升</div></div>
+      <div class="vocab-card"><div class="vocab-word">fierce competition</div><div class="vocab-meaning">激烈的竞争</div></div>
+      <div class="vocab-card"><div class="vocab-word">mismanagement</div><div class="vocab-meaning">管理不善</div></div>
+      <div class="vocab-card"><div class="vocab-word">a lack of innovation</div><div class="vocab-meaning">缺乏创新</div></div>
+      <div class="vocab-card"><div class="vocab-word">outdated technology</div><div class="vocab-meaning">过时的技术</div></div>
+      <div class="vocab-card"><div class="vocab-word">employee theft</div><div class="vocab-meaning">员工盗窃</div></div>
+      <div class="vocab-card"><div class="vocab-word">can't afford …</div><div class="vocab-meaning">负担不起……</div></div>
+      <div class="vocab-card"><div class="vocab-word">rising costs</div><div class="vocab-meaning">上升的成本</div></div>
+    </div>
+    <div class="sub-title" style="font-size:15px;font-weight:700;color:var(--pink);margin:20px 0 12px;">实用句子</div>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">The company has poor communication.</div><div class="expr-cn">这家公司沟通不畅。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">Its costs are going up.</div><div class="expr-cn">它的成本不断上升。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">It also faces fierce competition.</div><div class="expr-cn">它也面临激烈竞争。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">One big problem is that employee morale may be low.</div><div class="expr-cn">一个大问题是员工士气可能低落。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">The company can't afford new equipment.</div><div class="expr-cn">这家公司负担不起新设备。</div></div></div>
+    </div>
+    <div class="label-card">
+      <span class="en">The company has poor communication, its costs are going up, and it also faces fierce competition.</span>
+      <p>这家公司沟通不畅、成本不断上升，而且面临激烈竞争。</p>
+      <p style="font-size:12px;color:var(--text-muted);">注意：it 作主语时用 it faces（不是 it face）；face fierce competition = 面临激烈竞争；employee morale 是常见搭配，通常不加 the。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 五、提出解决方案 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> Offering Solutions｜提出解决方案</div>
+    <div class="section-sub">核心句型 + 例句 + 课堂表达</div>
+    <div class="pattern-box">
+      <h4>核心句型</h4>
+      <div class="formula">One solution could be to … — 一个解决办法可以是……</div>
+      <div class="formula">Another possibility would be to … — 另一个可能的办法是……</div>
+      <div class="formula">I strongly suggest that we … — 我强烈建议我们……</div>
+      <div class="formula">The only solution is to … — 唯一的解决办法是……</div>
+      <div class="formula">The only way to solve this problem is to … — 解决这个问题的唯一办法是……</div>
+    </div>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">One solution could be to have a team meeting and improve communication.</div><div class="expr-cn">一个解决办法是召开团队会议并改善沟通。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">Another possibility would be to hire a new manager.</div><div class="expr-cn">另一个可能的办法是聘请一位新经理。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">I strongly suggest that we deal with this problem immediately.</div><div class="expr-cn">我强烈建议我们立即处理这个问题。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">One solution could be to reduce costs.</div><div class="expr-cn">一个解决办法可以是降低成本。</div></div></div>
+    </div>
+    <div class="callout"><strong>注意：</strong> team meeting 在职场语境中很自然；Another possibility would be to … 是课件重点句型（could 也可以表达可能性，但练习时先熟悉课件句型）。</div>
+  </div>
+</section>
+
+<!-- 六、定语从句 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> Relative Clauses｜定语从句 who / that</div>
+    <div class="section-sub">在名词后补充说明"什么样的人／东西"</div>
+    <div class="pattern-box">
+      <h4>用法</h4>
+      <div class="formula">who — 通常指人</div>
+      <div class="formula">that — 可以指人或物</div>
+    </div>
+    <div class="expr-list">
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">We have a manager who works very hard.</div><div class="expr-cn">我们有一位工作非常努力的经理。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">I work for a company that has poor communication.</div><div class="expr-cn">我在一家沟通不畅的公司工作。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">We have a lot of engineers who work late.</div><div class="expr-cn">我们有很多经常加班的工程师。</div></div></div>
+      <div class="expr-item"><div class="expr-tag en">EN</div><div><div class="expr-en">I work for a company that has lots of problems.</div><div class="expr-cn">我在一家问题很多的公司工作。</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 七、课后作业 Part 1 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">07</span> 课后作业 Part 1｜Talk about My Personal Problems</div>
+    <div class="section-sub">核心词汇 + 实用句型 + 简单组织结构 + 个人答案示例</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vocab-word">weight problem</div><div class="vocab-meaning">体重问题</div></div>
+      <div class="vocab-card"><div class="vocab-word">overweight</div><div class="vocab-meaning">超重的</div></div>
+      <div class="vocab-card"><div class="vocab-word">affect my health</div><div class="vocab-meaning">影响我的健康</div></div>
+      <div class="vocab-card"><div class="vocab-word">stress at work</div><div class="vocab-meaning">工作压力</div></div>
+      <div class="vocab-card"><div class="vocab-word">feel tired</div><div class="vocab-meaning">感到疲倦</div></div>
+      <div class="vocab-card"><div class="vocab-word">financial problems</div><div class="vocab-meaning">经济问题</div></div>
+      <div class="vocab-card"><div class="vocab-word">bills to pay</div><div class="vocab-meaning">要支付的账单</div></div>
+      <div class="vocab-card"><div class="vocab-word">insomnia</div><div class="vocab-meaning">失眠</div></div>
+      <div class="vocab-card"><div class="vocab-word">be addicted to …</div><div class="vocab-meaning">对……上瘾</div></div>
+    </div>
+    <div class="sub-title" style="font-size:15px;font-weight:700;color:var(--pink);margin:20px 0 12px;">实用句型</div>
+    <div class="st-chips">
+      <span class="st-chip"><b>I have a weight problem.</b> <span class="cn">我有体重方面的问题。</span></span>
+      <span class="st-chip"><b>I'm overweight, and it affects my health.</b> <span class="cn">我超重了，这影响了我的健康。</span></span>
+      <span class="st-chip"><b>I've been a bit busy with work lately.</b> <span class="cn">最近工作有点忙。</span></span>
+      <span class="st-chip"><b>Sometimes I feel tired and don't have enough time to relax.</b> <span class="cn">有时我觉得很累，没有足够的时间放松。</span></span>
+      <span class="st-chip"><b>The problem is that I …</b> <span class="cn">问题是我……</span></span>
+      <span class="st-chip"><b>I think I should …</b> <span class="cn">我觉得我应该……</span></span>
+    </div>
+    <div class="label-card">
+      <span class="en">I have a weight problem. I'm overweight, and it affects my health.</span>
+      <p>我有体重方面的问题。我超重了，这影响了我的健康。</p>
+      <p style="font-size:12px;color:var(--text-muted);">简单组织结构：描述自己的问题 → 说明影响 → 说说自己的想法或行动。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 八、课后作业 Part 2 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> 课后作业 Part 2｜Sympathizing with Someone</div>
+    <div class="section-sub">表达关心、理解和安慰 + 情景对话</div>
+    <div class="pattern-box">
+      <h4>表达关心、理解和安慰</h4>
+      <div class="formula">I'm sorry to hear that. — 听到这个我很难过。</div>
+      <div class="formula">That sounds difficult. — 听起来确实不容易。</div>
+      <div class="formula">That must be difficult. — 那一定很不容易。</div>
+      <div class="formula">I hope everything will be all right. — 希望一切都会好起来。</div>
+      <div class="formula">I hope everything gets better soon. — 希望一切很快好起来。</div>
+      <div class="formula">I hope things get better soon. — 希望情况很快好转。</div>
+    </div>
+    <div class="callout"><strong>表达区别：</strong> That <b style="color:var(--text)">sounds</b> difficult — 听起来很不容易，回应对方描述的情况；That <b style="color:var(--text)">must</b> be difficult — 那一定很不容易，更直接地表达理解。安慰后可提出建议：You should … / You should go to bed earlier. / Stop playing computer games at night.</div>
+    <div class="sub-title" style="font-size:15px;font-weight:700;color:var(--pink);margin:20px 0 12px;">情景对话</div>
+    <div class="dialogue">
+      <h5>情景 A：工作压力</h5>
+      <div class="line"><b>Friend:</b> I've been very stressed at work lately. I feel tired every day.</div>
+      <div class="line"><b>You:</b> I'm sorry to hear that. That sounds difficult. I hope everything will be all right.</div>
+    </div>
+    <div class="dialogue">
+      <h5>情景 B：经济困难</h5>
+      <div class="line"><b>Friend:</b> I've been having financial problems. I don't have enough money to pay all my bills.</div>
+      <div class="line"><b>You:</b> I'm sorry to hear that. That must be difficult. I hope everything gets better soon.</div>
+    </div>
+    <div class="dialogue">
+      <h5>情景 C：沉迷电脑游戏、失眠</h5>
+      <div class="line"><b>Friend:</b> I play computer games every night, and now I have insomnia. I feel tired all day.</div>
+      <div class="line"><b>You:</b> I'm sorry to hear that. You should go to bed earlier and stop playing computer games at night.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 九、易错点汇总 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">09</span> 今日重点易错点汇总</div>
+    <div class="section-sub">8 个最容易出错的地方</div>
+    <div class="memory-grid">
+      <div class="memory-item"><span class="en">I'm overweight.</span><span class="cn">overweight 是形容词（不是 I'm overweighting.）</span></div>
+      <div class="memory-item"><span class="en">I have insomnia.</span><span class="cn">insomnia 是名词（不是 I am insomnia.）</span></div>
+      <div class="memory-item"><span class="en">You should go to bed earlier.</span><span class="cn">should + 动词原形</span></div>
+      <div class="memory-item"><span class="en">You had better not drink coffee at night.</span><span class="cn">had better not + 动词原形</span></div>
+      <div class="memory-item"><span class="en">They may forget important tasks and miss deadlines.</span><span class="cn">may + 动词原形</span></div>
+      <div class="memory-item"><span class="en">He drinks coffee. / It faces fierce competition.</span><span class="cn">第三人称单数一般现在时加 -s</span></div>
+      <div class="memory-item"><span class="en">Make sure to get enough sleep every night.</span><span class="cn">get enough sleep（不说 sleep enough time）</span></div>
+      <div class="memory-item"><span class="en">go to bed earlier · stop playing …</span><span class="cn">常用搭配：affect my health / pay my bills / face fierce competition / miss deadlines</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 十、快速复习 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">10</span> 快速复习｜最值得记住的句子</div>
+    <div class="section-sub">14 句 + 复习方法</div>
+    <div class="notes-box">
+      <h3>最值得记住的句子</h3>
+      <p>1. The problem is that I can't sleep well.</p>
+      <p>2. One big problem is that employee morale may be low.</p>
+      <p>3. The trouble is that people are addicted to coffee.</p>
+      <p>4. I'm overweight, and it affects my health.</p>
+      <p>5. You should exercise more.</p>
+      <p>6. Make sure to get enough sleep every night.</p>
+      <p>7. You had better not drink coffee at night.</p>
+      <p>8. One solution could be to have a team meeting.</p>
+      <p>9. Another possibility would be to hire a new manager.</p>
+      <p>10. We have a manager who works very hard.</p>
+      <p>11. I work for a company that has poor communication.</p>
+      <p>12. I'm sorry to hear that.</p>
+      <p>13. That must be difficult.</p>
+      <p>14. I hope everything gets better soon.</p>
+      <div class="callout"><strong>复习方法：</strong> 不必背诵整篇答案。先熟悉句型和搭配，回答时按"描述问题 — 说明影响 — 表达关心／提出建议"的顺序组织即可。</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    EF Adult English · Unit 3: Problems and Solutions · English Speaking Notebook
+  </div>
+</footer>
+
+</body>
+</html>
