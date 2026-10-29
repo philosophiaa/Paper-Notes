@@ -84,13 +84,18 @@
   .warn-box strong { color: var(--orange); }
 
   .formula {
-    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    font-family: 'JetBrains Mono', 'Noto Sans SC', monospace; font-size: 14px;
     color: var(--text); background: rgba(0,0,0,0.25);
     border: 1px solid rgba(139,92,246,0.2);
-    padding: 8px 14px; border-radius: 6px; margin: 8px 0; line-height: 1.8;
-    overflow-x: auto;
+    padding: 10px 16px; border-radius: 6px; margin: 8px 0; line-height: 2;
+    overflow-x: auto; letter-spacing: 0.5px;
   }
-  .formula .cn { color: var(--text-muted); font-size: 12px; }
+  .formula sub, .formula sup {
+    font-size: 11px; line-height: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .formula sub { color: var(--cyan); }
+  .formula sup { color: var(--pink); }
+  .formula .cn { color: var(--text-muted); font-size: 12px; letter-spacing: 0; }
 
   .strategy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .strategy-card {
@@ -202,7 +207,7 @@
       <div class="strategy-card">
         <h4>控制屏障函数（CBF）</h4>
         <p>定义安全集合 S={x: h(x)≥0}，再通过约束控制输入，使系统状态按满足安全条件的方式演化。</p>
-        <div class="formula">ḣ(x,u) + α(h(x)) ≥ 0<span class="cn">　连续时间条件形式</span></div>
+        <div class="formula">ḣ(x,u) + α(h(x)) ≥ 0<span class="cn">　连续时间条件形式</span></div>
         <p class="intuition">直觉：像一个实时动作门槛，限制当前控制输入。</p>
         <p><strong>优势：</strong>在模型、初始状态、约束可行性等条件满足时，可以建立形式化安全结论。<br><strong>局限：</strong>需要合适的安全函数和动力学描述；优化问题可能不可行；模型与真实系统不一致时，理论保证可能失效。</p>
       </div>
@@ -296,11 +301,11 @@
     <div class="paper-card">
       <p>这是论文重要的特殊设计：目标是把随机采样得到的落脚点修正到局部几何可行区域，同时尽量少改变原采样点。</p>
       <p><strong>第一步：计算有符号距离函数（SDF）。</strong>对候选落脚点 p 和第 j 个障碍物计算距离 D_j(p)。通常 D>0 表示在障碍物外，D=0 表示边界，D&lt;0 表示在障碍物内部。论文设置安全间距 ε<sub>safe</sub>=0.08 m，目标约束为：</p>
-      <div class="formula">D_j(p) ≥ ε_safe<span class="cn">　安全间距 0.08 m</span></div>
+      <div class="formula">D<sub>j</sub>(p) ≥ ε<sub>safe</sub><span class="cn">　安全间距 0.08 m</span></div>
       <p><strong>第二步：在当前候选点附近线性化距离函数。</strong>梯度 ∇D_j(p₀) 指示距离变化最快的方向。把安全距离要求代入后，可得到关于 p 的局部线性约束。</p>
-      <div class="formula">D_j(p) ≈ D_j(p₀) + ∇D_j(p₀)ᵀ(p − p₀)</div>
+      <div class="formula">D<sub>j</sub>(p) ≈ D<sub>j</sub>(p<sub>0</sub>) + ∇D<sub>j</sub>(p<sub>0</sub>)<sup>T</sup>(p − p<sub>0</sub>)</div>
       <p><strong>第三步：解小型二次规划（QP）。</strong>直觉目标是最小化修正距离，同时满足各障碍物对应的局部线性约束。求解结果是离原采样点最近的局部可行位置。作者针对不同几何形状计算 SDF 与梯度，并使用 active-set 方法或现成优化器求解小型 QP。</p>
-      <div class="formula">min ||p − p₀||²<span class="cn">　最小化修正距离</span></div>
+      <div class="formula">min ‖p − p<sub>0</sub>‖²<span class="cn">　最小化修正距离</span></div>
       <p style="margin-top:12px;"><strong>两种投影位置：</strong><br>• <strong>Projection in：</strong>每个候选样本在送去物理仿真评估前先投影——影响优化器"看见并评估什么候选"。<br>• <strong>Projection out：</strong>优化结束后，对最终计划再投影——修正"最后准备执行什么目标"。<br>两者作用不同。论文消融实验显示，两者共同使用时规划违规较低，但实际违规并非所有设置下都绝对最低。</p>
       <p style="margin-top:12px;"><strong>投影的边界：</strong>依赖已知的障碍物几何信息；线性化是局部近似，复杂几何关系下可能不准确；多个约束冲突时 QP 可能不可行；它约束落脚目标，不是完整摆腿轨迹或整个身体。因此投影是几何修正机制，不是形式化全身安全证明。</p>
     </div>
