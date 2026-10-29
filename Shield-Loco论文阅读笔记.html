@@ -391,74 +391,9 @@
   </div>
 </section>
 
-<!-- 08 复现路线 -->
-<section class="section">
-  <div class="container">
-    <div class="section-title"><span class="num">08</span> 论文复现路线</div>
-    <div class="stage-card">
-      <h4>阶段 1 · 跑通基线</h4>
-      <p>加载论文所用机器人模型和冻结的 RL 策略；运行原始落脚计划；固定场景和随机种子，记录 Tracking Cost、Planner Violations、Actual Violations 和计算时间。</p>
-    </div>
-    <div class="stage-card">
-      <h4>阶段 2 · 复现几何投影</h4>
-      <p>实现障碍物 SDF 和梯度；验证投影前后落脚点的距离约束；比较无投影、仅 Projection in、仅 Projection out、两者同时使用；记录 QP 无解、投影距离过大和投影后实际碰撞等情况。</p>
-    </div>
-    <div class="stage-card">
-      <h4>阶段 3 · 复现优化器</h4>
-      <p>在同一代价函数和场景中比较 MPPI、CEM、Replica Exchange；尽可能固定采样预算，避免比较不公平；记录每轮优化时间、跟踪代价和实际违规。</p>
-    </div>
-    <div class="stage-card">
-      <h4>阶段 4 · 复现消融实验</h4>
-      <p>改变采样数 K、优化迭代数 N、预测时域 H 和动量系数；开启和关闭终端价值函数；每项实验尽量使用多个随机种子，并报告均值与波动。</p>
-    </div>
-    <div class="stage-card">
-      <h4>阶段 5 · 分析失效原因</h4>
-      <p>发生碰撞时，区分：落脚目标本身几何上不安全；目标安全但摆腿轨迹碰撞；底层策略未准确跟踪目标；规划结果返回过晚，状态已改变；障碍物几何或状态估计不准确；优化问题无解或安全过滤器未及时给出替代计划。</p>
-    </div>
-    <div class="warn-box">
-      <strong>复现原则：</strong>不要只报告"算法成功率"，还要把预测违规、实际违规、任务偏差和计算延迟分开记录。
-    </div>
-  </div>
-</section>
-
-<!-- 09 最终记忆框架 -->
-<section class="section">
-  <div class="container">
-    <div class="section-title"><span class="num">09</span> 最终记忆框架</div>
-    <div class="memory-list">
-      <div class="memory-item"><div class="memory-num">1</div><p><strong>CBF：</strong>通过控制条件限制系统的安全演化。</p></div>
-      <div class="memory-item"><div class="memory-num">2</div><p><strong>预测式安全过滤器：</strong>预测未来行为，有风险时修改原始计划。</p></div>
-      <div class="memory-item"><div class="memory-num">3</div><p><strong>硬约束：</strong>要求严格满足指定条件，但求解问题可能无解。</p></div>
-      <div class="memory-item"><div class="memory-num">4</div><p><strong>软约束：</strong>用代价惩罚违规，但不自动提供安全保证。</p></div>
-      <div class="memory-item"><div class="memory-num">5</div><p><strong>递归可行性：</strong>不仅当前有解，还要关注未来每一步能否继续有解。</p></div>
-      <div class="memory-item"><div class="memory-num">6</div><p><strong>备份控制器：</strong>为正常控制失败或优化无解提供恢复机制，但自身也需要验证。</p></div>
-      <div class="memory-item"><div class="memory-num">7</div><p><strong>Shield-Loco：</strong>优化四足机器人的落脚目标，结合 SDF/QP 投影、采样优化、动量、Replica Exchange 和终端价值函数来降低碰撞风险。</p></div>
-      <div class="memory-item"><div class="memory-num">8</div><p><strong>评价安全方法：</strong>必须区分预测安全、实际执行安全和形式化安全保证。</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- 10 阅读定位与待核对 -->
-<section class="section">
-  <div class="container">
-    <div class="section-title"><span class="num">10</span> 论文阅读定位与待核对事项</div>
-    <div class="paper-card">
-      <div class="sub-title">精读重点章节</div>
-      <p><strong>Section 3.4：</strong>Sampling-Based Optimization。</p>
-      <p><strong>Algorithm 1：</strong>完整过滤流程。</p>
-      <p><strong>Appendix D.2：</strong>几何投影的 SDF、线性化和 QP。</p>
-      <p><strong>Section 4：</strong>仿真、真实机器人实验与消融。</p>
-      <p><strong>Conclusion / Limitations：</strong>理论保证、已知障碍物假设及未来工作。</p>
-    </div>
-    <div class="note-box">
-      <strong>正式引用：</strong>正式引用论文时，请以论文 PDF 首页的作者、版本和发表信息为准；本笔记整理的是方法与实验逻辑，不替代正式文献引用核对。
-    </div>
-  </div>
-</section>
-
 <footer class="footer">
   <div class="container">
-    Shield-Loco 论文阅读笔记 · 从基础概念到论文精读与复现路线 · 2026-10-29
+    Shield-Loco 论文阅读笔记 · 从基础概念到论文精读 · 2026-10-29
   </div>
 </footer>
 
