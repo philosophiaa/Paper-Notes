@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SURE 论文精读笔记 · 分支与汇合的接触时间不确定轨迹优化</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔀</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  .header { padding: 52px 0 36px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--cyan); border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+  .header h1 .accent { color: var(--cyan); }
+  .header .meta { font-size: 14px; color: var(--text-muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; }
+  .header .meta a { font-size: 14px; }
+  .header p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan);
+    background: rgba(6,182,212,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .sub-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sub-title::before { content: ''; width: 3px; height: 16px; background: var(--cyan); border-radius: 2px; }
+  .sub-title .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400;
+    color: var(--purple); background: rgba(139,92,246,0.12);
+    padding: 2px 8px; border-radius: 4px;
+  }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .paper-card h4 { font-size: 15px; margin-bottom: 12px; color: var(--text); line-height: 1.5; }
+  .paper-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
+  .paper-card p:last-child { margin-bottom: 0; }
+  .paper-card strong { color: var(--text); }
+  .paper-card ol, .paper-card ul { margin: 8px 0 8px 22px; }
+  .paper-card li { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 6px; }
+  .paper-card li:last-child { margin-bottom: 0; }
+  .paper-card li strong { color: var(--text); }
+
+  .note-box {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(6,182,212,0.08));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 10px; padding: 16px 18px; margin: 14px 0;
+    font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .note-box strong { color: var(--purple); }
+
+  .warn-box {
+    background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px; padding: 14px 16px; margin: 14px 0;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .warn-box strong { color: var(--orange); }
+
+  .formula {
+    font-family: 'JetBrains Mono', 'Noto Sans SC', monospace; font-size: 14px;
+    color: var(--text); background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(139,92,246,0.2);
+    padding: 10px 16px; border-radius: 6px; margin: 8px 0; line-height: 2;
+    overflow-x: auto; letter-spacing: 0.5px;
+  }
+  .formula sub, .formula sup {
+    font-size: 11px; line-height: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .formula sub { color: var(--cyan); }
+  .formula sup { color: var(--pink); }
+  .formula .cn { color: var(--text-muted); font-size: 12px; letter-spacing: 0; }
+
+  .symbol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .symbol-item {
+    display: flex; gap: 10px; align-items: baseline;
+    background: rgba(0,0,0,0.18); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px;
+  }
+  .symbol-item .sym {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--cyan); min-width: 70px;
+  }
+  .symbol-item sub, .symbol-item sup { font-size: 10px; line-height: 0; }
+  .symbol-item p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .branch-diagram {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-secondary);
+    background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px 18px; margin: 12px 0; line-height: 1.9;
+    overflow-x: auto; white-space: pre;
+  }
+  .branch-diagram .hl { color: var(--cyan); font-weight: 700; }
+
+  .flow-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .flow-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .flow-num {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    color: var(--cyan); background: rgba(6,182,212,0.1);
+    padding: 2px 8px; border-radius: 4px; margin-top: 2px;
+  }
+  .flow-step p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .flow-step strong { color: var(--text); }
+
+  .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+  .metric-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; text-align: center;
+  }
+  .metric-card .name { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); margin-bottom: 6px; }
+  .metric-card .val { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+  .metric-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(6,182,212,0.08); color: var(--cyan);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.7;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .pos { color: var(--green); font-weight: 700; }
+  .data-table .neg { color: var(--pink); font-weight: 700; }
+
+  .memory-list { display: flex; flex-direction: column; gap: 8px; }
+  .memory-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(6,182,212,0.06));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .memory-num {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    color: var(--purple); background: rgba(139,92,246,0.12);
+    padding: 2px 8px; border-radius: 4px; margin-top: 2px;
+  }
+  .memory-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .memory-item strong { color: var(--text); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 22px; }
+    .symbol-grid, .metric-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">PAPER NOTES · SURE</div>
+    <h1>SURE 论文精读笔记</h1>
+    <div class="meta">SURE: Safe Uncertainty-Aware Robot-Environment Interaction using Trajectory Optimization · <a href="https://arxiv.org/abs/2602.06864?utm_source=chatgpt.com" target="_blank">arXiv:2602.06864</a></div>
+    <p>研究机器人与环境交互时的<strong>接触时间不确定性</strong>：通过多分支轨迹 + 汇合约束，把多种可能的接触时刻显式纳入轨迹优化，同时共享汇合后的终端轨迹、减少重复规划。笔记覆盖研究背景、核心思想、公式（1）（2）、分支数量与复杂度、两种执行方式、两个实验、贡献与局限、概念速查与自测问题。</p>
+  </div>
+</header>
+
+<!-- 01 研究背景与核心问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> 论文研究背景与核心问题</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 研究问题</div>
+      <p>SURE 研究机器人与环境交互时的<strong>接触时间不确定性</strong>。实际接触时刻可能偏离计划时刻，原因包括：</p>
+      <ul>
+        <li>物体初始位置或高度存在误差；</li>
+        <li>机器人状态估计存在误差；</li>
+        <li>释放动作、通信或控制过程存在延迟；</li>
+        <li>实际接触与模型预测不完全一致。</li>
+      </ul>
+      <p>接触时间变化不仅会影响接触发生的时刻，还可能改变接触前的状态、碰撞后的速度和后续运动。因此，只针对一个预定接触时刻规划轨迹，可能无法适应真实环境中的变化。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 为什么接触问题特殊？</div>
+      <p>这类系统具有<strong>混合动力学系统（Hybrid Dynamical System）</strong>的特点：</p>
+      <ul>
+        <li><strong>接触前：</strong>系统遵循连续运动动力学；</li>
+        <li><strong>接触瞬间：</strong>触发接触条件，状态可能发生跳变；</li>
+        <li><strong>接触后：</strong>系统进入新的动力学模式。</li>
+      </ul>
+      <p>接触时刻不仅是普通的时间参数，还<strong>决定了系统何时切换动力学模式</strong>。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. 传统方法的局限</div>
+      <p>传统名义轨迹优化通常<strong>预先指定接触发生在哪个离散节点</strong>，并针对该时刻规划一条轨迹。如果真实接触时间偏离计划，机器人可能进入原轨迹没有充分考虑的状态，导致后续运动不再合适。</p>
+      <p>SURE 要解决的问题是：<strong>如何在轨迹优化阶段考虑多个可能的接触时刻，同时避免为每种情况都独立规划到终点所造成的巨大计算负担？</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 SURE 核心思想 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> SURE 的核心思想</div>
+    <div class="note-box">
+      <strong>核心：</strong>为多个可能的接触时刻建立<strong>轨迹分支</strong>，再让这些分支在<strong>共同状态处汇合</strong>，之后共享最终轨迹。
+    </div>
+    <div class="paper-card">
+      <p>整个结构可以分为三部分：</p>
+      <p><strong>1.</strong> 共享的接触前轨迹。<br><strong>2.</strong> 针对不同接触时刻的接触后分支。<br><strong>3.</strong> 各分支汇合后的共享终端轨迹。</p>
+      <p>概念示意：</p>
+      <div class="branch-diagram"><span class="hl">共享接触前轨迹</span>
+    ├── 接触情况 i → 分支 i ──┐
+    ├── 接触情况 j → 分支 j ──┼── <span class="hl">共同状态</span> → <span class="hl">共享终端轨迹</span>
+    └── 接触情况 k → 分支 k ──┘</div>
+      <p style="font-size:13px; color: var(--text-muted);">注意：这些分支代表优化问题中需要考虑的不同可能情况，<strong>不等于运行时随机尝试多条轨迹</strong>。</p>
+    </div>
+    <div class="paper-card">
+      <p>SURE 的主要设计不是取消动力学模型，而是<strong>改变优化问题的结构</strong>：</p>
+      <ul>
+        <li>用分支表达接触时刻不确定性；</li>
+        <li>用汇合约束减少重复规划；</li>
+        <li>在鲁棒性和计算成本之间取得折中。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 公式（1） -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> 公式（1）：传统名义轨迹优化</div>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.9; margin-bottom:14px;">核心：在满足动力学、接触和任务约束的前提下，寻找代价尽可能低的一条轨迹。</p>
+    <div class="paper-card">
+      <div class="sub-title">主要符号</div>
+      <div class="symbol-grid">
+        <div class="symbol-item"><div class="sym">x<sub>i</sub></div><p>第 i 个节点的系统状态，例如机器人位置和速度</p></div>
+        <div class="symbol-item"><div class="sym">u<sub>i</sub></div><p>第 i 个节点的控制输入</p></div>
+        <div class="symbol-item"><div class="sym">Δt<sub>i</sub></div><p>相邻节点之间的时间间隔</p></div>
+        <div class="symbol-item"><div class="sym">L<sub>i</sub> / L<sub>N</sub></div><p>阶段代价 / 终端代价</p></div>
+        <div class="symbol-item"><div class="sym">f<sub>i</sub> = 0</div><p>离散动力学约束</p></div>
+        <div class="symbol-item"><div class="sym">w<sub>i</sub> = 0</div><p>等式约束</p></div>
+        <div class="symbol-item"><div class="sym">h<sub>i</sub> ≤ 0</div><p>不等式约束</p></div>
+        <div class="symbol-item"><div class="sym">g(x<sub>i</sub>)</div><p>接触触发函数（Guard Function）</p></div>
+        <div class="symbol-item"><div class="sym">R(x<sub>c</sub>)</div><p>接触发生时的状态重置映射</p></div>
+      </div>
+      <p><strong>传统方法指定接触节点 c：</strong></p>
+      <ul>
+        <li>接触前满足未接触条件；</li>
+        <li>在节点 c 满足 g(x<sub>c</sub>) = 0；</li>
+        <li>接触后通过重置映射 R 描述状态跳变；</li>
+        <li>整条轨迹满足动力学和任务约束。</li>
+      </ul>
+    </div>
+    <div class="warn-box">
+      <strong>边界：</strong>公式（1）本身并没有问题，它能解决指定接触时刻下的轨迹优化问题。局限在于，它没有同时规划其他接触时刻下的后续运动。
+    </div>
+  </div>
+</section>
+
+<!-- 04 公式（2） -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> 公式（2）：SURE 的分支与汇合</div>
+    <p style="font-size:14px; color:var(--text-secondary); line-height:1.9; margin-bottom:14px;">公式（2）在传统轨迹结构上增加了多条接触后分支以及分支汇合约束。</p>
+    <div class="paper-card">
+      <div class="sub-title">1. 目标函数的直觉</div>
+      <div class="formula">总成本 = 共享轨迹成本 + 各分支成本 + 终端轨迹成本</div>
+      <p>优化器需要同时考虑共享轨迹和不同接触情况下的后续运动。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 关键符号</div>
+      <div class="symbol-grid">
+        <div class="symbol-item"><div class="sym">K</div><p>可能发生接触的离散节点集合</p></div>
+        <div class="symbol-item"><div class="sym">|K|</div><p>分支数量</p></div>
+        <div class="symbol-item"><div class="sym">K<sub>0</sub></div><p>分支范围的起始节点</p></div>
+        <div class="symbol-item"><div class="sym">K<sub>e</sub></div><p>分支范围的末尾节点</p></div>
+        <div class="symbol-item"><div class="sym">x<sub>i,j</sub></div><p>从可能接触节点 i 出发的第 j 个分支状态</p></div>
+        <div class="symbol-item"><div class="sym">u<sub>i,j</sub></div><p>对应分支的控制输入</p></div>
+        <div class="symbol-item"><div class="sym">N<sub>r</sub></div><p>分支从起点走到共同汇合状态所经历的离散步数</p></div>
+        <div class="symbol-item"><div class="sym">d</div><p>接触判定函数空间中的半宽参数</p></div>
+      </div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. 分支初始状态</div>
+      <p>概念上：</p>
+      <div class="formula">x<sub>i,0</sub> = R(x<sub>i</sub>)</div>
+      <p>表示不同接触时刻对应不同的接触前状态，经过接触重置映射后，可能得到不同的分支起始状态。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">4. 分支汇合约束</div>
+      <div class="formula">x<sub>i,N<sub>r</sub></sub> = x<sub>K<sub>e</sub>+1</sub></div>
+      <p>这要求各分支在规定步数后回到共同状态。</p>
+      <p><strong>好处：</strong>分支只需规划到共同状态；汇合后的终端轨迹只优化一次；避免每条分支都独立规划到终点。</p>
+      <p><strong>代价：</strong>不同分支必须到达同一个状态；限制各分支独立选择后续运动的自由度；可能牺牲部分最优性，或增加优化难度。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">5. 参数 d 的理解</div>
+      <p>d 表示接触判定函数空间中的<strong>半宽</strong>。只有当 g 直接表示几何距离时，d 才能直接理解为距离；如果 g 经过缩放或采用其他定义，就不能直接把 d 当成米。</p>
+      <p>即使 d 是优化变量，也不意味着它必然增大；其变化取决于目标函数和其他约束。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 分支数量与计算复杂度 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> 分支数量与计算复杂度</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 分支越多有什么好处？</div>
+      <p>优化问题可以显式考虑更多候选接触节点，对离散化后的接触时间范围覆盖得更细。</p>
+      <div class="sub-title">2. 分支过少的风险</div>
+      <ul>
+        <li>可能不能充分代表不确定区间；</li>
+        <li>候选节点之间的接触情况未必得到充分覆盖；</li>
+        <li>对设计范围之外的情况不作保证。</li>
+      </ul>
+      <div class="sub-title">3. 分支过多的代价</div>
+      <p>每增加一条分支，通常会增加：状态变量、控制变量、动力学约束、接触后约束、汇合约束。实际求解时间还受非线性程度、约束耦合、求解器和初始猜测等因素影响。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">4. 与 Tree OCP 的比较</div>
+      <p><strong>Tree OCP：</strong>每条分支都可以独立规划到终点，可能重复规划大量后续运动。</p>
+      <p><strong>SURE：</strong>不同分支先汇合，汇合后共享终端轨迹，减少重复优化。</p>
+      <p>论文在小车倒立摆案例中报告，相对于所比较的 Tree OCP 方案：</p>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="name">优化代价</div><div class="val" style="color: var(--orange);">+4.85%</div><p>平均增加</p></div>
+        <div class="metric-card"><div class="name">总计算时间</div><div class="val" style="color: var(--green);">−39.78%</div><p>降低</p></div>
+        <div class="metric-card"><div class="name">预热后计算时间</div><div class="val" style="color: var(--green);">−76.05%</div><p>降低</p></div>
+      </div>
+      <div class="warn-box">
+        这些数字来自特定实验配置，不应视为所有机器人任务的普遍加速比例。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 两种执行方式 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> 优化结果的两种执行方式</div>
+    <div class="paper-card">
+      <div class="sub-title">1. Trajectory Scheduling（轨迹调度）</div>
+      <p><strong>前提：</strong>系统能够可靠检测接触时刻，并及时切换轨迹。</p>
+      <p><strong>流程：</strong></p>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>沿共享接触前轨迹运动；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>检测实际接触发生的时刻；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>选择对应的接触后分支；</p></div>
+        <div class="flow-step"><div class="flow-num">4</div><p>到达共同汇合状态后，使用共享终端轨迹。</p></div>
+      </div>
+      <p style="margin-top:10px;"><strong>优点：</strong>可以针对实际接触时刻选择相应的后续轨迹。<br><strong>局限：</strong>依赖接触检测的可靠性和时效性。检测延迟或接触发生在离散节点之间，都可能影响切换效果。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. Robust Nominal Trajectory（鲁棒名义轨迹）</div>
+      <p><strong>前提：</strong>缺少可靠接触传感器，或者不适合运行时切换分支。</p>
+      <p><strong>流程：</strong></p>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>优化阶段仍考虑多条接触后分支；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>从分支中选择中间分支；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>将其作为单条参考轨迹执行。</p></div>
+      </div>
+      <p style="margin-top:10px;"><strong>注意：</strong>鲁棒名义轨迹不是把所有分支的控制输入简单求平均，而是<strong>选择中间分支作为参考轨迹</strong>。</p>
+      <p><strong>优点：</strong>运行时不必根据实际接触时刻切换分支，但仍可能受益于优化阶段对接触时间不确定性的考虑。<br><strong>局限：</strong>不能针对每个实际接触时刻选择专用分支；中间分支也不保证对所有情况都最优。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 实验一 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">07</span> 实验一：小车倒立摆撞墙后恢复平衡</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 实验目的</div>
+      <p>测试接触时序和碰撞参数存在不确定性时，SURE 是否能够提高任务成功率。</p>
+      <div class="sub-title">2. 不确定性来源</div>
+      <ul>
+        <li>墙的位置变化；</li>
+        <li>碰撞恢复系数变化（可粗略理解为碰撞沿法向有多"弹"）。</li>
+      </ul>
+      <div class="sub-title">3. 比较方法</div>
+      <ul>
+        <li>传统名义轨迹；</li>
+        <li>SURE 鲁棒名义轨迹；</li>
+        <li>SURE 轨迹调度。</li>
+      </ul>
+      <div class="sub-title">4. 成功判据</div>
+      <ul>
+        <li>在规定时间内到达目标状态；</li>
+        <li>杆子最多与墙碰撞一次；</li>
+        <li>杆子没有倒下；</li>
+        <li>小车没有穿透墙壁。</li>
+      </ul>
+      <p>论文在四组初始条件下进行测试，每组使用 200 个不确定性样本。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">5. 汇总成功率</div>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="name">传统名义轨迹</div><div class="val">44.8%</div><p>基准</p></div>
+        <div class="metric-card"><div class="name">SURE 鲁棒名义轨迹</div><div class="val" style="color: var(--green);">55.3%</div><p>+10.5 个百分点</p></div>
+        <div class="metric-card"><div class="name">SURE 轨迹调度</div><div class="val" style="color: var(--green);">66.4%</div><p>+21.6 个百分点</p></div>
+      </div>
+      <div class="sub-title">6. 结果解释</div>
+      <p><strong>轨迹调度成功率最高</strong>，与它能根据实际接触时刻选择对应分支的设计相符。鲁棒名义轨迹也优于传统方法，说明仅在优化阶段考虑多个接触时刻，也可能改变共享的接触前轨迹，使运动方案提前为接触时间变化留出余量。</p>
+    </div>
+    <div class="warn-box">
+      <strong>证据边界：</strong>实验支持 SURE 在论文所测试的系统、扰动范围和任务判据下提升成功率。但<strong>不能</strong>由此证明：所有机器人任务都能获得同样提升；所有未知扰动都能被覆盖；SURE 提供了形式化安全保证。
+    </div>
+  </div>
+</section>
+
+<!-- 08 实验二 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> 实验二：机械臂接住下落的鸡蛋</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 实验系统</div>
+      <p><strong>Unitree Z1</strong> 六自由度机械臂负责接住鸡蛋，末端安装轻质容器；<strong>Franka Panda</strong> 机械臂负责释放鸡蛋。由于缺少可靠的接触传感器，真实实验采用鲁棒名义轨迹，而不是轨迹调度。</p>
+      <div class="sub-title">2. 任务难点</div>
+      <p>鸡蛋初始高度和释放时序存在误差，实际接触时刻可能提前或延后。作者希望降低接触时鸡蛋与容器之间的相对速度，以减少冲击并提高接住鸡蛋的成功率。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. 传统名义轨迹的代价函数</div>
+      <p>论文将接触时的相对速度代价与关节加速度平滑代价结合。概念结构：</p>
+      <div class="formula">接触相对速度² + w<sub>a</sub> · Σ q̈<sub>i</sub>² Δt<sub>i</sub></div>
+      <p>符号含义：</p>
+      <div class="symbol-grid">
+        <div class="symbol-item"><div class="sym">v<sub>ball,c</sub></div><p>接触时鸡蛋的速度</p></div>
+        <div class="symbol-item"><div class="sym">v<sub>ee,c</sub></div><p>接触时机械臂末端的速度</p></div>
+        <div class="symbol-item"><div class="sym">q̈<sub>i</sub></div><p>关节加速度</p></div>
+        <div class="symbol-item"><div class="sym">Δt<sub>i</sub></div><p>节点时间间隔</p></div>
+        <div class="symbol-item"><div class="sym">w<sub>a</sub></div><p>平滑代价权重</p></div>
+      </div>
+      <p>末端速度通过雅可比矩阵与关节速度联系：</p>
+      <div class="formula">v<sub>ee,c</sub> = J<sub>t</sub>(q<sub>c</sub>) q̇<sub>c</sub></div>
+      <p><strong>为什么惩罚相对速度？</strong>即使末端位置正确，如果鸡蛋和容器在接触瞬间的相对速度很大，也可能产生较大的冲击。因此相对速度是与接物质量相关的代理指标。</p>
+      <p><strong>为什么惩罚关节加速度？</strong>如果只优化相对速度，优化器可能选择关节运动很剧烈的轨迹。加速度代价有助于提高轨迹平滑性。</p>
+      <div class="warn-box">
+        注意：相对速度不等于直接测量或严格限制接触力；加速度惩罚不等于关节力矩约束；简化模型不能完整描述鸡蛋接触后的变形、反弹和破损过程。
+      </div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">4. SURE 如何修改目标函数？</div>
+      <p>传统方法主要优化指定接触节点的相对速度。SURE 引入共同上界 v<sub>lim</sub>，并对每个候选接触节点 i ∈ K 施加类似以下约束：</p>
+      <div class="formula">‖v<sub>ee,i</sub> − v<sub>ball,i</sub>‖² ≤ v<sub>lim</sub>²</div>
+      <p>目标函数试图压低 v<sub>lim</sub>，同时惩罚共享轨迹和分支轨迹中的关节加速度。</p>
+      <p><strong>直觉：</strong>传统方法重点优化名义接触时刻；SURE 同时关注多个候选接触时刻；降低共同上界会使优化器关注候选情况中相对速度较大的情况。</p>
+      <div class="warn-box">
+        这是针对已建模离散候选接触时刻的最坏情况设计，不等于对任意连续时间或任意未知扰动的保证。
+      </div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">5. 其他约束</div>
+      <p>论文还考虑与接物任务相关的几何约束，例如：末端容器保持水平；末端位置与鸡蛋下落路径对齐；接触前满足接触间隙条件，避免提前穿透。</p>
+      <p>论文使用 <strong>10 条分支</strong>，并将鸡蛋初始高度不确定性的半宽设置为 <strong>d = 0.20 m</strong>。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">6. 仿真结果</div>
+      <p>论文在 11 个均匀分布的鸡蛋初始高度下进行测试，范围为名义高度上下 0.20 m。</p>
+      <p>最大相对接触速度：</p>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="name">传统名义轨迹</div><div class="val">3.93 m/s</div><p>基准</p></div>
+        <div class="metric-card"><div class="name">SURE</div><div class="val" style="color: var(--green);">2.67 m/s</div><p>最大相对速度降低约 32.1%</p></div>
+      </div>
+      <p>作者展示的轨迹还表明，SURE 的鲁棒名义轨迹会改变末端接触前的运动方式，以适应更宽的接触时序范围。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">7. 真实实验设计</div>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>Z1 移动到初始配置；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>Panda 根据触发信号打开夹爪释放鸡蛋；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>Z1 执行优化后的跟踪轨迹；</p></div>
+        <div class="flow-step"><div class="flow-num">4</div><p>作者调整等待时间，以平衡接触过早和过晚的情况；</p></div>
+        <div class="flow-step"><div class="flow-num">5</div><p>比较传统名义轨迹与 SURE 鲁棒名义轨迹。</p></div>
+      </div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">8. 真实实验评分规则与结果</div>
+      <p>评分规则：完整接住且鸡蛋未损坏 = <strong>1 分</strong>；鸡蛋反弹后重新接住且未破损 = <strong>0.5 分</strong>；鸡蛋破损或掉落 = <strong>0 分</strong>。每种方法合计 20 次正式试验。</p>
+      <div class="table-wrap">
+        <table class="data-table">
+          <colgroup><col style="width: 26%"><col style="width: 20%"><col style="width: 20%"><col style="width: 16%"><col style="width: 18%"></colgroup>
+          <thead><tr><th>方法（Table II）</th><th>完整接住未损坏</th><th>反弹后重新接住</th><th>失败</th><th>平均得分</th></tr></thead>
+          <tbody>
+            <tr><td>传统名义轨迹</td><td>7 次</td><td>4 次</td><td>9 次</td><td>45%</td></tr>
+            <tr><td>SURE</td><td>15 次</td><td>4 次</td><td>1 次</td><td class="pos">85%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>必须区分：</strong></p>
+      <ul>
+        <li><strong>85%</strong> 是按照 1、0.5、0 分规则计算的平均得分；</li>
+        <li>SURE 完整接住且未损坏的比例为 <strong>15/20 = 75%</strong>；</li>
+        <li>传统方法完整接住且未损坏的比例为 <strong>7/20 = 35%</strong>。</li>
+      </ul>
+    </div>
+    <div class="warn-box">
+      <strong>证据局限：</strong>每种方法的真实实验样本量较小；鸡蛋个体差异、释放误差和跟踪误差都可能影响结果；优化模型对接触后的鸡蛋行为作了简化。结果支持 SURE 在特定机械臂和释放时序条件下的优势，但<strong>不能</strong>推导出所有机器人任务的普遍成功率或安全保证。
+    </div>
+  </div>
+</section>
+
+<!-- 09 主要贡献 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">09</span> 论文主要贡献</div>
+    <div class="paper-card">
+      <p><strong>1.</strong> 将多个可能的接触时刻显式纳入轨迹优化，而不是只针对一个名义接触时刻规划。</p>
+      <p><strong>2.</strong> 设计分支汇合结构，使不同接触情况的后续轨迹在共同状态汇合，从而共享最终轨迹、减少重复优化。</p>
+      <p><strong>3.</strong> 在小车倒立摆和真实机械臂接鸡蛋任务中，验证该方法在指定不确定性条件下的有效性。</p>
+    </div>
+    <div class="note-box">
+      <strong>创新重点：</strong>将接触时刻分支、分支汇合与完整终端轨迹规划组合为一个优化框架，而不是声称发明了分支轨迹、鲁棒优化或接触动力学本身。
+    </div>
+  </div>
+</section>
+
+<!-- 10 局限与未来方向 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">10</span> 论文局限与未来方向</div>
+    <div class="paper-card">
+      <p><strong>1. 不确定性范围依赖建模：</strong>如果实际接触时刻或其他扰动超出设计范围，不能直接保证优化结果仍然有效。</p>
+      <p><strong>2. 汇合约束限制自由度：</strong>各分支需要到达共同状态，可能牺牲各自独立优化时的最优性，也可能导致某些问题难以找到可行解。</p>
+      <p><strong>3. 仍然依赖动力学模型：</strong>接触模型、摩擦、执行器响应和状态估计误差都可能影响真实表现。</p>
+      <p><strong>4. 不等于形式化安全证明：</strong>论文展示的是特定实验条件下的鲁棒性提升，不是对所有未知扰动的绝对安全保证。</p>
+      <p><strong>5. 作者提出的未来研究方向：</strong></p>
+      <ul>
+        <li>扩展到多次接触事件；</li>
+        <li>利用鲁棒优化结果学习不确定性条件化策略；</li>
+        <li>推广到浮动基机器人。</li>
+      </ul>
+      <div class="warn-box">这些是作者提出的后续方向，不应理解为本文已经全部实现。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 核心概念速查 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">11</span> 核心概念速查</div>
+    <div class="memory-list">
+      <div class="memory-item"><div class="memory-num">1</div><p><strong>接触时间不确定性：</strong>实际接触发生时刻与名义规划时刻不一致。</p></div>
+      <div class="memory-item"><div class="memory-num">2</div><p><strong>混合动力学系统：</strong>系统在连续运动过程中会因为接触等离散事件切换动力学模式。</p></div>
+      <div class="memory-item"><div class="memory-num">3</div><p><strong>Guard Function g(x)：</strong>接触事件的触发函数。</p></div>
+      <div class="memory-item"><div class="memory-num">4</div><p><strong>Reset Map R：</strong>描述接触瞬间状态跳变的映射。</p></div>
+      <div class="memory-item"><div class="memory-num">5</div><p><strong>Branch（分支）：</strong>对应一种可能接触时刻的后续轨迹。</p></div>
+      <div class="memory-item"><div class="memory-num">6</div><p><strong>Merging（汇合）：</strong>要求不同分支到达共同状态，以共享之后的终端轨迹。</p></div>
+      <div class="memory-item"><div class="memory-num">7</div><p><strong>Trajectory Scheduling：</strong>检测实际接触时刻后，切换到相应的后续分支。</p></div>
+      <div class="memory-item"><div class="memory-num">8</div><p><strong>Robust Nominal Trajectory：</strong>不进行运行时分支切换，而是选择中间分支作为单条参考轨迹。</p></div>
+      <div class="memory-item"><div class="memory-num">9</div><p><strong>v<sub>lim</sub>：</strong>SURE 接鸡蛋目标中，用于限制候选接触时刻相对速度的共同上界。</p></div>
+      <div class="memory-item"><div class="memory-num">10</div><p><strong>d：</strong>接触判定函数空间中的半宽；只有当 g 直接表示距离时，才能直接理解为几何距离。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 全文结论 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">12</span> 全文结论</div>
+    <div class="paper-card">
+      <p>SURE 研究的是：<strong>当机器人与环境的接触时刻不确定时，如何在轨迹优化阶段考虑多种可能性，并避免为每一种可能性都重复规划到终点</strong>。</p>
+      <p>它通过多分支和汇合结构，将接触时间不确定性显式纳入优化，同时共享汇合后的终端轨迹。论文的仿真和真实机器人实验支持该方法在指定任务和不确定性范围内提高鲁棒性，并展示了相对于所比较 Tree OCP 方案的计算效率收益。</p>
+      <p>但 SURE 仍依赖建模假设、不确定性范围、优化可行性与控制执行效果。它不能被理解为对任意未知接触、任意机器人或任意扰动都有效的形式化安全保证。</p>
+      <p style="margin-top:12px;"><strong>一句话概括：</strong>SURE 的核心思想是"提前规划多种可能的接触后果，再让这些方案在共同状态汇合"，以在接触时间不确定性、轨迹性能与计算成本之间取得折中。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 自测问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">13</span> 自测问题</div>
+    <div class="paper-card">
+      <ol>
+        <li>SURE 主要处理哪一种不确定性？</li>
+        <li>传统名义轨迹优化为什么可能在接触时间偏差时失效？</li>
+        <li>SURE 的分支变量与共享轨迹变量有什么区别？</li>
+        <li>为什么要求不同分支汇合到同一个状态？</li>
+        <li>增加分支数量有什么好处与代价？</li>
+        <li>Trajectory Scheduling 与 Robust Nominal Trajectory 的执行方式有何区别？</li>
+        <li>为什么接鸡蛋任务要惩罚相对速度？</li>
+        <li>论文中 85% 的真实实验结果代表什么？为什么不能直接说成 85% 的严格二元成功率？</li>
+        <li>论文实验能够支持哪些结论，又不能证明哪些结论？</li>
+        <li>SURE 的哪些设计可能成为进一步研究的切入点？</li>
+      </ol>
+    </div>
+    <div class="note-box">
+      <strong>备注：</strong>正式引用公式、作者信息、页码和实验细节时，请回到论文 PDF 核对原始排版与定义。
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    SURE 论文精读笔记 · Safe Uncertainty-Aware Robot-Environment Interaction · arXiv:2602.06864
+  </div>
+</footer>
+
+</body>
+</html>
