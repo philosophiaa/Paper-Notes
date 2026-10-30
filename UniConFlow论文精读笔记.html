@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniConFlow 论文精读笔记 · 带证书约束的 Flow Matching 运动规划</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --bg: #0F172A; --bg-card: #1E293B; --bg-card-hover: #243347;
+    --border: #334155; --text: #F1F5F9; --text-secondary: #94A3B8; --text-muted: #64748B;
+    --cyan: #06B6D4; --purple: #8B5CF6; --green: #10B981; --orange: #F59E0B; --red: #EF4444; --pink: #EC4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    line-height: 1.75; font-size: 15px;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  .header { padding: 52px 0 36px; border-bottom: 1px solid var(--border); }
+  .header-tag {
+    display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    color: var(--purple); border: 1px solid rgba(139,92,246,0.3);
+    padding: 4px 12px; border-radius: 4px; margin-bottom: 16px;
+  }
+  .header h1 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+  .header h1 .accent { color: var(--purple); }
+  .header .meta { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; line-height: 1.9; }
+  .header p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+
+  .section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+  .section-title {
+    font-size: 19px; font-weight: 700; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--purple);
+    background: rgba(139,92,246,0.1); padding: 2px 8px; border-radius: 4px;
+  }
+  .sub-title {
+    font-size: 16px; font-weight: 700; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sub-title::before { content: ''; width: 3px; height: 16px; background: var(--purple); border-radius: 2px; }
+  .sub-title .tag {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 400;
+    color: var(--cyan); background: rgba(6,182,212,0.12);
+    padding: 2px 8px; border-radius: 4px;
+  }
+
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(6,182,212,0.4); transition: all 0.2s; }
+  a:hover { color: var(--pink); border-bottom-color: var(--pink); }
+
+  .paper-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 14px;
+  }
+  .paper-card h4 { font-size: 15px; margin-bottom: 12px; color: var(--text); line-height: 1.5; }
+  .paper-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 8px; }
+  .paper-card p:last-child { margin-bottom: 0; }
+  .paper-card strong { color: var(--text); }
+  .paper-card ol, .paper-card ul { margin: 8px 0 8px 22px; }
+  .paper-card li { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 6px; }
+  .paper-card li:last-child { margin-bottom: 0; }
+  .paper-card li strong { color: var(--text); }
+
+  .note-box {
+    background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(6,182,212,0.08));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 10px; padding: 16px 18px; margin: 14px 0;
+    font-size: 14px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .note-box strong { color: var(--purple); }
+
+  .warn-box {
+    background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.2);
+    border-left: 3px solid var(--orange);
+    border-radius: 8px; padding: 14px 16px; margin: 14px 0;
+    font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  }
+  .warn-box strong { color: var(--orange); }
+
+  .formula {
+    font-family: 'JetBrains Mono', 'Noto Sans SC', monospace; font-size: 14px;
+    color: var(--text); background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(139,92,246,0.2);
+    padding: 10px 16px; border-radius: 6px; margin: 8px 0; line-height: 2;
+    overflow-x: auto; letter-spacing: 0.5px;
+  }
+  .formula sub, .formula sup {
+    font-size: 11px; line-height: 0; font-family: 'JetBrains Mono', monospace;
+  }
+  .formula sub { color: var(--cyan); }
+  .formula sup { color: var(--pink); }
+  .formula .cn { color: var(--text-muted); font-size: 12px; letter-spacing: 0; }
+
+  .symbol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+  .symbol-item {
+    display: flex; gap: 10px; align-items: baseline;
+    background: rgba(0,0,0,0.18); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px;
+  }
+  .symbol-item .sym {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: var(--cyan); min-width: 90px;
+  }
+  .symbol-item sub, .symbol-item sup { font-size: 10px; line-height: 0; }
+  .symbol-item p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .flow-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .flow-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .flow-num {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    color: var(--purple); background: rgba(139,92,246,0.1);
+    padding: 2px 8px; border-radius: 4px; margin-top: 2px;
+  }
+  .flow-step p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .flow-step strong { color: var(--text); }
+
+  .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0; }
+  .metric-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; text-align: center;
+  }
+  .metric-card .name { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); margin-bottom: 6px; }
+  .metric-card .val { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 4px; }
+  .metric-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .data-table th {
+    text-align: left; padding: 10px 12px;
+    background: rgba(139,92,246,0.08); color: var(--purple);
+    font-weight: 600; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid var(--border);
+    color: var(--text-secondary); vertical-align: top; line-height: 1.7;
+  }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .data-table .pos { color: var(--green); font-weight: 700; }
+
+  .window-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .window-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; border-top: 3px solid var(--purple);
+  }
+  .window-card .w-name { font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .window-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+
+  .memory-list { display: flex; flex-direction: column; gap: 8px; }
+  .memory-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: linear-gradient(135deg, rgba(139,92,246,0.06), rgba(6,182,212,0.06));
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 8px; padding: 12px 16px;
+  }
+  .memory-num {
+    flex-shrink: 0; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700;
+    color: var(--purple); background: rgba(139,92,246,0.12);
+    padding: 2px 8px; border-radius: 4px; margin-top: 2px;
+  }
+  .memory-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; }
+  .memory-item strong { color: var(--text); }
+
+  .footer { padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 22px; }
+    .symbol-grid, .metric-grid, .window-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container">
+    <div class="header-tag">PAPER NOTES · UniConFlow</div>
+    <h1>UniConFlow 论文精读笔记</h1>
+    <div class="meta">
+      UniConFlow: A Unified Constrained Flow-Matching Framework for Certified Motion Planning<br>
+      Zewen Yang, Xiaobing Dai, Dian Yu, Zhijun Li, Majid Khadiv, Sandra Hirche, Sami Haddadin<br>
+      arXiv:2506.02955v3（论文首页标注 2026-10-08）
+    </div>
+    <p>在预训练 Flow Matching 生成模型的采样 ODE 上加入控制理论引导：用 <strong>Lyapunov</strong> 处理等式约束、<strong>CBF</strong> 处理不等式约束，再通过 <strong>PTZF</strong> 使约束在指定生成时间内得到满足；对离散数值误差和复杂长轨迹，再用 <strong>CEM</strong> 做终端修正。目标不是"生成一条看起来合理的轨迹"，而是"生成一条同时满足安全、动力学一致性和执行器约束的轨迹"。</p>
+  </div>
+</header>
+
+<!-- 01 一句话概括 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">01</span> 整篇论文一句话概括</div>
+    <div class="paper-card">
+      <p>UniConFlow 在预训练 Flow Matching 生成模型的采样 ODE 上加入控制理论引导：用 <strong>Lyapunov 条件</strong>处理等式约束，用 <strong>Control Barrier Function（CBF）条件</strong>处理不等式约束，再通过 <strong>Prescribed-Time Zeroing Function（PTZF）</strong>使约束在指定生成时间内得到满足；对于离散数值误差和复杂长轨迹，再用 <strong>CEM</strong> 做终端修正。</p>
+      <p>它要解决的不是"生成一条看起来合理的轨迹"，而是"生成一条<strong>同时满足安全、动力学一致性和执行器约束</strong>的轨迹"。</p>
+    </div>
+    <div class="note-box">
+      <strong>核心关键词：</strong>Flow Matching（FM：学习从噪声分布到专家数据分布的连续流）· Lyapunov（让等式约束误差收敛到零）· CBF（让不等式安全集合保持正向不变）· PTZF（把约束满足时间显式设定在生成区间末端）· QP（计算尽可能小的流场修正量）· CEM（在生成后对轨迹进行数值修正）· Trajectory Compression（用 B-spline 降低高维机械臂轨迹的生成成本）
+    </div>
+  </div>
+</section>
+
+<!-- 02 研究背景 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">02</span> 研究背景：作者想解决什么问题</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 生成模型用于机器人运动规划的优势</div>
+      <p>机器人运动规划具有高维、强时间相关、多模态等特点。传统优化方法在长时域、非凸和高维约束问题上可能计算昂贵。生成模型能够从专家轨迹数据中学习运动分布，并快速生成多样化轨迹。</p>
+      <p>论文关注 <strong>Flow Matching（FM）</strong> 及 <strong>Conditional Flow Matching（CFM）</strong>。与扩散模型相比，FM 通过 ODE 将简单先验分布运输到数据分布，通常可以用较直接的 ODE 数值积分进行采样。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 现有方法的不足</div>
+      <p>论文把已有约束生成方法概括为三类：</p>
+      <ul>
+        <li><strong>训练阶段嵌入约束：</strong>模型可以学习任务约束，但部署时遇到新的约束往往需要重新训练或额外适配。</li>
+        <li><strong>生成过程中加入 guidance：</strong>能把样本往约束满足方向推，但引导方向不等于形式化保证；很多方法只考虑碰撞等不等式安全约束，没有同时解决动力学一致性和动作可行性。</li>
+        <li><strong>生成后做 post-processing：</strong>可以修正不合格样本，但修正可能把样本推离模型学到的数据分布，高维、长时域问题的优化也可能很慢。</li>
+      </ul>
+      <p style="margin-top:8px;">论文特别讨论 SafeDiffuser 和 SafeFlow：</p>
+      <ul>
+        <li><strong>SafeDiffuser</strong> 使用 CBF 思路，但经典 CBF 正向不变性通常要求初始样本已经处于安全集合；生成过程通常从高斯噪声开始，初始样本不一定安全。</li>
+        <li><strong>SafeFlow</strong> 引入 prescribed-time 思路，但论文认为其约束调度会在整个生成过程中持续施加压力，可能使样本偏离训练分布。</li>
+        <li>两者都没有像 UniConFlow 一样<strong>统一处理</strong>状态安全、动作可行性和动力学等式约束。</li>
+      </ul>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. 论文提出的目标</div>
+      <p>作者希望同时满足三件事：</p>
+      <ul>
+        <li><strong>State safety：</strong>机器人状态不进入不安全区域。</li>
+        <li><strong>Action feasibility：</strong>控制输入不超过执行器能力。</li>
+        <li><strong>Kinodynamic consistency：</strong>状态转移符合机器人动力学。</li>
+      </ul>
+      <p>论文把同时满足这些要求的轨迹称为 <strong>Certified Motion Trajectory</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Flow Matching 基础 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">03</span> Flow Matching 基础：生成模型在做什么</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 基本思路</div>
+      <p>设训练数据轨迹来自目标分布 q，初始噪声来自简单先验分布 p。FM 学习一个随时间变化的速度场 v<sub>θ</sub>(t, T)，让样本沿 ODE 从噪声分布移动到数据分布：</p>
+      <div class="formula">dT<sub>t</sub> / dt = v<sub>θ,t</sub>(T<sub>t</sub>)</div>
+      <div class="symbol-grid">
+        <div class="symbol-item"><div class="sym">T<sub>0</sub></div><p>初始噪声轨迹</p></div>
+        <div class="symbol-item"><div class="sym">T<sub>1</sub></div><p>生成得到的轨迹</p></div>
+        <div class="symbol-item"><div class="sym">t ∈ [0,1]</div><p>生成过程的内部时间</p></div>
+        <div class="symbol-item"><div class="sym">v<sub>θ</sub></div><p>神经网络学习到的速度场</p></div>
+      </div>
+      <p>模型不是直接预测最终轨迹，而是学习"当前轨迹应该往哪个方向变化"。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. Conditional Flow Matching 训练</div>
+      <p>论文用线性插值路径说明训练过程：</p>
+      <div class="formula">T<sub>t</sub> = α(t) T<sub>1</sub> + β(t) T<sub>0</sub></div>
+      <p>t=0 时接近噪声，t=1 时到达训练样本。模型通过速度匹配损失学习目标速度场。</p>
+      <p><strong>训练时：</strong>给模型噪声样本、专家轨迹和中间时刻，学习中间状态的变化方向。<br><strong>推理时：</strong>从噪声开始，反复调用学到的速度场并数值积分，得到完整轨迹。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. UniConFlow 的关键改动</div>
+      <div class="formula">原始 FM：dT<sub>t</sub> / dt = v<sub>θ,t</sub>(T<sub>t</sub>)</div>
+      <div class="formula">UniConFlow：dT<sub>t</sub> / dt = v<sub>θ,t</sub>(T<sub>t</sub>) + u<sub>t</sub></div>
+      <p>u<sub>t</sub> 是额外的 guidance input。它不是重新训练得到的神经网络输出，而是在推理时通过约束条件和 QP 计算出来的修正量。</p>
+      <p>因此，UniConFlow 的重点是<strong>修改生成过程中的向量场</strong>，而不是改变原有 FM 模型的训练目标或网络结构。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 约束生成问题 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">04</span> 约束生成问题：什么叫 Certified Sample</div>
+    <div class="paper-card">
+      <p>论文把生成样本 T 的约束分为两类：</p>
+      <p><strong>1. 等式约束（Equality Constraints）</strong></p>
+      <div class="formula">g<sub>i</sub>(T) = 0</div>
+      <ul>
+        <li>状态转移必须满足动力学方程；</li>
+        <li>轨迹必须从指定初始状态出发。</li>
+      </ul>
+      <p><strong>2. 不等式约束（Inequality Constraints）</strong></p>
+      <div class="formula">h<sub>j</sub>(T) ≤ 0</div>
+      <ul>
+        <li>机器人不能进入障碍物区域；</li>
+        <li>关节力矩不能超过上下限；</li>
+        <li>状态必须留在指定安全集合中。</li>
+      </ul>
+      <p>如果 T 同时满足全部等式和不等式约束，论文称其为 <strong>Certified Sample</strong>。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">机器人轨迹定义</div>
+      <div class="formula">T = [s<sub>0</sub>, a<sub>0</sub>, s<sub>1</sub>, a<sub>1</sub>, …, s<sub>H-1</sub>, a<sub>H-1</sub>, s<sub>H</sub>]</div>
+      <p>其中 s<sub>k</sub> 是状态，a<sub>k</sub> 是控制输入。一条 Certified Motion Trajectory 必须满足：</p>
+      <ul>
+        <li><strong>动力学一致性：</strong>s<sub>k+1</sub> = f<sub>k</sub>(s<sub>k</sub>, a<sub>k</sub>)</li>
+        <li><strong>状态安全：</strong>s<sub>k</sub> ∈ C<sub>s</sub></li>
+        <li><strong>动作可行性：</strong>a<sub>k</sub> ∈ C<sub>a</sub></li>
+      </ul>
+      <div class="warn-box"><strong>注意：</strong>论文的"认证"是相对于给定的动力学模型、约束函数和假设而言，并不自动等于真实世界任何情况下的绝对安全。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Lyapunov -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">05</span> 控制理论基础一：Lyapunov 如何处理等式约束</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 核心想法</div>
+      <p>对于等式约束 g<sub>i</sub>(T) = 0，如果当前 g<sub>i</sub>(T) 不等于零，就希望随着生成时间推进，误差逐渐减小，最终收敛到零。</p>
+      <p>控制理论中，Lyapunov 函数用于衡量系统偏离目标的程度。如果能让它持续下降，就能证明系统趋向目标。</p>
+      <p>论文先为每个约束构造非负函数 V<sub>i</sub>(g<sub>i</sub>(T))，并要求：</p>
+      <div class="formula">dV<sub>i</sub> / dt ≤ −γ<sub>V,i</sub>(V<sub>i</sub>)</div>
+      <p>在适当条件下，这意味着 g<sub>i</sub>(T<sub>t</sub>) → 0。这属于<strong>渐近收敛</strong>：理论上随着时间趋于无穷，误差趋于零。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 为什么要聚合多个等式约束</div>
+      <p>如果有多个等式约束，逐个设计更新律不方便。论文把它们聚合成一个非负函数：</p>
+      <div class="formula">g(T) = Σ<sub>i</sub> [g<sub>i</sub>(T)]²</div>
+      <p>因此：g(T) = 0 当且仅当所有 g<sub>i</sub>(T) 都等于零。</p>
+      <p>这一步非常关键：多个动力学等式、初始条件等，可以被统一放进一个聚合约束函数中。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 CBF -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">06</span> 控制理论基础二：CBF 如何处理不等式约束</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 核心想法</div>
+      <p>不等式约束定义的是一个可行集合，而不是一个唯一目标点。CBF 关注的是集合的 <strong>forward invariance（正向不变性）</strong>：如果系统一开始在安全集合内，之后就不应该离开。</p>
+      <p>论文采用的约束符号约定是 h(T) ≤ 0。其屏障条件可写为：</p>
+      <div class="formula">dh(T)/dT · Ṫ ≤ −γ<sub>h</sub>(−h(T))</div>
+      <p>满足适当条件时，如果初始状态满足 h(T<sub>0</sub>) ≤ 0，则后续演化保持 h(T<sub>t</sub>) ≤ 0。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 传统 CBF 在生成模型中的困难</div>
+      <p>经典 CBF 的正向不变性证明依赖初始点已经在安全集合中。但生成模型的起点通常是高斯噪声：初始轨迹可能穿过障碍物、违反动作边界、不满足其他任务约束。</p>
+      <p>所以不能直接把"从安全状态出发"的传统 CBF 结论套用到"从任意噪声开始"的生成过程。</p>
+      <p>论文真正要解决的是：<strong>初始样本可以违反约束，但在有限生成时间 t=1 结束时，必须进入约束集合</strong>。这就是引出 PTZF 的原因。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 PTZF -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">07</span> 核心创新：Prescribed-Time Zeroing Function（PTZF）</div>
+    <div class="paper-card">
+      <div class="sub-title">1. PTZF 是什么</div>
+      <p>PTZF 是论文提出的预设时间归零函数。它构造一个随生成时间变化的参考边界 r(t)，并要求它在指定时间 T<sub>pre</sub> 到达零。论文给出的动态形式为：</p>
+      <div class="formula">ṙ(t) = − T<sub>pre</sub> / (T<sub>pre</sub> − t)² · γ<sub>r</sub>(t, r(t)), t &lt; T<sub>pre</sub></div>
+      <div class="formula">ṙ(t) = 0, t ≥ T<sub>pre</sub></div>
+      <div class="symbol-grid">
+        <div class="symbol-item"><div class="sym">T<sub>pre</sub></div><p>预先指定的归零时间</p></div>
+        <div class="symbol-item"><div class="sym">γ<sub>r</sub></div><p>可选择的扩展 class-K 函数</p></div>
+        <div class="symbol-item"><div class="sym">c<sub>r</sub></div><p>控制早期自由生成区间的参数</p></div>
+      </div>
+      <p>论文在生成任务中通常令 T<sub>pre</sub>=1，也就是在整个 FM 生成过程结束时达到目标约束。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 一个直观例子</div>
+      <p>若选择 γ<sub>r</sub>(t, r) = c<sub>γ</sub>·r，则一个显式解为：</p>
+      <div class="formula">r(t) = r(0) · exp[−c<sub>γ</sub> · t / (T<sub>pre</sub> − t)]</div>
+      <p>当 t 接近 T<sub>pre</sub> 时，指数项快速下降，r(t) 趋于零。直观上：</p>
+      <ul>
+        <li><strong>生成前期：</strong>约束参考边界仍有较大余量，不必立即强行修正样本。</li>
+        <li><strong>生成后期：</strong>参考边界迅速收紧，生成轨迹必须逐渐满足约束。</li>
+        <li><strong>到达预设时间：</strong>参考边界归零。</li>
+      </ul>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. PTZF 如何处理等式约束</div>
+      <p>论文先构造聚合等式误差 g(T<sub>t</sub>)，再构造其 PTZF 参考边界 ḡ(t)。要求：</p>
+      <div class="formula">ġ(T<sub>t</sub>) ≤ γ(ḡ(t) − g(T<sub>t</sub>)) + ḡ̇(t)</div>
+      <p>如果初始参考边界足够大，并且上述条件在生成过程中成立，则在 t=1 时：g(T<sub>1</sub>) = 0，从而所有聚合的等式约束都满足。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">4. PTZF 如何处理不等式约束</div>
+      <p>对于每个不等式约束 h<sub>j</sub>(T<sub>t</sub>)，分别构造 h̄<sub>j</sub>(t)，并要求：</p>
+      <div class="formula">ḣ<sub>j</sub>(T<sub>t</sub>) ≤ γ(h̄<sub>j</sub>(t) − h<sub>j</sub>(T<sub>t</sub>)) + h̄̇<sub>j</sub>(t)</div>
+      <p>在论文给出的条件下，最终得到：h<sub>j</sub>(T<sub>1</sub>) ≤ 0。因此，等式约束和不等式约束虽然目标不同，但可以用<strong>结构相似的预设时间条件</strong>处理。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">5. PTZF 最重要的特殊设计：Early Free Generation</div>
+      <p>这是论文非常有辨识度的设计。作者希望生成模型早期尽可能保留原本学到的数据分布，不要一开始就被约束项强行拉偏。</p>
+      <p>在满足论文 Theorem 5 的条件时，通过选择足够大的 PTZF 初始边界，可以使：</p>
+      <div class="formula">u<sub>t</sub> = 0, t ∈ [0, c<sub>r</sub>]</div>
+      <p>即早期阶段可以完全不施加约束引导，让原始 FM 自由生成；之后再逐渐增强约束引导，在预设时间前完成约束满足。</p>
+      <div class="warn-box"><strong>但要注意：</strong>自由生成不是无条件成立的；需要约束函数 Lipschitz 连续、原始流场有界等假设；PTZF 初始边界需要满足论文给出的条件；c<sub>r</sub> 越大，早期自由生成区间越长，但后期通常需要更强的引导；初始边界越大，后期引导强度也可能越大。所以这里存在"生成分布保真度"和"后期约束修正强度"之间的权衡。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 QP Guidance -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">08</span> UniConFlow 的核心算法：QP Guidance</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 为什么需要 QP</div>
+      <p>加入 guidance 后：</p>
+      <div class="formula">Ṫ<sub>t</sub> = v<sub>θ,t</sub>(T<sub>t</sub>) + u<sub>t</sub></div>
+      <p>作者希望同时满足：等式约束的 PTZF 条件、每一个不等式约束的 PTZF 条件、对原始 FM 流场的改动尽可能小。</p>
+      <p>将约束条件整理后，得到线性不等式形式：</p>
+      <div class="formula">ρ(t) + η(t) · u<sub>t</sub> ≤ 0</div>
+      <div class="symbol-grid">
+        <div class="symbol-item"><div class="sym">ρ(t)</div><p>原始 FM 速度在当前时刻造成的约束变化趋势，以及 PTZF 参考边界要求</p></div>
+        <div class="symbol-item"><div class="sym">η(t)</div><p>约束函数对完整轨迹 T 的梯度</p></div>
+        <div class="symbol-item"><div class="sym">u<sub>t</sub></div><p>需要求解的引导修正量</p></div>
+      </div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. QP 优化目标</div>
+      <div class="formula">min<sub>u</sub> u<sub>t</sub><sup>T</sup> P<sub>u,t</sub> u<sub>t</sub> &nbsp;&nbsp; s.t.&nbsp; ρ(t) + η(t)u<sub>t</sub> ≤ 0</div>
+      <p>P<sub>u,t</sub> 是正定权重矩阵。直观理解：</p>
+      <ul>
+        <li>如果原始 FM 速度已经满足约束条件，最优修正量可以是零；</li>
+        <li>如果原始速度会让约束变差，QP 就寻找一个尽可能小的 u<sub>t</sub> 来修正方向；</li>
+        <li>该修正不是随意的梯度惩罚，而是通过约束不等式明确限制生成速度。</li>
+      </ul>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. 为什么引入 Slack Variable（松弛变量）</div>
+      <p>多个约束可能相互冲突，原始 QP 可能无解。论文引入松弛变量 δ：</p>
+      <div class="formula">min u<sub>t</sub><sup>T</sup> P<sub>u</sub> u<sub>t</sub> + δ<sub>t</sub><sup>T</sup> P<sub>δ</sub> δ<sub>t</sub> &nbsp;&nbsp; s.t.&nbsp; ρ(t) + η(t)u<sub>t</sub> = δ<sub>t</sub></div>
+      <p>松弛变量允许约束在优化过程中暂时存在残差，同时通过惩罚项限制残差大小。</p>
+      <div class="warn-box"><strong>重要区别：</strong>加入 slack 后 QP 的数值可行性得到保障，但"QP 总能求出解"不等于"机器人约束自动得到严格满足"。论文 Theorem 4 还要求特定 blow-up 条件和 slack 有界等假设，才能推出生成终点满足原约束。所以不能把 slack 理解成可以任意违反安全约束。它是理论分析中受到限制的辅助变量。</div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">4. QP 的闭式解</div>
+      <p>论文进一步利用 KKT 条件给出带 slack 的 QP 闭式解，减少在线求解成本。实现上，每个生成时刻：</p>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>计算当前约束函数和梯度；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>计算原始 FM 速度；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>构造 QP；</p></div>
+        <div class="flow-step"><div class="flow-num">4</div><p>得到 u<sub>t</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">5</div><p>将 v<sub>θ</sub> + u<sub>t</sub> 输入 ODE 数值积分器；</p></div>
+        <div class="flow-step"><div class="flow-num">6</div><p>进入下一个生成时刻。</p></div>
+      </div>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">5. Theorem 3 与 Theorem 4 的区别</div>
+      <ul>
+        <li><strong>Theorem 3：</strong>假设原始 QP 在整个生成区间都可行，则按照 QP 得到的 guidance 演化，可以保证终点满足约束。</li>
+        <li><strong>Theorem 4：</strong>引入 slack 处理潜在不可行；需要 γ 与 blow-up function 满足特定条件、slack 有界；在这些假设下，仍能证明生成样本满足约束。</li>
+      </ul>
+      <p><strong>理解重点：</strong>QP 负责计算引导方向，PTZF 负责预设时间约束逻辑，理论保证依赖定理的全部假设，而不是仅仅依赖"运行了一个 QP"。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 Section V -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">09</span> Section V：如何把抽象约束变成机器人规划约束</div>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:14px;">作者将机器人轨迹写成 T = [s<sub>0</sub>, a<sub>0</sub>, s<sub>1</sub>, a<sub>1</sub>, …, s<sub>H</sub>]，对每个机器人系统构造四类约束。</p>
+    <div class="paper-card">
+      <p><strong>1. 动力学一致性（Equality）</strong></p>
+      <div class="formula">g<sub>con</sub><sup>k</sup>(T) = ‖s<sub>k+1</sub> − f<sub>k</sub>(s<sub>k</sub>, a<sub>k</sub>)‖ &nbsp;&nbsp; 要求 g<sub>con</sub><sup>k</sup>(T) = 0</div>
+      <p>如果状态序列与控制序列不符合机器人动力学，即使轨迹看起来平滑，也不代表机器人能够实际执行。</p>
+      <p><strong>2. 初始状态对齐（Equality）</strong></p>
+      <div class="formula">g<sub>ini</sub>(T) = ‖s<sub>0</sub> − s<sub>cur</sub>‖ &nbsp;&nbsp; 要求 g<sub>ini</sub>(T) = 0</div>
+      <p>保证规划从真实当前状态开始。作者强调，初始状态不能仅仅作为一个可能被违反的软引导条件，而要作为<strong>硬等式约束</strong>。</p>
+    </div>
+    <div class="paper-card">
+      <p><strong>3. 状态安全（Inequality）</strong></p>
+      <p>采用 CBF 形式描述安全集合：</p>
+      <div class="formula">C<sub>s</sub> = {s | h<sub>s</sub>(s) ≥ 0}</div>
+      <p>转换成论文统一的约束符号：</p>
+      <div class="formula">h<sub>s</sub><sup>k</sup>(T) = −h<sub>s</sub>(s<sub>k</sub>) ≤ 0</div>
+      <p>可以用于描述碰撞避免、工作空间边界等。</p>
+      <p><strong>4. 动作可行性（Inequality）</strong></p>
+      <div class="formula">h<sub>a</sub><sup>k</sup>(T) = −h<sub>a</sub>(a<sub>k</sub>) ≤ 0</div>
+      <p>例如关节力矩限制、控制输入上下界等。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">5. 聚合后的约束</div>
+      <p>作者将初始状态和动力学一致性合并：</p>
+      <div class="formula">g(T) = g<sub>ini</sub>(T)² + Σ<sub>k</sub> [g<sub>con</sub><sup>k</sup>(T)]²</div>
+      <p>状态约束和动作约束则分别组成一组不等式 h<sub>j</sub>(T) ≤ 0。这一步把机器人运动规划完整地转换成前面 Section IV 的受约束生成问题。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 推理流程 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">10</span> 推理流程：Stage 1 + Stage 2</div>
+    <div class="paper-card">
+      <div class="sub-title">Stage 1：PTZF-based Guided Sampling</div>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>从先验分布采样初始噪声轨迹 T<sub>0</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>调用预训练 Conditional Flow Matching 模型，得到原始速度 v<sub>θ</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>计算当前等式和不等式约束；</p></div>
+        <div class="flow-step"><div class="flow-num">4</div><p>构造并求解 QP，得到 guidance u<sub>t</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">5</div><p>用 ODE 求解器积分：Ṫ<sub>t</sub> = v<sub>θ,t</sub>(T<sub>t</sub>) + u<sub>t</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">6</div><p>在 t=1 附近得到经过约束引导的完整轨迹。</p></div>
+      </div>
+      <p style="margin-top:10px;"><strong>这一阶段的作用：</strong>在生成过程中主动改变流场；让轨迹逐渐靠近约束可行区域；尽可能保留生成模型学到的运动分布。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">Stage 2：Terminal Refinement</div>
+      <p><strong>为什么需要第二阶段？</strong>理论分析针对连续时间流；实际推理使用有限步长 ODE 数值积分，存在离散化、浮点精度和梯度计算误差。因此 Stage 1 的数值输出仍可能有少量残余违反。</p>
+      <p>作者在终端阶段使用 CEM 和动力学 rollout 修正轨迹。双倒立摆中，主要优化目标是：</p>
+      <div class="formula">min ‖T − T<sub>1</sub>‖²</div>
+      <p>同时满足：状态安全、动作可行、动力学一致性。也就是说，<strong>尽可能保留 Stage 1 生成的运动方案，而不是从头重新规划</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 局部窗口修正 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">11</span> 长时域轨迹的特殊设计：局部窗口修正</div>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:14px;">在赛车和机械臂任务中，整条轨迹较长、维度较高。若每次都重新优化整条轨迹，计算成本会很高。作者把轨迹划分为三类窗口：</p>
+    <div class="window-grid">
+      <div class="window-card"><div class="w-name">Frozen Window（冻结窗口）</div><p>当前没有安全约束违反的区间。尽可能保留原轨迹形状。通过 CEM 调整控制输入，再 rollout 动力学，恢复动力学一致性。</p></div>
+      <div class="window-card"><div class="w-name">Violation Window（违反窗口）</div><p>检测到碰撞或越界的区间。对该区域进行重点优化。原始违反区间会向前、向后扩展 padding，避免只修正单个时间点。</p></div>
+      <div class="window-card"><div class="w-name">Recovery Window（恢复窗口）</div><p>紧跟在违反窗口之后。让修复后的局部轨迹平滑地重新接回后续轨迹。避免只修复碰撞点，却导致后续状态突变。</p></div>
+    </div>
+    <div class="paper-card" style="margin-top:14px;">
+      <p><strong>整体过程：</strong></p>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>提取所有违反区间；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>扩展违反窗口并构造恢复窗口；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>先处理冻结窗口的动力学一致性；</p></div>
+        <div class="flow-step"><div class="flow-num">4</div><p>逐段修复违反窗口和恢复窗口；</p></div>
+        <div class="flow-step"><div class="flow-num">5</div><p>连接已认证区间，最后进行整体收尾优化。</p></div>
+      </div>
+      <p style="margin-top:10px;">这套机制的核心不是简单地"把碰撞点推开"，而是<strong>局部修复、动力学 rollout 和全局轨迹连续性</strong>一起考虑。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 B-spline -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">12</span> 机械臂轨迹压缩：Cubic B-spline</div>
+    <div class="paper-card">
+      <p>Franka 机械臂状态为 s = [q, q̇]，维度 14；控制输入为 a = τ，维度 7。每个时间步共有 21 个状态和动作变量。再考虑长时域和较高控制频率，直接在完整轨迹空间进行 ODE 生成会带来较大计算负担。</p>
+      <p>作者使用三次 B-spline 对轨迹进行压缩：</p>
+      <ul>
+        <li>用少量 spline control points 表示连续关节轨迹；</li>
+        <li>FM 在压缩空间中生成；</li>
+        <li>通过确定性的线性解码器 D 还原完整状态和动作轨迹；</li>
+        <li>再在机器人原始空间中计算约束函数和梯度。</li>
+      </ul>
+      <div class="note-box">
+        <strong>最重要的设计点：</strong>压缩只用于降低生成计算量。安全约束并没有被转移到一个近似的低维空间中，而是在解码后的<strong>机器人原始空间</strong>中评估。论文强调 E 和 D 是由 B-spline 基函数定义的<strong>确定性线性算子</strong>，不是另一个学习得到、可能产生重建误差的神经网络。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 Trajectory vs Path Planning -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">13</span> Trajectory Planning 与 Path Planning 的区别</div>
+    <div class="paper-card">
+      <p>论文正文重点讨论 trajectory planning，即训练数据同时包含状态和动作：</p>
+      <div class="formula">T = [s<sub>0</sub>, a<sub>0</sub>, s<sub>1</sub>, a<sub>1</sub>, …, s<sub>H</sub>]</div>
+      <p>但有些场景只有状态路径数据，没有专家动作序列。论文 Appendix B 为此提出 path planning 的处理方式：</p>
+      <div class="flow-list">
+        <div class="flow-step"><div class="flow-num">1</div><p>FM 只学习状态路径 T<sub>s</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">2</div><p>另外引入一个 virtual action flow（虚拟动作流）T<sub>a</sub>；</p></div>
+        <div class="flow-step"><div class="flow-num">3</div><p>虚拟动作流不需要训练生成模型，而是由 guidance correction 驱动；</p></div>
+        <div class="flow-step"><div class="flow-num">4</div><p>将状态流和虚拟动作流组合起来，计算动力学一致性和动作可行性约束；</p></div>
+        <div class="flow-step"><div class="flow-num">5</div><p>通过相应 Jacobian 把约束梯度映射回状态流和虚拟动作流，再统一求解 QP。</p></div>
+      </div>
+      <p style="margin-top:10px;"><strong>两者区别：</strong>Trajectory planning 模型直接生成状态和动作；Path planning 模型主要生成状态路径，动作作为辅助变量在约束引导中补充。这个设计扩展了 UniConFlow 对不同数据形式的适用性。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 实验设计与结果 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">14</span> 实验设计与主要结果</div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">本节只总结实验逻辑和结论，不逐项推导实验代价函数。</p>
+    <div class="paper-card">
+      <div class="sub-title">1. 双倒立摆（Toy Example）</div>
+      <p><strong>任务：</strong>双连杆、两个关节；从随机初始状态摆到直立平衡点；末端不能穿过 x=−1 的虚拟墙；两个关节力矩均受限于 30 Nm。</p>
+      <p><strong>数据：</strong>使用 MPC 生成专家轨迹；论文报告生成 5000 条专家 rollout。</p>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="name">SR-S / SR-A / AR / TSR</div><div class="val pos">100%</div><p>全部指标</p></div>
+        <div class="metric-card"><div class="name">KC-F / KC-I</div><div class="val pos">0</div><p>动力学一致性 RMSE</p></div>
+        <div class="metric-card"><div class="name">推理时间</div><div class="val">2.6 ms</div><p>约为 FM-MPPI 的 1/5</p></div>
+      </div>
+      <p>FM-MPPI 在该任务中也接近完全约束满足，但推理时间约 12.9 ms。主要说明：在较简单的动力学系统中，UniConFlow 能够兼顾轨迹质量、约束满足和推理效率。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. Car Racing（赛车）</div>
+      <p><strong>任务：</strong>使用 Nürburgring Nordschleife 赛道数据构建环境；车辆状态包括位置、航向角和速度；控制输入包括转向和纵向加速度；正向驾驶设置多个静态椭球障碍物，反向驾驶设置一个不规则障碍物；车辆需要保持在可行驶赛道区域内并避开障碍物。</p>
+      <p><strong>数据：</strong>通过最优控制问题生成专家轨迹；正向和反向驾驶各生成 5000 条轨迹。</p>
+      <ul>
+        <li>UniConFlow 在正向和反向场景中均报告各项成功率指标 100%；</li>
+        <li>部分生成式 baseline 能满足动作边界，却不能保证动力学一致性和避障；</li>
+        <li>SafeFlow 在某些场景能保证状态轨迹安全，但动作 rollout 仍可能失败；</li>
+        <li>PCFM 和 FM-MPPI 在该长时域任务中超过 180 秒仍未能求得可用解。</li>
+      </ul>
+      <p>该实验考察了非完整车辆动力学、多障碍物和长时域规划下的约束处理能力。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. Franka 7-DoF 机械臂（Sim-to-Real）</div>
+      <p><strong>任务：</strong>使用 Franka Research 3 七自由度机械臂；状态包含 7 个关节位置和 7 个关节速度；控制输入为 7 个关节力矩；包含伪二维八字轨迹和三维圆形轨迹；使用运动捕捉系统估计障碍物相对位置；在真实机械臂上进行部署验证。</p>
+      <p><strong>计算策略：</strong>使用 MPC 生成专家示范；用 B-spline 压缩长轨迹；Stage 1 在压缩空间中进行 PTZF 引导生成；Stage 2 在完整机器人空间进行局部终端修正。</p>
+      <div class="metric-grid">
+        <div class="metric-card"><div class="name">伪二维</div><div class="val pos">100%</div><p>四项成功率指标 · 32 ms</p></div>
+        <div class="metric-card"><div class="name">三维</div><div class="val pos">100%</div><p>四项成功率指标 · 105 ms</p></div>
+        <div class="metric-card"><div class="name">baseline</div><div class="val">超时</div><p>PCFM / FM-MPPI &gt;180s 未完成</p></div>
+      </div>
+      <p>多数 baseline 无法同时满足动作 rollout 安全和动力学一致性。这是论文最有说服力的验证之一，因为它不仅有仿真，还包含真实机械臂部署。但它仍然是在论文定义的模型和障碍物表示下进行的验证。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">4. 评价指标怎么读</div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <colgroup><col style="width: 22%"><col style="width: 78%"></colgroup>
+          <thead><tr><th>指标</th><th>含义</th></tr></thead>
+          <tbody>
+            <tr><td>SR-S</td><td>Safety Rate for States：状态序列安全率，统计状态轨迹是否避开障碍物或留在安全状态空间。</td></tr>
+            <tr><td>SR-A</td><td>Safety Rate for Action Rollouts：根据动作序列进行动力学 rollout 后的安全率，检查动作实际推演出的状态是否安全。</td></tr>
+            <tr><td>AR</td><td>Admissibility Rate：动作可行率，检查控制输入是否满足动作空间限制。</td></tr>
+            <tr><td>TSR</td><td>Total Success Rate：总成功率，要求轨迹同时满足等式和不等式约束。</td></tr>
+            <tr><td>KC-F</td><td>Forward Kinodynamic Consistency：将生成的动作输入动力学模型，比较 rollout 状态与生成状态，用 RMSE 衡量。</td></tr>
+            <tr><td>KC-I</td><td>Inverse Kinodynamic Consistency：通过相邻状态反推动作，再与生成动作比较，用 RMSE 衡量。</td></tr>
+            <tr><td>Cost / Time</td><td>平均轨迹代价 / 平均单条轨迹推理时间。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="warn-box"><strong>特别注意：</strong>SR-S 高并不代表动作可执行；AR 高也不代表状态轨迹安全。要判断方法是否真正生成了可执行轨迹，必须结合 SR-S、SR-A、AR、TSR 和 KC 指标一起看。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 消融实验 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">15</span> 消融实验：哪些模块真正发挥作用</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 推理时间构成</div>
+      <p>论文报告的总平均推理时间：双倒立摆约 2.50 ms、赛车约 2.60 ms、伪二维机械臂约 31.70 ms、三维机械臂约 105.00 ms。</p>
+      <p>各模块耗时占比：</p>
+      <ul>
+        <li>生成模型 ODE 积分约占 <strong>71%–78%</strong>；</li>
+        <li>PTZF 约束计算和 QP 约占 <strong>8.5%–14.8%</strong>；</li>
+        <li>Terminal Refinement 约占 <strong>7.6%–18.9%</strong>。</li>
+      </ul>
+      <p>含义：QP 和约束计算并不是主要计算瓶颈，<strong>生成模型 ODE 积分</strong>占据大部分推理预算。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. Stage 1 与 Stage 2 的作用</div>
+      <p>Stage 1 在没有终端修正时报告的 certified rate：双倒立摆 88.4%、赛车 98.1%、伪二维机械臂 89.2%、三维机械臂 86.1%。</p>
+      <p>这说明 <strong>PTZF guidance 本身已经明显改善生成轨迹</strong>，并不是把所有安全工作都推给最后的 CEM。Stage 2 则进一步处理数值积分和离散化造成的残余违反，得到最终满足约束的轨迹。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. Slack 使用情况</div>
+      <p>论文还分析了 slack 的使用量，报告其总体保持有界；较复杂任务中也没有呈现随维度增加而无限增大的趋势。作者据此认为 slack 是受控的辅助缓冲，而不是把 UniConFlow 退化成一个全局软惩罚规划器。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 贡献归纳 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">16</span> 论文贡献归纳</div>
+    <div class="paper-card">
+      <p><strong>贡献一：统一处理等式和不等式约束</strong>——以往不少安全生成方法主要关注碰撞避免等不等式约束。UniConFlow 把动力学一致性、初始状态等式约束，与状态安全、动作可行性不等式约束统一放进一个生成框架。</p>
+      <p><strong>贡献二：提出 PTZF</strong>——允许约束在生成前期不必过早强制收紧，并在指定生成时间前完成收敛或安全集合进入。这是论文在理论设计上的核心创新。</p>
+      <p><strong>贡献三：QP 直接修正生成流场</strong>——通过约束函数梯度构造 QP，在满足约束条件的同时，尽量减小对原始 FM 速度场的修改。</p>
+      <p><strong>贡献四：Terminal Refinement</strong>——针对有限步数数值积分和长时域轨迹，提出 CEM 终端修正和局部窗口修复策略。</p>
+      <p><strong>贡献五：高维轨迹压缩</strong>——通过 B-spline 在压缩空间生成轨迹，并在解码后的机器人空间中检查约束，提升机械臂任务的计算可行性。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 局限与证据边界 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">17</span> 论文局限与证据边界</div>
+    <div class="paper-card">
+      <p><strong>1. 连续时间理论与离散数值实现之间存在差距：</strong>理论认证基于连续时间流和相应假设；实际 ODE 采用有限步长积分，可能出现时间离散误差、浮点精度误差和数值梯度误差。所以 Stage 1 的输出不应直接等同于无数值误差的最终认证结果，Terminal Refinement 在工程实现中仍然重要。</p>
+      <p><strong>2. QP 的 Jacobian 可能奇异或病态：</strong>在奇异或近奇异配置下，约束 Jacobian 可能秩亏或数值条件很差。论文当前使用并行 resampling，生成多个候选并保留数值条件较好的候选。这是工程层面的保护措施，不是对奇异性问题的根本理论解决。作者提出的未来方向包括 rank-aware regularization、damped pseudoinverse、manifold-based guidance。</p>
+      <p><strong>3. 没有显式处理所有真实动力学不确定性：</strong>真实机械臂存在关节摩擦、执行器动态等名义模型未充分描述的因素，导致实际执行与生成轨迹存在偏差。论文主要保证的是相对于名义动力学模型的 kinodynamic consistency。潜在扩展：dynamics randomization、bounded model uncertainty、uncertainty-aware guidance。</p>
+      <p><strong>4. 约束函数需要可微：</strong>当前框架需要显式的约束梯度。真实环境中的复杂障碍物因此使用椭球或椭球并集近似。局限是可能过于保守、可能遮蔽几何细节、可能减少可用工作空间；认证针对的是所采用的解析障碍物模型，而不是任意原始传感器观测。</p>
+      <p><strong>5. 可行解存在性假设：</strong>论文假设至少存在一条轨迹，同时满足动力学一致性、状态安全和动作可行性。如果任务本身没有可行解，框架不能凭空保证找到安全轨迹。</p>
+      <p><strong>6. 生成模型不等于全局最优规划器：</strong>专家数据来自 OCP 或 MPC，但生成模型并不因此保证产生 OCP/MPC 的全局最优解。论文主要强调的是约束满足、轨迹生成质量和计算效率，而不是对全局最优性的数学证明。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 综合评价 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">18</span> 综合评价：这篇论文真正强在哪里</div>
+    <div class="paper-card">
+      <div class="sub-title">1. 理论层面</div>
+      <p><strong>较强之处：</strong>将 Lyapunov、CBF 和预设时间思想统一到生成 ODE 中；不只是用经验 penalty，而是明确构造约束演化条件；对等式和不等式约束分别建立理论条件；通过 PTZF 处理从任意初始噪声出发的问题。</p>
+      <p><strong>需要谨慎的地方：</strong>理论保证依赖已知、可微的约束函数和相应正则性条件；带 slack 的证明还依赖 slack 有界等条件；数值实现并不自动继承全部连续时间证明结论。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">2. 算法层面</div>
+      <p><strong>较强之处：</strong>guidance 作用于生成 ODE，而不是重新训练模型；QP 尽可能小地修改原始生成流；终端 CEM 修正弥补离散数值误差；局部窗口策略降低长轨迹修正成本；B-spline 压缩支持高维机械臂轨迹生成。</p>
+    </div>
+    <div class="paper-card">
+      <div class="sub-title">3. 实验层面</div>
+      <p><strong>较强之处：</strong>覆盖简单动力学系统、车辆系统和真实机械臂；指标不仅看状态避障，还检查动作 rollout 和动力学一致性；与多类生成模型和优化基线比较；包含推理时间和模块消融。</p>
+      <p><strong>证据边界：</strong>100% 是论文所测试场景和指标下的实验结果，不是任意环境下的普遍概率保证；真实机械臂仍存在 sim-to-real 偏差；还没有解决任意原始感知输入、未知动力学和所有奇异几何条件。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 19 与传统 MPC/MPPI 关系 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">19</span> 与传统 MPC / MPPI 的关系</div>
+    <div class="paper-card">
+      <p>不要把 UniConFlow 理解成"传统优化控制已经没有价值"。</p>
+      <p><strong>传统 MPC / MPPI：</strong>根据动力学模型和代价函数，在线搜索或优化控制序列；通过 rollout 评估候选动作；在每次规划时直接求解当前控制问题。</p>
+      <p><strong>UniConFlow：</strong>先通过离线训练得到生成模型，学习专家轨迹分布；在线生成时，通过 QP 修正 Flow Matching 的速度场；最后仍可能用 CEM 和动力学 rollout 做终端修正。</p>
+      <p>所以 UniConFlow 不是完全抛弃优化，而是<strong>把生成模型作为轨迹先验，再结合控制理论约束和优化修正</strong>。</p>
+      <p>论文中 FM-MPPI 在简单双倒立摆上表现不错，但在长时域赛车和高维机械臂场景中遇到计算超时。这支持作者提出的一个观点：采样优化在高维复杂任务中可能计算代价很高。但不能据此得出 MPPI 在所有机器人任务中都不适用。算法效果依赖状态维度、时域长度、模型、采样数和计算预算。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 20 核心逻辑 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">20</span> 阅读后应记住的核心逻辑</div>
+    <p style="font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:14px;">把整篇论文压缩成以下十步：</p>
+    <div class="memory-list">
+      <div class="memory-item"><div class="memory-num">1</div><p>用 FM 学习专家轨迹分布。</p></div>
+      <div class="memory-item"><div class="memory-num">2</div><p>从噪声轨迹开始生成。</p></div>
+      <div class="memory-item"><div class="memory-num">3</div><p>把轨迹约束分成等式和不等式两类。</p></div>
+      <div class="memory-item"><div class="memory-num">4</div><p>用 Lyapunov 处理等式约束。</p></div>
+      <div class="memory-item"><div class="memory-num">5</div><p>用 CBF 处理不等式约束。</p></div>
+      <div class="memory-item"><div class="memory-num">6</div><p>用 PTZF 让约束在指定生成时间内得到满足，并尽量保留早期自由生成。</p></div>
+      <div class="memory-item"><div class="memory-num">7</div><p>用 QP 计算最小必要的 guidance。</p></div>
+      <div class="memory-item"><div class="memory-num">8</div><p>用 ODE 积分得到第一阶段约束引导轨迹。</p></div>
+      <div class="memory-item"><div class="memory-num">9</div><p>用 CEM、动力学 rollout 和局部窗口修正残余违反。</p></div>
+      <div class="memory-item"><div class="memory-num">10</div><p>对高维机械臂轨迹用 B-spline 压缩，最终在原始机器人空间检查约束。</p></div>
+    </div>
+    <div class="note-box" style="margin-top:14px;">
+      <strong>最重要的概念区分：</strong>Lyapunov（让等式误差趋于零）· CBF（让状态保持在安全集合中）· PTZF（规定约束何时必须被满足）· QP（计算满足约束所需的最小流场修正）· CEM（对最终轨迹做数值优化修正）· B-spline（降低高维轨迹生成的计算维度）
+    </div>
+    <div class="paper-card">
+      <p><strong>最终结论：</strong>UniConFlow 的核心价值不是提出了一个新的机器人动力学模型，也不是单纯提出一个更快的生成模型，而是<strong>把控制理论中的约束证书嵌入生成模型的连续时间推理过程</strong>，并用终端优化和轨迹压缩使其能够落地到长时域和高维机器人规划任务。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 21 建议复习公式 -->
+<section class="section">
+  <div class="container">
+    <div class="section-title"><span class="num">21</span> 建议后续重点复习的公式</div>
+    <div class="paper-card">
+      <ul>
+        <li><strong>公式（1）—（7）：</strong>Flow Matching 的 ODE、概率路径和训练损失。</li>
+        <li><strong>公式（13）：</strong>Lyapunov 等式约束条件。</li>
+        <li><strong>公式（19）：</strong>CBF 不等式约束条件。</li>
+        <li><strong>公式（31）：</strong>聚合等式约束 g(T) = Σ<sub>i</sub> g<sub>i</sub>(T)²。</li>
+        <li><strong>公式（35）—（37）：</strong>PTZF 定义和预设时间归零性质。</li>
+        <li><strong>公式（38）：</strong>等式约束的 PTZF 演化条件。</li>
+        <li><strong>公式（41）：</strong>不等式约束的 PTZF 演化条件。</li>
+        <li><strong>公式（42）：</strong>加入 guidance 后的受控 Flow Matching ODE。</li>
+        <li><strong>公式（48）：</strong>无 slack 的 QP。</li>
+        <li><strong>公式（49）—（51）：</strong>引入 slack 后的 QP 及闭式解。</li>
+        <li><strong>公式（63）—（76）：</strong>机器人动力学、状态安全、动作可行性和初始状态约束。</li>
+        <li><strong>公式（77）—（84）：</strong>机器人轨迹约束的聚合表达。</li>
+        <li><strong>公式（89）：</strong>双倒立摆的终端 CEM 修正目标。</li>
+        <li><strong>公式（94）及 Algorithm 2：</strong>违反区间提取和局部窗口修正。</li>
+        <li><strong>公式（112）—（130）：</strong>只有状态路径数据时的虚拟动作流设计。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    UniConFlow 论文精读笔记 · arXiv:2506.02955v3 · Certified Motion Planning
+  </div>
+</footer>
+
+</body>
+</html>
