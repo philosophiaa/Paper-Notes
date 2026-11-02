@@ -40,6 +40,10 @@
   .paper p { color:var(--secondary); margin-bottom:10px; }
   .paper p:last-child { margin-bottom:0; }
   strong { color:var(--text); }
+  a { color:var(--cyan); text-decoration:none; border-bottom:1px dotted rgba(6,182,212,.45); }
+  a:hover { color:var(--pink); border-bottom-color:var(--pink); }
+  .links { display:flex; flex-wrap:wrap; gap:8px; margin:11px 0 13px; }
+  .links a { display:inline-flex; align-items:center; padding:4px 10px; border:1px solid rgba(6,182,212,.3); border-radius:16px; font-size:12px; background:rgba(6,182,212,.06); }
   .why { margin-top:13px; padding:13px 15px; border-radius:8px; background:rgba(0,0,0,.2); border-left:3px solid var(--purple); color:var(--secondary); font-size:13px; }
   .why strong { color:var(--purple); }
   .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
@@ -97,30 +101,35 @@
   <h2 class="title"><span class="num">60%</span> 本周最值得关注的 5 项机器人研究</h2>
   <p class="sub">接触力、可微物理、自动数据生成、实时世界模型与局部纠错成为共同主线。</p>
 
-  <article class="paper"><div class="paper-no">01 · 本周重点论文</div><h3>FLoRe：机器人开始学习人类施加的力，而不只是模仿动作</h3><div class="meta">Learning Force-Reactive Humanoid Loco-Manipulation ｜ Amazon Frontier AI &amp; Robotics、NYU、CMU 等 ｜ arXiv 预印本</div>
+  <article class="paper"><div class="paper-no">01 · 本周重点论文</div><h3>FLoRe：机器人开始学习人类施加的力，而不只是模仿动作</h3><div class="meta"><a href="https://arxiv.org/abs/2610.35862" target="_blank" rel="noopener">Learning Force-Reactive Humanoid Loco-Manipulation</a> ｜ Amazon Frontier AI &amp; Robotics、NYU、CMU 等 ｜ 作者：Sihang Li、Xiaofeng Guo、<a href="https://x.com/GuanyaShi/status/1921982316068381172" target="_blank" rel="noopener">Guanya Shi</a>、Haozhi Qi 等 ｜ arXiv 预印本</div>
+    <div class="links"><a href="https://arxiv.org/abs/2610.35862" target="_blank" rel="noopener">论文原文 ↗</a><a href="https://louis-leee.github.io/FLoRe/" target="_blank" rel="noopener">项目演示 ↗</a><a href="https://x.com/GuanyaShi/status/1921982316068381172" target="_blank" rel="noopener">Guanya Shi 动态 ↗</a></div>
     <p><strong>技术做法：</strong>传统模仿学习主要记录手部运动，FLoRe 同时记录手部运动和六轴力传感器数据。机器人学习接触物体时应施加多大的力，再由混合柔顺全身控制器执行。</p>
     <div class="stats"><div class="stat"><b>26.7%</b><span>仅位置控制平均成功率</span></div><div class="stat"><b>80%</b><span>FLoRe 平均成功率</span></div><div class="stat"><b>3</b><span>真实 G1 测试任务</span></div></div>
     <div class="why"><strong>为什么重要：</strong>家务、装配和搬运中的很多失败来自力控制不合适。学习模型可预测期望接触力，底层控制器负责稳定执行。</div>
   </article>
 
-  <article class="paper"><div class="paper-no">02 · 投稿 T-RO</div><h3>Differentiable Contact Dynamics：让接触物理真正参与梯度优化</h3><div class="meta">KAIST ｜ Policy Learning and Contact-Implicit Trajectory Optimization ｜ 尚未接收</div>
+  <article class="paper"><div class="paper-no">02 · 投稿 T-RO</div><h3>Differentiable Contact Dynamics：让接触物理真正参与梯度优化</h3><div class="meta">KAIST ｜ 作者：Gijeong Kim、Seungbin Oh、Dongyun Kang、Hae-Won Park ｜ <a href="https://arxiv.org/abs/2610.35852" target="_blank" rel="noopener">Policy Learning and Contact-Implicit Trajectory Optimization</a> ｜ 尚未接收</div>
+    <div class="links"><a href="https://arxiv.org/abs/2610.35852" target="_blank" rel="noopener">论文 ↗</a><a href="https://diffcontact.github.io/" target="_blank" rel="noopener">项目主页 ↗</a><a href="https://www.aimodels.fyi/papers/arxiv/learning-quadrupedal-locomotion-via-differentiable-simulation" target="_blank" rel="noopener">研究介绍 ↗</a></div>
     <p><strong>技术做法：</strong>正向仿真保留硬接触物理求解，反向传播使用平滑接触梯度，再利用梯度改善运动策略和接触轨迹。作者报告四足步态训练约 108 秒，并展示接触隐式 MPC 实时运行。</p>
     <div class="why"><strong>为什么重要：</strong>它没有用神经网络替代动力学，而是让传统物理模型更容易被学习算法优化，是可微物理、MPC 与强化学习的重要交叉方向。</div>
   </article>
 
-  <article class="paper"><div class="paper-no">03 · arXiv 预印本</div><h3>Zero-HLM：减少真实人形机器人训练数据依赖</h3><div class="meta">Generalizable Humanoid Loco-Manipulation without Real Robot Data</div>
+  <article class="paper"><div class="paper-no">03 · arXiv 预印本</div><h3>Zero-HLM：减少真实人形机器人训练数据依赖</h3><div class="meta"><a href="https://arxiv.org/abs/2610.35075" target="_blank" rel="noopener">Generalizable Humanoid Loco-Manipulation without Real Robot Data</a> ｜ 作者：Dianyi Yang、Baoxiong Jia、Siyuan Huang 等</div>
+    <div class="links"><a href="https://arxiv.org/abs/2610.35075" target="_blank" rel="noopener">论文原文 ↗</a><a href="https://hub.baai.ac.cn/view/50326" target="_blank" rel="noopener">智源社区介绍 ↗</a></div>
     <p><strong>技术做法：</strong>用手机拍摄场景，通过 Gaussian Splatting 重建环境，再由 Agent 构建可交互仿真。系统利用物理反馈修正动作并生成训练数据，最后训练 GR00T N1.7。</p>
     <p>作者报告生成 4,800 条物理验证示范，并在真实 Unitree G1 任务中展示迁移效果。</p>
     <div class="why"><strong>为什么重要：</strong>它把场景重建、仿真、强化学习和 VLA 训练串成自动数据生产流水线，指向更低成本的机器人训练方式。</div>
   </article>
 
-  <article class="paper"><div class="paper-no">04 · CoRL 2026 已接收</div><h3>TAPESTRY：世界模型不必每次都生成未来视频</h3><div class="meta">A Single Backbone for Video Generation and Robot Control ｜ Jeremy A. Collins、Animesh Garg 等</div>
+  <article class="paper"><div class="paper-no">04 · CoRL 2026 已接收</div><h3>TAPESTRY：世界模型不必每次都生成未来视频</h3><div class="meta"><a href="https://arxiv.org/abs/2610.36823" target="_blank" rel="noopener">A Single Backbone for Video Generation and Robot Control</a> ｜ 作者：Jeremy A. Collins、Animesh Garg 等</div>
+    <div class="links"><a href="https://arxiv.org/abs/2610.36823" target="_blank" rel="noopener">论文 ↗</a><a href="https://tapestry-wam.github.io/" target="_blank" rel="noopener">项目主页 ↗</a></div>
     <p><strong>技术做法：</strong>视频和机器人动作使用统一 Transformer 主干，将动作编码成类似视频 Patch 的 Token。训练时同时学习视频与动作生成，执行时只输出动作。</p>
     <p>作者报告动作块生成延迟约 <strong>84ms</strong>。</p>
     <div class="why"><strong>为什么重要：</strong>模型可通过视频学习物理规律，而无需在每个控制周期承担完整视频生成的计算成本。</div>
   </article>
 
-  <article class="paper"><div class="paper-no">05 · arXiv 预印本</div><h3>ARC：机器人失败后，不必重新训练整个模型</h3><div class="meta">Human-Guided Adaptive Residual Correction for Robot Policies</div>
+  <article class="paper"><div class="paper-no">05 · arXiv 预印本</div><h3>ARC：机器人失败后，不必重新训练整个模型</h3><div class="meta"><a href="https://arxiv.org/abs/2610.37547" target="_blank" rel="noopener">Human-Guided Adaptive Residual Correction for Robot Policies</a> ｜ 作者：Anukriti Singh、Maxime Caniot、Pratap Tokekar、Firas Abi-Farraj</div>
+    <div class="links"><a href="https://arxiv.org/abs/2610.37547" target="_blank" rel="noopener">论文 ↗</a></div>
     <p><strong>技术做法：</strong>冻结原有模仿学习策略，只训练残差控制模块。人类提供少量纠错示范，系统识别易失败状态，再用强化学习优化局部动作。</p>
     <div class="stats"><div class="stat"><b>33.3%</b><span>修正前平均成功率</span></div><div class="stat"><b>75%</b><span>修正后平均成功率</span></div><div class="stat"><b>3</b><span>真实精密操作任务</span></div></div>
     <div class="why"><strong>为什么重要：</strong>局部纠错、在线适应和残差策略可能成为机器人部署后持续改善的重要机制。</div>
@@ -138,19 +147,19 @@
 <section class="section" id="ai"><div class="container">
   <h2 class="title"><span class="num">30%</span> AI 基础模型与 Agent</h2><p class="sub">模型规模、资源调度和实验预测成为本周三个关键方向。</p>
   <div class="feature-grid">
-    <div class="feature"><h3>Mistral Large 4</h3><p>约 1.05T 总参数、52B 激活参数的 MoE 开放权重模型，支持多模态输入和百万 Token 上下文。开放权重不等于完整训练流程开源，部署成本仍然较高。</p></div>
-    <div class="feature"><h3>EvoRouter</h3><p>根据任务难度、历史效果和成本动态选择模型与 Agent 数量。作者在 19 个数据集上报告准确率提升，同时降低约 50.95% 推理计算成本。</p></div>
-    <div class="feature"><h3>MLE-World</h3><p>读取实验代码与数据描述，预测执行日志、错误和验证分数，让 Agent 先进行虚拟试验，再选择值得实际运行的方案。</p></div>
+    <div class="feature"><h3><a href="https://docs.mistral.ai/models/mistral-large-4" target="_blank" rel="noopener">Mistral Large 4</a></h3><p>约 1.05T 总参数、52B 激活参数的 MoE 开放权重模型，支持多模态输入和百万 Token 上下文。开放权重不等于完整训练流程开源，部署成本仍然较高。</p><div class="links"><a href="https://docs.mistral.ai/models/mistral-large-4" target="_blank" rel="noopener">官方模型文档 ↗</a><a href="https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B" target="_blank" rel="noopener">模型权重 ↗</a><a href="https://www.technobezz.com/news/mistral-launches-large-4-trillion-parameters" target="_blank" rel="noopener">新闻来源 ↗</a></div></div>
+    <div class="feature"><h3><a href="https://arxiv.org/abs/2610.35690" target="_blank" rel="noopener">EvoRouter</a></h3><p>根据任务难度、历史效果和成本动态选择模型与 Agent 数量。作者在 19 个数据集上报告准确率提升，同时降低约 50.95% 推理计算成本。</p><div class="links"><a href="https://arxiv.org/abs/2610.35690" target="_blank" rel="noopener">论文 ↗</a></div></div>
+    <div class="feature"><h3><a href="https://arxiv.org/abs/2610.37175" target="_blank" rel="noopener">MLE-World</a></h3><p>读取实验代码与数据描述，预测执行日志、错误和验证分数，让 Agent 先进行虚拟试验，再选择值得实际运行的方案。</p><div class="links"><a href="https://arxiv.org/abs/2610.37175" target="_blank" rel="noopener">论文 ↗</a></div></div>
     <div class="feature"><h3>共同趋势</h3><p>工具调用、实际执行、计算成本、长期记忆、过程验证与错误恢复，正在成为 Agent 系统的重要能力。</p></div>
   </div>
 </div></section>
 
 <section class="section" id="industry"><div class="container">
   <h2 class="title"><span class="num">10%</span> 工业与商业化动态</h2>
-  <article class="paper"><div class="paper-no">01 · AGILITY ROBOTICS</div><h3>约 4.65 亿美元拟议融资</h3><p>Agility 与 Churchill Capital Corp XI 公布拟议业务合并融资安排；Digit 还将扩展至 GXO 在美国的另外两个仓库，计划 2027 年开始部署。相关交易仍以股东批准和交割条件为前提。</p></article>
-  <article class="paper"><div class="paper-no">02 · UNITREE</div><h3>营收增长，研发投入明显增加</h3><p>报告记录第三季度营收 6.65 亿元，同比增长约 69.9%；归母净利润约 1.13 亿元，同比下降约 17.4%；研发费用同比增长约 249.6%。</p></article>
-  <article class="paper"><div class="paper-no">03 · META × FOURIER</div><h3>传出合作开发人形机器人原型</h3><p>报道称双方合作开发原型 Max 并开始第二代研发，但尚未独立证实，应作为行业传闻跟踪。</p></article>
-  <article class="paper"><div class="paper-no">04 · AGIBOT</div><h3>提出 Worken 机器人有效工作量指标</h3><p>Worken 尝试结合活跃数量、自主工作时间和实际产出效能，代表产业评价开始从出货量转向实际生产价值，但目前还不是统一行业标准。</p></article>
+  <article class="paper"><div class="paper-no">01 · <a href="https://www.agilityrobotics.com/content/agility-robotics-and-churchill-capital-corp-xi-announce-expected-gross-capital-raise-of-approximately-465-million-and-anticipated-closing-of-business-combination" target="_blank" rel="noopener">AGILITY ROBOTICS</a></div><h3>约 4.65 亿美元拟议融资</h3><p>Agility 与 Churchill Capital Corp XI 公布拟议业务合并融资安排；Digit 还将扩展至 GXO 在美国的另外两个仓库，计划 2027 年开始部署。相关交易仍以股东批准和交割条件为前提。</p><div class="links"><a href="https://www.agilityrobotics.com/content/agility-robotics-and-churchill-capital-corp-xi-announce-expected-gross-capital-raise-of-approximately-465-million-and-anticipated-closing-of-business-combination" target="_blank" rel="noopener">公司公告 ↗</a></div></article>
+  <article class="paper"><div class="paper-no">02 · <a href="https://www.reuters.com/world/asia-pacific/unitrees-q3-profit-down-174-on-year-test-chinas-robotics-sector-2026-10-28/" target="_blank" rel="noopener">UNITREE</a></div><h3>营收增长，研发投入明显增加</h3><p>报告记录第三季度营收 6.65 亿元，同比增长约 69.9%；归母净利润约 1.13 亿元，同比下降约 17.4%；研发费用同比增长约 249.6%。</p><div class="links"><a href="https://www.reuters.com/world/asia-pacific/unitrees-q3-profit-down-174-on-year-test-chinas-robotics-sector-2026-10-28/" target="_blank" rel="noopener">路透社报道 ↗</a></div></article>
+  <article class="paper"><div class="paper-no">03 · <a href="https://www.reuters.com/world/china/meta-builds-humanoid-robot-with-chinese-startup-fourier-information-says-2026-10-31/" target="_blank" rel="noopener">META × FOURIER</a></div><h3>传出合作开发人形机器人原型</h3><p>报道称双方合作开发原型 Max 并开始第二代研发，但尚未独立证实，应作为行业传闻跟踪。</p><div class="links"><a href="https://www.reuters.com/world/china/meta-builds-humanoid-robot-with-chinese-startup-fourier-information-says-2026-10-31/" target="_blank" rel="noopener">路透社报道 ↗</a></div></article>
+  <article class="paper"><div class="paper-no">04 · <a href="https://agibot.com/article/231/detail/131.html" target="_blank" rel="noopener">AGIBOT</a></div><h3>提出 Worken 机器人有效工作量指标</h3><p>Worken 尝试结合活跃数量、自主工作时间和实际产出效能，代表产业评价开始从出货量转向实际生产价值，但目前还不是统一行业标准。</p><div class="links"><a href="https://agibot.com/article/231/detail/131.html" target="_blank" rel="noopener">智元官方公告 ↗</a></div></article>
 </div></section>
 
 <section class="section" id="trends"><div class="container">
