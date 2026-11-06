@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语学习笔记 · Unit 5 Business Proposals</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap">
+<style>
+  :root { --bg:#0b1220; --card:#172033; --border:#2b3a55; --text:#f1f5f9; --secondary:#a7b3c7; --muted:#6f7f99; --blue:#38bdf8; --cyan:#22d3ee; --purple:#a78bfa; --green:#34d399; --orange:#fbbf24; --red:#fb7185; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Noto Sans SC',-apple-system,sans-serif; font-size:15px; line-height:1.75; }
+  .container { max-width:960px; margin:0 auto; padding:0 24px; }
+  .hero { padding:60px 0 44px; border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; width:580px; height:580px; right:-12%; top:-55%; background:radial-gradient(circle,rgba(56,189,248,.13),transparent 70%); }
+  .hero-tag { display:inline-block; font:12px 'JetBrains Mono',monospace; color:var(--blue); border:1px solid rgba(56,189,248,.35); padding:4px 12px; border-radius:4px; margin-bottom:16px; }
+  h1 { font-size:32px; line-height:1.35; margin-bottom:12px; }
+  h1 span { color:var(--blue); }
+  .hero p { color:var(--secondary); max-width:760px; }
+  .goal { display:inline-flex; margin-top:20px; padding:8px 16px; border-radius:8px; color:var(--blue); background:rgba(56,189,248,.09); border:1px solid rgba(56,189,248,.24); font-size:13px; }
+  .pills,.chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .pills { margin-top:18px; }
+  .pill,.chip { background:var(--card); border:1px solid var(--border); color:var(--secondary); border-radius:20px; padding:5px 12px; font-size:12px; }
+  .chip { border-radius:6px; padding:7px 11px; font-size:13px; }
+  .chip b { color:var(--cyan); font-family:'JetBrains Mono',monospace; }
+  .toc { position:sticky; top:0; z-index:20; display:flex; gap:7px; flex-wrap:wrap; padding:12px 0; background:rgba(11,18,32,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); }
+  .toc a { text-decoration:none; color:var(--secondary); border:1px solid var(--border); background:var(--card); border-radius:18px; padding:4px 10px; font-size:12px; }
+  .toc a:hover { color:var(--blue); border-color:rgba(56,189,248,.48); }
+  .section { padding:38px 0; border-bottom:1px solid var(--border); scroll-margin-top:74px; }
+  .title { display:flex; align-items:center; gap:10px; font-size:21px; margin-bottom:5px; }
+  .num { font:13px 'JetBrains Mono',monospace; color:var(--blue); background:rgba(56,189,248,.1); padding:2px 8px; border-radius:4px; }
+  .sub { color:var(--muted); font-size:13px; margin-bottom:20px; }
+  .label { color:var(--blue); font-weight:700; margin:22px 0 10px; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:11px; }
+  .card { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:9px; padding:15px 17px; }
+  .en { color:var(--text); font-size:14px; }
+  .cn { color:var(--muted); font-size:13px; margin-top:3px; }
+  .box { background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(56,189,248,.07)); border:1px solid rgba(56,189,248,.24); border-radius:12px; padding:22px; margin-top:14px; }
+  .box h3 { color:var(--blue); font-size:16px; margin-bottom:12px; }
+  .box p { color:var(--secondary); margin-bottom:8px; }
+  .box p:last-child { margin-bottom:0; }
+  .dialogue,.writing { background:var(--card); border:1px solid var(--border); border-left:3px solid var(--purple); border-radius:12px; padding:22px; }
+  .dialogue p,.writing p { margin-bottom:10px; }
+  .dialogue p:last-child,.writing p:last-child { margin-bottom:0; }
+  .speaker { color:var(--purple); font-weight:700; }
+  .callout { margin-top:14px; padding:13px 16px; border-radius:8px; border:1px solid rgba(251,191,36,.23); border-left:3px solid var(--orange); background:rgba(251,191,36,.07); color:var(--secondary); font-size:13px; }
+  .callout strong { color:var(--orange); }
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th { color:var(--blue); background:rgba(56,189,248,.07); text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); }
+  td { color:var(--secondary); padding:10px 12px; border-bottom:1px solid var(--border); vertical-align:top; }
+  td:first-child { color:var(--text); }
+  .flow { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:18px; }
+  .step { color:var(--text); background:var(--card); border:1px solid var(--border); padding:9px 13px; border-radius:8px; }
+  .arrow { color:var(--blue); }
+  .footer { padding:28px 0; text-align:center; color:var(--muted); font-size:12px; }
+  .footer a { color:var(--blue); text-decoration:none; }
+  @media(max-width:700px){ h1{font-size:24px}.grid{grid-template-columns:1fr}.hero{padding-top:42px}.toc{position:static}.arrow{display:none} }
+</style>
+</head>
+<body>
+<header class="hero"><div class="container">
+  <div class="hero-tag">EF UNIT 5 · BUSINESS PROPOSALS · LESSONS 1–4</div>
+  <h1>Business Proposals <span>商务提案</span></h1>
+  <p>从描述商务现状和数据变化，到分析原因、讨论解决方案、正式提出建议，最终完成一份结构清晰的简短商务提案。</p>
+  <div class="goal">学习路径：描述现状 → 分析原因与结果 → 讨论方案 → 提出建议 → 撰写提案</div>
+  <div class="pills"><span class="pill">Business Situation</span><span class="pill">Cause &amp; Effect</span><span class="pill">Possible Solutions</span><span class="pill">Making a Proposal</span><span class="pill">Executive Summary</span></div>
+</div></header>
+
+<main>
+<div class="container"><nav class="toc" aria-label="页面目录"><a href="#overview">概览</a><a href="#lesson1">Lesson 1 商务现状</a><a href="#lesson2">Lesson 2 讨论方案</a><a href="#lesson3">Lesson 3 提出提案</a><a href="#lesson4">Lesson 4 商务写作</a><a href="#review">重点复习</a></nav></div>
+
+<section class="section" id="overview"><div class="container">
+  <h2 class="title"><span class="num">00</span> Unit Overview｜单元概览</h2><p class="sub">四课共同构成一条完整的商务提案工作流</p>
+  <div class="grid">
+    <div class="card"><div class="en">Lesson 1 · Describing a Business Situation</div><div class="cn">描述商务现状、数据变化及原因和结果。</div></div>
+    <div class="card"><div class="en">Lesson 2 · Discussing Possible Solutions</div><div class="cn">表达观点，讨论方案，请求重复、澄清和确认。</div></div>
+    <div class="card"><div class="en">Lesson 3 · Making a Proposal</div><div class="cn">使用 propose 和 suggest 正式提出建议。</div></div>
+    <div class="card"><div class="en">Lesson 4 · Writing a Short Business Proposal</div><div class="cn">组织执行摘要，分析优缺点并建议下一步。</div></div>
+  </div>
+  <div class="flow"><span class="step">现状与数据</span><span class="arrow">→</span><span class="step">原因与结果</span><span class="arrow">→</span><span class="step">备选方案</span><span class="arrow">→</span><span class="step">正式提案</span><span class="arrow">→</span><span class="step">结论与行动</span></div>
+</div></section>
+
+<section class="section" id="lesson1"><div class="container">
+  <h2 class="title"><span class="num">01</span> Describing a Business Situation｜描述商务现状</h2><p class="sub">掌握商业数据词汇，清楚表达原因、结果、增长和下降</p>
+  <div class="label">Key Vocabulary｜核心词汇</div>
+  <div class="chips"><span class="chip"><b>revenue</b> 营业收入</span><span class="chip"><b>profits</b> 利润</span><span class="chip"><b>market share</b> 市场份额</span><span class="chip"><b>region</b> 地区</span><span class="chip"><b>purchase</b> 购买／收购</span><span class="chip"><b>strength</b> 优势</span><span class="chip"><b>sales</b> 销售额</span><span class="chip"><b>efficiency</b> 效率</span><span class="chip"><b>competition</b> 竞争</span><span class="chip"><b>competitor</b> 竞争对手</span></div>
+  <div class="label">Useful Examples｜实用例句</div>
+  <div class="grid">
+    <div class="card"><div class="en">Company revenue has increased.</div><div class="cn">公司营业收入增长了。</div></div>
+    <div class="card"><div class="en">Europe is a very important region for us.</div><div class="cn">欧洲对我们来说是一个非常重要的地区。</div></div>
+    <div class="card"><div class="en">Do we have enough money for the purchase?</div><div class="cn">我们有足够的钱进行这项收购吗？</div></div>
+    <div class="card"><div class="en">Our market share is only 5% in that country.</div><div class="cn">我们在那个国家的市场份额只有 5%。</div></div>
+    <div class="card"><div class="en">The biggest strength we have is our technology.</div><div class="cn">我们最大的优势是技术。</div></div>
+    <div class="card"><div class="en">What can we do to increase sales?</div><div class="cn">我们可以做些什么来提高销售额？</div></div>
+  </div>
+
+  <div class="label">Cause and Effect｜原因与结果</div>
+  <div class="table-wrap"><table><thead><tr><th>表达</th><th>用法</th><th>例句</th></tr></thead><tbody>
+    <tr><td>because of / due to</td><td>后接名词或名词短语，说明原因</td><td>Due to the purchase of Sunset Computers, our market share has increased.</td></tr>
+    <tr><td>as a result</td><td>引出前述原因造成的结果</td><td>Sales in Europe have decreased. As a result, revenue there fell by 8%.</td></tr>
+    <tr><td>consequently</td><td>较正式地表达“因此”</td><td>Our costs have risen. Consequently, our profits are going to decrease.</td></tr>
+  </tbody></table></div>
+  <div class="callout"><strong>标点提示：</strong>because of / due to 引导的原因短语位于句首时，后面通常加逗号；位于主句后时一般不加。</div>
+
+  <div class="label">Increases and Decreases｜增长与下降</div>
+  <div class="box"><h3>Present Perfect｜现在完成时</h3><p><strong>结构：</strong>have / has + past participle，用于描述持续到现在的变化。</p><p>Our market share <strong>has increased to</strong> 23 percent.</p><p>Profits <strong>have decreased by</strong> 15 percent.</p><p>Sales <strong>have been flat</strong>.</p></div>
+  <div class="box"><h3>Past Simple｜一般过去时</h3><p>用于描述过去某个明确时间段的数据。</p><p>Revenue <strong>fell by</strong> 8% last year.</p><p>Our market share <strong>rose to</strong> 35% last quarter.</p></div>
+  <div class="callout"><strong>to 与 by：</strong>increase / decrease / rise / fall <strong>to</strong> + 最终数值；<strong>by</strong> + 变化幅度。例：increased to 23%（增长到 23%）；decreased by 15%（下降了 15%）。</div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>nearly</b> 将近</span><span class="chip"><b>slightly</b> 略微</span><span class="chip"><b>significantly</b> 显著地</span><span class="chip"><b>remain flat</b> 保持不变</span></div>
+
+  <div class="label">Model Answer｜商务现状描述范例</div>
+  <div class="writing"><p>The purpose of today’s meeting is to talk about our competition. Their increasing market share is a big problem for us. Overall, our revenue and profits are down. We have to find ways to improve our sales. We cannot delay.</p><p>One thing we are thinking about is the purchase of one of our smaller competitors. They have a lot of strength in the South American region. We are also looking at several projects to improve efficiency.</p></div>
+</div></section>
+
+<section class="section" id="lesson2"><div class="container">
+  <h2 class="title"><span class="num">02</span> Discussing Possible Solutions｜讨论可能的解决方案</h2><p class="sub">表达观点、回应观点，并在讨论中请求重复、澄清和确认</p>
+  <div class="label">Think &amp; Believe｜表达观点</div>
+  <div class="grid">
+    <div class="card"><div class="en">I think (that) Joan did a good job.</div><div class="cn">我认为 Joan 做得很好。that 可以省略。</div></div>
+    <div class="card"><div class="en">Simon believes (that) we can save half a million dollars.</div><div class="cn">Simon 相信我们可以节省 50 万美元。</div></div>
+    <div class="card"><div class="en">Yes, I think so.</div><div class="cn">是的，我也这么认为。so 代替前面的从句。</div></div>
+    <div class="card"><div class="en">No, I don’t think so.</div><div class="cn">不，我不这么认为。</div></div>
+  </div>
+  <div class="chips" style="margin-top:14px"><span class="chip">In my opinion, …</span><span class="chip">It’s my feeling that …</span><span class="chip">I think …</span><span class="chip">I believe …</span></div>
+
+  <div class="label">Repetition, Clarification &amp; Confirmation｜重复、澄清与确认</div>
+  <div class="table-wrap"><table><thead><tr><th>目的</th><th>实用表达</th></tr></thead><tbody>
+    <tr><td>请求重复</td><td>I’m sorry, could you repeat that? / I didn’t catch that. / Would you mind repeating that?</td></tr>
+    <tr><td>请求澄清</td><td>Do you mean that you think it’s a good idea? / Are you saying we should stop the project?</td></tr>
+    <tr><td>请求确认</td><td>So, just to confirm, you believe that it’s too expensive? / Half a million?</td></tr>
+  </tbody></table></div>
+
+  <div class="label">Verb to Noun｜动词变名词</div>
+  <div class="chips"><span class="chip"><b>discuss → discussion</b> 讨论</span><span class="chip"><b>suggest → suggestion</b> 建议</span><span class="chip"><b>hire → hiring</b> 招聘</span><span class="chip"><b>save → savings</b> 节省／储蓄</span><span class="chip"><b>propose → proposal</b> 提案</span><span class="chip"><b>think → thought</b> 想法</span><span class="chip"><b>lay off → layoff</b> 裁员</span></div>
+  <div class="callout"><strong>注意：</strong>不存在适用于所有单词的固定转换规则。有些名词变化较大，有些与动词形式相同，需要分别记忆。</div>
+
+  <div class="label">Dialogue｜讨论削减成本</div>
+  <div class="dialogue">
+    <p><span class="speaker">Sarah:</span> In my opinion, we need to cut costs.</p>
+    <p><span class="speaker">Paul:</span> Yes, but how?</p>
+    <p><span class="speaker">Sarah:</span> I think that we could save half a million dollars with layoffs.</p>
+    <p><span class="speaker">Paul:</span> No, I don’t believe that’s the best idea. It would hurt employee morale.</p>
+    <p><span class="speaker">Sarah:</span> So, what’s your idea?</p>
+    <p><span class="speaker">Paul:</span> It’s my feeling that a hiring freeze is the best way.</p>
+    <p><span class="speaker">Sarah:</span> Maybe, but it will take longer to save money.</p>
+  </div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>cut costs</b> 削减成本</span><span class="chip"><b>layoffs</b> 裁员</span><span class="chip"><b>employee morale</b> 员工士气</span><span class="chip"><b>hiring freeze</b> 冻结招聘</span></div>
+</div></section>
+
+<section class="section" id="lesson3"><div class="container">
+  <h2 class="title"><span class="num">03</span> Making a Proposal｜提出商务提案</h2><p class="sub">使用特殊不定式结构以及 propose / suggest 正式提出方案</p>
+  <div class="label">Special Infinitive Phrases｜特殊不定式结构</div>
+  <div class="grid">
+    <div class="card"><div class="en">This meeting is an opportunity to give you some answers.</div><div class="cn">名词 + to do：这次会议是一个向你们提供答案的机会。</div></div>
+    <div class="card"><div class="en">We’re not looking at layoffs to save money.</div><div class="cn">我们并不考虑通过裁员来省钱。</div></div>
+    <div class="card"><div class="en">The purpose of today’s meeting is to give you a company update.</div><div class="cn">名词短语 + be + to do：今天会议的目的是介绍公司最新情况。</div></div>
+  </div>
+
+  <div class="label">Propose &amp; Suggest｜正式提出建议</div>
+  <div class="box"><h3>核心结构</h3><p>I propose (that) we <strong>delay</strong> the database project.</p><p>I suggest (that) we <strong>hire</strong> a new project manager.</p><p>I suggest that we <strong>not have</strong> any layoffs.</p><p>He proposes that the company <strong>not give</strong> pay increases this year.</p></div>
+  <div class="callout"><strong>语法重点：</strong>propose / suggest 后的 that 可以省略；that 从句使用动词原形，不因主语是 he / she / the company 而加 -s。否定形式为 <strong>not + 动词原形</strong>。</div>
+
+  <div class="label">Dialogue｜节省资金的方案</div>
+  <div class="dialogue">
+    <p><span class="speaker">Ron:</span> OK, so what are your ideas for saving money?</p>
+    <p><span class="speaker">Linda:</span> I have two proposals. First, I propose that we delay the database project for six months.</p>
+    <p><span class="speaker">Ron:</span> How much will that save us?</p>
+    <p><span class="speaker">Linda:</span> Half a million dollars.</p>
+    <p><span class="speaker">Ron:</span> That’s great! And your second idea?</p>
+    <p><span class="speaker">Linda:</span> I suggest that the company not lay off any staff, and that we have a hiring freeze. In other words, as staff leaves, we don’t replace them.</p>
+  </div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>proposal</b> 提案</span><span class="chip"><b>delay the project</b> 推迟项目</span><span class="chip"><b>lay off staff</b> 裁员</span><span class="chip"><b>replace staff</b> 补充／替换员工</span></div>
+</div></section>
+
+<section class="section" id="lesson4"><div class="container">
+  <h2 class="title"><span class="num">04</span> Writing a Short Business Proposal｜撰写简短商务提案</h2><p class="sub">组织执行摘要，比较正式与非正式语言，分析优缺点并完成结论</p>
+  <div class="label">Executive Summary｜执行摘要结构</div>
+  <div class="table-wrap"><table><thead><tr><th>步骤</th><th>功能</th><th>示例</th></tr></thead><tbody>
+    <tr><td>1. Purpose</td><td>说明提案目的</td><td>The purpose of this proposal is to find a new location for our company offices.</td></tr>
+    <tr><td>2. Problem</td><td>总结需要解决的问题</td><td>Because of falling market share, we have to find a way to generate more sales.</td></tr>
+    <tr><td>3. Actions taken</td><td>描述已经采取的行动</td><td>We have reviewed a list of options to find the best solution.</td></tr>
+    <tr><td>4. Solution</td><td>概述推荐方案</td><td>We are proposing a hiring freeze as the best way to cut expenses.</td></tr>
+    <tr><td>5. Rejected alternatives</td><td>解释为何拒绝其他方案</td><td>We are rejecting layoffs due to the negative effects on staff.</td></tr>
+  </tbody></table></div>
+
+  <div class="label">Formal vs. Informal｜正式与非正式表达</div>
+  <div class="table-wrap"><table><thead><tr><th>功能</th><th>Informal</th><th>Formal</th></tr></thead><tbody>
+    <tr><td>说明目的</td><td>I think we should try to spend less money.</td><td>The purpose of this proposal is to outline a plan to cut expenses.</td></tr>
+    <tr><td>总结问题</td><td>I think we should save more because things are getting more expensive, and sales are poor.</td><td>Because of increasing expenses and decreasing sales, the company has identified the need to make savings.</td></tr>
+    <tr><td>已采取行动</td><td>I’ve looked at a few options.</td><td>We have reviewed a list of options to find the best solution.</td></tr>
+    <tr><td>提出方案</td><td>I think we should have a hiring freeze.</td><td>We are proposing a hiring freeze as the best way to cut expenses.</td></tr>
+    <tr><td>拒绝方案</td><td>I don’t think we should lay off anyone.</td><td>We are rejecting layoffs due to the negative effects they would have on staff.</td></tr>
+  </tbody></table></div>
+
+  <div class="label">Advantages &amp; Disadvantages｜优缺点</div>
+  <div class="grid">
+    <div class="card"><div class="en">One advantage is lower costs.</div><div class="cn">一个优点是成本较低。</div></div>
+    <div class="card"><div class="en">Another pro is that revenues will increase.</div><div class="cn">另一个优点是收入会增加。</div></div>
+    <div class="card"><div class="en">One con, however, is that we’ll need to use staff more efficiently.</div><div class="cn">然而，一个缺点是需要更有效地安排员工。</div></div>
+    <div class="card"><div class="en">A further disadvantage is that projects will not be finished so quickly.</div><div class="cn">另一个缺点是项目完成速度会变慢。</div></div>
+  </div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>pros and cons</b> 优缺点</span><span class="chip"><b>a big advantage</b> 重要优点</span><span class="chip"><b>an obvious advantage</b> 明显优点</span><span class="chip"><b>a further disadvantage</b> 另一项缺点</span></div>
+
+  <div class="label">Concluding a Proposal｜总结提案</div>
+  <div class="grid">
+    <div class="card"><div class="en">In conclusion, a hiring freeze is the best choice for the company right now.</div><div class="cn">总结解决方案。</div></div>
+    <div class="card"><div class="en">The advantages are obvious: Costs would be cut by 50%.</div><div class="cn">重申方案优点。</div></div>
+    <div class="card"><div class="en">We suggest that we review this proposal at a meeting next week.</div><div class="cn">建议下一步行动。</div></div>
+    <div class="card"><div class="en">Please contact me with any questions or concerns.</div><div class="cn">邀请对方提出问题或顾虑。</div></div>
+  </div>
+
+  <div class="label">Sample Proposal｜商务提案范例</div>
+  <div class="writing">
+    <p>The purpose of this proposal is to find a solution to our sales problems.</p>
+    <p>Sales have been falling due to more customers buying our competitors’ products.</p>
+    <p>We’ve reviewed a number of options, and we’ve decided a new product is the best option.</p>
+    <p>We’ve rejected the idea of upgrading our current products because they’re too old.</p>
+    <p>Can you let me know what you think before Friday?</p>
+  </div>
+  <div class="label">Useful Email Expressions｜商务邮件常用表达</div>
+  <div class="grid">
+    <div class="card"><div class="en">The purpose of this email is to begin discussion about a new office location.</div><div class="cn">这封邮件的目的是开始讨论新的办公室地点。</div></div>
+    <div class="card"><div class="en">Our office space is too small due to the increase in employees.</div><div class="cn">由于员工人数增加，我们的办公空间太小了。</div></div>
+    <div class="card"><div class="en">We are rejecting the solution offered by the operations manager.</div><div class="cn">我们不采用运营经理提出的方案。</div></div>
+    <div class="card"><div class="en">We are going to review other proposals at tomorrow’s meeting.</div><div class="cn">我们将在明天的会议上审查其他提案。</div></div>
+    <div class="card"><div class="en">We may have to lay off some employees because of budget cuts.</div><div class="cn">由于预算削减，我们可能不得不裁掉一些员工。</div></div>
+    <div class="card"><div class="en">We have to cut the budget.</div><div class="cn">我们必须削减预算。</div></div>
+  </div>
+</div></section>
+
+<section class="section" id="review"><div class="container">
+  <h2 class="title"><span class="num">05</span> Key Takeaways｜单元重点回顾</h2><p class="sub">按四课逻辑快速复习最重要的词汇、句型和写作结构</p>
+  <div class="box"><h3>Lesson 1 · Business Situation</h3><p>revenue · profits · market share · sales</p><p>because of / due to · as a result / consequently</p><p>increase to / by · decrease to / by · remain flat · slightly · significantly</p></div>
+  <div class="box"><h3>Lesson 2 · Possible Solutions</h3><p>I think (that) … · I believe (that) … · In my opinion, … · It’s my feeling that …</p><p>Could you repeat that? · I didn’t catch that. · Do you mean that …? · Just to confirm, …</p></div>
+  <div class="box"><h3>Lesson 3 · Making a Proposal</h3><p>The purpose of the meeting is to …</p><p>I propose that we … · I suggest that we …</p><p>propose / suggest + that 从句使用动词原形。</p></div>
+  <div class="box"><h3>Lesson 4 · Writing a Proposal</h3><p>State the purpose → Summarize the problem → Describe actions taken → Outline the solution → Reject alternatives → Compare pros and cons → Conclude → Suggest next steps</p></div>
+  <div class="callout"><strong>Unit 5 核心逻辑：</strong>描述商务现状 → 分析原因和结果 → 表达观点、讨论方案 → 提出建议 → 分析优缺点 → 总结并撰写商务提案。</div>
+</div></section>
+</main>
+
+<footer class="footer"><div class="container"><a href="index.html">← 返回学习笔记库</a></div></footer>
+</body>
+</html>
