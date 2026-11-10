@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英语学习笔记 · Unit 6 Getting a Service Provider</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap">
+<style>
+  :root{--bg:#0b1220;--card:#172033;--border:#2b3a55;--text:#f1f5f9;--secondary:#a7b3c7;--muted:#6f7f99;--cyan:#22d3ee;--blue:#38bdf8;--purple:#a78bfa;--green:#34d399;--orange:#fbbf24}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',-apple-system,sans-serif;font-size:15px;line-height:1.75}.container{max-width:960px;margin:0 auto;padding:0 24px}
+  .hero{padding:60px 0 44px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}.hero::before{content:'';position:absolute;width:580px;height:580px;right:-12%;top:-55%;background:radial-gradient(circle,rgba(34,211,238,.13),transparent 70%)}.hero-tag{display:inline-block;font:12px 'JetBrains Mono',monospace;color:var(--cyan);border:1px solid rgba(34,211,238,.35);padding:4px 12px;border-radius:4px;margin-bottom:16px}h1{font-size:32px;line-height:1.35;margin-bottom:12px}h1 span{color:var(--cyan)}.hero p{color:var(--secondary);max-width:760px}.goal{display:inline-flex;margin-top:20px;padding:8px 16px;border-radius:8px;color:var(--cyan);background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.24);font-size:13px}
+  .pills,.chips{display:flex;flex-wrap:wrap;gap:8px}.pills{margin-top:18px}.pill,.chip{background:var(--card);border:1px solid var(--border);color:var(--secondary);border-radius:20px;padding:5px 12px;font-size:12px}.chip{border-radius:6px;padding:7px 11px;font-size:13px}.chip b{color:var(--cyan);font-family:'JetBrains Mono',monospace}.toc{position:sticky;top:0;z-index:20;display:flex;gap:7px;flex-wrap:wrap;padding:12px 0;background:rgba(11,18,32,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}.toc a{text-decoration:none;color:var(--secondary);border:1px solid var(--border);background:var(--card);border-radius:18px;padding:4px 10px;font-size:12px}.toc a:hover{color:var(--cyan);border-color:rgba(34,211,238,.48)}
+  .section{padding:38px 0;border-bottom:1px solid var(--border);scroll-margin-top:74px}.title{display:flex;align-items:center;gap:10px;font-size:21px;margin-bottom:5px}.num{font:13px 'JetBrains Mono',monospace;color:var(--cyan);background:rgba(34,211,238,.1);padding:2px 8px;border-radius:4px}.sub{color:var(--muted);font-size:13px;margin-bottom:20px}.label{color:var(--cyan);font-weight:700;margin:22px 0 10px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}.card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:9px;padding:15px 17px}.en{color:var(--text);font-size:14px}.cn{color:var(--muted);font-size:13px;margin-top:3px}
+  .box{background:linear-gradient(135deg,rgba(167,139,250,.08),rgba(34,211,238,.07));border:1px solid rgba(34,211,238,.24);border-radius:12px;padding:22px;margin-top:14px}.box h3{color:var(--cyan);font-size:16px;margin-bottom:12px}.box p{color:var(--secondary);margin-bottom:8px}.box p:last-child{margin-bottom:0}.dialogue{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--purple);border-radius:12px;padding:22px}.dialogue p{margin-bottom:10px}.dialogue p:last-child{margin-bottom:0}.speaker{color:var(--purple);font-weight:700}.callout{margin-top:14px;padding:13px 16px;border-radius:8px;border:1px solid rgba(251,191,36,.23);border-left:3px solid var(--orange);background:rgba(251,191,36,.07);color:var(--secondary);font-size:13px}.callout strong{color:var(--orange)}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th{color:var(--cyan);background:rgba(34,211,238,.07);text-align:left;padding:10px 12px;border-bottom:1px solid var(--border)}td{color:var(--secondary);padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}td:first-child{color:var(--text)}.footer{padding:28px 0;text-align:center;color:var(--muted);font-size:12px}.footer a{color:var(--cyan);text-decoration:none}@media(max-width:700px){h1{font-size:24px}.grid{grid-template-columns:1fr}.hero{padding-top:42px}.toc{position:static}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="container">
+  <div class="hero-tag">EF UNIT 6 · GETTING A SERVICE PROVIDER · LESSONS 1–4</div>
+  <h1>Getting a Service Provider <span>选择服务提供商</span></h1>
+  <p>从描述网络服务问题、比较服务套餐，到询问技术支持和确认合同条款，完成一次专业、清晰的服务商咨询。</p>
+  <div class="goal">沟通流程：描述问题 → 表达不满 → 比较套餐 → 询问服务 → 确认合同条款</div>
+  <div class="pills"><span class="pill">Service Issues</span><span class="pill">Comparing Packages</span><span class="pill">Technical Support</span><span class="pill">Terms &amp; Conditions</span><span class="pill">Role-play</span></div>
+</div></header>
+<main>
+<div class="container"><nav class="toc" aria-label="页面目录"><a href="#overview">概览</a><a href="#lesson1">服务问题</a><a href="#lesson2">比较套餐</a><a href="#lesson3">询问服务</a><a href="#lesson4">合同条款</a><a href="#roleplay">综合对话</a><a href="#review">重点复习</a></nav></div>
+
+<section class="section" id="overview"><div class="container">
+  <h2 class="title"><span class="num">00</span> Unit Overview｜单元概览</h2><p class="sub">四课对应选择和管理服务提供商的完整商务场景</p>
+  <div class="grid"><div class="card"><div class="en">Lesson 1 · Issues with Your Internet Provider</div><div class="cn">描述服务问题并表达不满。</div></div><div class="card"><div class="en">Lesson 2 · Comparing Packages</div><div class="cn">比较套餐特点、价格和服务质量。</div></div><div class="card"><div class="en">Lesson 3 · Asking About a Service</div><div class="cn">询问技术支持、响应时间、上门服务和付款方式。</div></div><div class="card"><div class="en">Lesson 4 · Terms and Conditions</div><div class="cn">确认变更、升级、取消、许可和合同义务。</div></div></div>
+</div></section>
+
+<section class="section" id="lesson1"><div class="container">
+  <h2 class="title"><span class="num">01</span> Issues with Your Internet Provider｜网络服务问题</h2><p class="sub">描述具体问题，并自然表达不满与沮丧</p>
+  <div class="label">Describing Issues｜描述服务问题</div>
+  <div class="grid"><div class="card"><div class="en">The service just isn’t reliable.</div><div class="cn">这项服务就是不可靠。</div></div><div class="card"><div class="en">We have problems downloading things.</div><div class="cn">我们下载东西时遇到了问题。</div></div><div class="card"><div class="en">It’s difficult to get the support we need.</div><div class="cn">很难获得我们需要的支持。</div></div><div class="card"><div class="en">It takes ages to get a response.</div><div class="cn">等待回复需要很长时间。</div></div></div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>reliable</b> 可靠的</span><span class="chip"><b>download</b> 下载</span><span class="chip"><b>support</b> 技术支持</span><span class="chip"><b>response</b> 回复／响应</span><span class="chip"><b>take ages</b> 花很长时间</span></div>
+  <div class="box"><h3>核心结构</h3><p><strong>have problems + V-ing：</strong>We have problems downloading things.</p><p><strong>It’s difficult to + 动词原形：</strong>It’s difficult to get support.</p><p><strong>It takes ages to + 动词原形：</strong>It takes ages to get a response.</p></div>
+  <div class="label">Saying How We Feel｜表达感受和不满</div>
+  <div class="grid"><div class="card"><div class="en">We’re not so happy with our current service.</div><div class="cn">我们对目前的服务不太满意。</div></div><div class="card"><div class="en">The speed is driving us crazy.</div><div class="cn">网速慢得让我们很抓狂。</div></div><div class="card"><div class="en">It can be pretty frustrating.</div><div class="cn">这确实令人相当沮丧。</div></div><div class="card"><div class="en">It’s always so unreliable.</div><div class="cn">它总是很不可靠。</div></div></div>
+  <div class="callout"><strong>frustrating vs. frustrated：</strong>The service is <strong>frustrating</strong>（服务令人沮丧）；I’m <strong>frustrated</strong> with the service（我感到沮丧）。always 表示“总是”，never 表示“从不”。</div>
+</div></section>
+
+<section class="section" id="lesson2"><div class="container">
+  <h2 class="title"><span class="num">02</span> Comparing Packages｜比较服务套餐</h2><p class="sub">比较套餐特点、性价比与数字，并说明是否满足需求</p>
+  <div class="label">Package Features｜套餐特点</div>
+  <div class="grid"><div class="card"><div class="en">Elektra is the basic package.</div><div class="cn">Elektra 是基础套餐。</div></div><div class="card"><div class="en">Foto is our premium package.</div><div class="cn">Foto 是我们的高级套餐。</div></div><div class="card"><div class="en">The premium package is a high-speed, high-quality service.</div><div class="cn">高级套餐提供高速、高质量的服务。</div></div><div class="card"><div class="en">The basic package is very good value for money.</div><div class="cn">基础套餐性价比很高。</div></div><div class="card"><div class="en">I think the basic package will meet your needs.</div><div class="cn">我认为基础套餐能够满足你的需求。</div></div></div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>basic package</b> 基础套餐</span><span class="chip"><b>premium package</b> 高级套餐</span><span class="chip"><b>high-speed</b> 高速的</span><span class="chip"><b>good value for money</b> 性价比高</span><span class="chip"><b>meet your needs</b> 满足需求</span></div>
+  <div class="label">Both, Neither &amp; Differences｜两者比较</div>
+  <div class="grid"><div class="card"><div class="en">Both L1 and L2 are high-speed packages.</div><div class="cn">L1 和 L2 都是高速套餐。</div></div><div class="card"><div class="en">Neither package is really good value for money.</div><div class="cn">两种套餐的性价比都不算高。</div></div><div class="card"><div class="en">Are there any differences between the two packages?</div><div class="cn">这两个套餐之间有什么区别吗？</div></div><div class="card"><div class="en">The two packages are pretty similar.</div><div class="cn">这两个套餐相当相似。</div></div></div>
+  <div class="callout"><strong>固定搭配：</strong>similar <strong>to</strong> · different <strong>from</strong> · differences <strong>between</strong> A and B。both = 两者都；neither = 两者都不。</div>
+  <div class="label">Large Numbers｜大数字</div>
+  <div class="table-wrap"><table><thead><tr><th>数字</th><th>英文读法</th></tr></thead><tbody><tr><td>105,000</td><td>one hundred and five thousand</td></tr><tr><td>1,000,000</td><td>one million</td></tr><tr><td>1,250,000</td><td>one million two hundred and fifty thousand</td></tr><tr><td>4,000,000 yen per year</td><td>four million yen per year</td></tr></tbody></table></div>
+  <div class="callout"><strong>注意：</strong>具体数字后面的 hundred、thousand、million 不加 -s：three million，不说 three millions。网速单位 <strong>Mbps</strong> = megabits per second。</div>
+</div></section>
+
+<section class="section" id="lesson3"><div class="container">
+  <h2 class="title"><span class="num">03</span> Asking About a Service｜询问服务内容</h2><p class="sub">确认技术支持、响应时间、上门服务和付款方式</p>
+  <div class="label">Service Features｜服务特点</div>
+  <div class="grid"><div class="card"><div class="en">There’s a 24-hour help line.</div><div class="cn">有 24 小时服务热线。</div></div><div class="card"><div class="en">That’s covered in the service plan.</div><div class="cn">这包含在服务计划中。</div></div><div class="card"><div class="en">We can send someone out to you.</div><div class="cn">我们可以派人上门为您服务。</div></div><div class="card"><div class="en">We have a 12-hour response time.</div><div class="cn">我们的响应时间是 12 小时。</div></div><div class="card"><div class="en">You can set up a regular payment.</div><div class="cn">您可以设置定期付款。</div></div><div class="card"><div class="en">You can get technical support any time.</div><div class="cn">您可以随时获得技术支持。</div></div></div>
+  <div class="label">Questions to Ask｜询问服务细节</div>
+  <div class="chips"><span class="chip">What if we have problems with the internet?</span><span class="chip">What’s the response time?</span><span class="chip">Is your help line open 24 hours?</span><span class="chip">Is technical support included?</span><span class="chip">Can you send someone out to us?</span><span class="chip">How do we pay?</span></div>
+  <div class="label">Service Conversation｜服务咨询对话</div>
+  <div class="dialogue"><p><span class="speaker">Customer:</span> What if we have problems with the internet?</p><p><span class="speaker">Provider:</span> You just call our help line and we send someone out. That’s covered in the service plan.</p><p><span class="speaker">Customer:</span> What’s the response time?</p><p><span class="speaker">Provider:</span> Same day.</p><p><span class="speaker">Customer:</span> You mean it’s a 24-hour response time?</p><p><span class="speaker">Provider:</span> Yes. For an extra 60,000 per month, we can send someone out in six hours.</p><p><span class="speaker">Customer:</span> Is your help line open 24 hours, too?</p><p><span class="speaker">Provider:</span> That’s right. If you set up a regular payment, we take the money at the end of each month.</p></div>
+</div></section>
+
+<section class="section" id="lesson4"><div class="container">
+  <h2 class="title"><span class="num">04</span> Terms and Conditions｜合同条款</h2><p class="sub">提出假设、澄清含义，并确认合同许可和义务</p>
+  <div class="label">When, If &amp; What If｜条件表达</div>
+  <div class="grid"><div class="card"><div class="en">When you have a problem, you just call our help line.</div><div class="cn">当／每次遇到问题时，拨打服务热线。when 强调发生时或每次发生时。</div></div><div class="card"><div class="en">If we have a question, we can call any time.</div><div class="cn">如果有问题，可以随时打电话。if 强调假设条件。</div></div><div class="card"><div class="en">What if we need technical support?</div><div class="cn">如果我们需要技术支持怎么办？</div></div></div>
+  <div class="label">Using Mean｜澄清和修正</div>
+  <div class="grid"><div class="card"><div class="en">You mean there’s a 24-hour response time?</div><div class="cn">你的意思是响应时间为 24 小时吗？</div></div><div class="card"><div class="en">It’ll be here in 24 hours. Sorry, I mean 48.</div><div class="cn">会在 24 小时内送到。抱歉，我是说 48 小时。</div></div><div class="card"><div class="en">I see what you mean.</div><div class="cn">我明白你的意思。</div></div></div>
+  <div class="label">Contract Details｜合同细节</div>
+  <div class="grid"><div class="card"><div class="en">You can cancel any time.</div><div class="cn">您可以随时取消。</div></div><div class="card"><div class="en">You’ll need to give us 30 days’ notice.</div><div class="cn">您需要提前 30 天通知我们。</div></div><div class="card"><div class="en">Are we able to change packages?</div><div class="cn">我们可以更换套餐吗？</div></div><div class="card"><div class="en">You can upgrade to a premium package.</div><div class="cn">您可以升级到高级套餐。</div></div><div class="card"><div class="en">You have to wait for the contract to expire.</div><div class="cn">您必须等到合同到期。</div></div></div>
+  <div class="label">Permission &amp; Obligation｜许可与义务</div>
+  <div class="table-wrap"><table><thead><tr><th>功能</th><th>结构</th><th>例句</th></tr></thead><tbody><tr><td>许可</td><td>be allowed to / can / be able to + 动词原形</td><td>Are we allowed to change packages?<br>Can we cancel the contract?<br>Are we able to upgrade any time?</td></tr><tr><td>义务</td><td>need to / have to + 动词原形</td><td>Do we need to give you notice?<br>We have to wait for the contract to expire.</td></tr></tbody></table></div>
+  <div class="chips" style="margin-top:14px"><span class="chip"><b>cancel</b> 取消</span><span class="chip"><b>give notice</b> 提前通知</span><span class="chip"><b>upgrade</b> 升级</span><span class="chip"><b>contract</b> 合同</span><span class="chip"><b>expire</b> 到期</span></div>
+</div></section>
+
+<section class="section" id="roleplay"><div class="container">
+  <h2 class="title"><span class="num">05</span> Complete Role-play｜综合商务对话</h2><p class="sub">代表公司联系网络服务商，从问题描述到合同确认</p>
+  <div class="box"><h3>A. Describing Problems｜描述问题</h3><p>We’re not so happy with the service because it isn’t reliable. We often have problems downloading things, and the speed is driving us crazy. It’s difficult to get the support we need, and it takes ages to get a response.</p></div>
+  <div class="box"><h3>B. Comparing Packages｜比较套餐</h3><p>I’d like to know more about the premium package because our company needs a high-speed internet service. I think it offers better value for money because it includes high-speed internet and 24-hour technical support. I think it’s worth it because the better service can improve our work efficiency.</p></div>
+  <div class="box"><h3>C. Asking About Service｜询问服务</h3><p>I’d like to learn more about the technical support service, especially the response time. What is the response time? Is technical support included in the service plan?</p></div>
+  <div class="box"><h3>D. Asking About Contract Terms｜询问合同条款</h3><p>I’d like to know more about the contract terms, especially the contract period and cancellation policy. If we cancel early, do we need to pay an additional fee? Can we upgrade our package if we need faster internet in the future?</p></div>
+  <div class="box"><h3>E. Ending the Conversation｜结束对话</h3><p>No, that’s all. Thank you for the information. I will consider the premium package.</p></div>
+</div></section>
+
+<section class="section" id="review"><div class="container">
+  <h2 class="title"><span class="num">06</span> Key Takeaways｜单元重点回顾</h2><p class="sub">快速复习四课的核心词汇与句型</p>
+  <div class="box"><h3>Lesson 1 · Service Issues</h3><p>The service isn’t reliable. · We have problems downloading things. · It takes ages to get a response. · The speed is driving us crazy.</p></div>
+  <div class="box"><h3>Lesson 2 · Comparing Packages</h3><p>basic / premium package · high-speed · good value for money · meet your needs · both / neither · similar / different</p></div>
+  <div class="box"><h3>Lesson 3 · Asking About a Service</h3><p>24-hour help line · covered in the service plan · send someone out · response time · regular payment · technical support</p></div>
+  <div class="box"><h3>Lesson 4 · Terms and Conditions</h3><p>when / if / what if · mean · cancel · give notice · upgrade · expire · be allowed to · be able to · need to · have to</p></div>
+  <div class="callout"><strong>核心沟通流程：</strong>描述服务问题 → 表达不满 → 比较不同套餐 → 询问服务内容 → 确认合同条款 → 礼貌结束沟通。</div>
+</div></section>
+</main>
+<footer class="footer"><div class="container"><a href="index.html">← 返回学习笔记库</a></div></footer>
+</body>
+</html>
